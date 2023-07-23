@@ -4,8 +4,8 @@
  */
 package com.thao.repository.impl;
 
-import com.thao.pojo.TieuChi;
-import com.thao.repository.TieuChiRepository;
+import com.thao.pojo.GiangVienHuongDanKhoaLuan;
+import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -30,33 +29,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @PropertySource("classpath:configs.properties")
 @Transactional
-public class TieuChiRepositoryImpl  implements TieuChiRepository{
+public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDanKhoaLuanRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
     private Environment env;
 
     @Override
-    public List<TieuChi> getTieuChis(Map<String, String> params) {
+    public List<GiangVienHuongDanKhoaLuan> getGiangVienHuongDans(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<TieuChi> q = b.createQuery(TieuChi.class);
-        Root root = q.from(TieuChi.class);
+        CriteriaQuery<GiangVienHuongDanKhoaLuan> q = b.createQuery(GiangVienHuongDanKhoaLuan.class);
+        Root root = q.from(GiangVienHuongDanKhoaLuan.class);
         q.select(root);
         
         if(params != null){
-            List<Predicate> predicates = new ArrayList<>();
+             List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("kw");
             if(kw != null && !kw.isEmpty()){
-                predicates.add(b.like(root.get("noiDungTieuChi"), String.format("%%%s%%", kw)));
-            }
-            String klId = params.get("klId");
-            if(klId != null && !klId.isEmpty()){
-                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(klId)));
-            }
-            String tieuChiId = params.get("tieuChiId");
-            if(tieuChiId != null && !tieuChiId.isEmpty()){
-                predicates.add(b.equal(root.get("id"), Integer.parseInt(tieuChiId)));
+                predicates.add(b.like(root.get("nguoiDungId.ten"), String.format("%%%s%%", kw)));
             }
             q.where(predicates.toArray(Predicate[]::new));
         }
@@ -72,19 +63,6 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
             }
         }
         return query.getResultList();
-    }
-
-    @Override
-    public boolean addTieuChi(TieuChi tc) {
-        Session s = this.factory.getObject().getCurrentSession();
-        try{
-            s.save(tc);
-            return true;
-        }
-        catch(HibernateException ex){
-            ex.printStackTrace();
-            return false;
-        }
     }
     
     

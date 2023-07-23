@@ -5,9 +5,8 @@
 package com.thao.service.impl;
 
 import com.thao.pojo.GiangVienThuocHoiDong;
-import com.thao.pojo.HoiDongBaoVeKhoaLuan;
-import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
-import com.thao.service.HoiDongBaoVeKhoaLuanService;
+import com.thao.repository.GiangVienThuocHoiDongRepository;
+import com.thao.service.GiangVienThuocHoiDongService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,12 @@ import org.springframework.stereotype.Service;
  * @author Chung Vu
  */
 @Service
-public class HoiDongBaoVeKhoaLuanServiceImpl implements HoiDongBaoVeKhoaLuanService{
+public class GiangVienThuocHoiDongServiceImpl implements GiangVienThuocHoiDongService{
     @Autowired
-    private HoiDongBaoVeKhoaLuanRepository hoiDongBaoVeKhoaLuanRepository;
-
+    private GiangVienThuocHoiDongRepository giangVienThuocHoiDongRepository;
+    
     @Override
-    public List<HoiDongBaoVeKhoaLuan> getHoiDongBaoVeKhoaLuans(Map<String, String> params) {
-        return this.hoiDongBaoVeKhoaLuanRepository.getHoiDongBaoVeKhoaLuans(params);
+    public List<GiangVienThuocHoiDong> getGiangVienThuocHoiDong(Map<String, String> params) {
+        return this.giangVienThuocHoiDongRepository.getGiangVienThuocHoiDong(params);
     }
-    
-    
 }

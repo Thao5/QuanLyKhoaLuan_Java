@@ -14,4 +14,6 @@ import java.util.Map;
  */
 public interface KhoaLuanTotNghiepService {
     List<KhoaLuanTotNghiep> getKhoaLuans(Map<String,String> params);
+    List<KhoaLuanTotNghiep> getDanhSachSinhVienLamKhoaLuanTheoId(Map<String,String> params);
+    List<KhoaLuanTotNghiep> getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(Map<String,String> params);
 }

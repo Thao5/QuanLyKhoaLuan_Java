@@ -14,4 +14,5 @@ import java.util.Map;
  */
 public interface HoiDongBaoVeKhoaLuanRepository {
     List<HoiDongBaoVeKhoaLuan> getHoiDongBaoVeKhoaLuans(Map<String,String> params);
+    
 }

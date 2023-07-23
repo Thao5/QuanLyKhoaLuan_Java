@@ -5,6 +5,7 @@
 package com.thao.repository;
 
 import com.thao.pojo.NguoiDung;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +15,5 @@ import java.util.Map;
  */
 public interface NguoiDungRepository {
     List<NguoiDung> getNguoiDungs(Map<String,String> params);
+    Boolean addNguoiDung(NguoiDung user);
 }

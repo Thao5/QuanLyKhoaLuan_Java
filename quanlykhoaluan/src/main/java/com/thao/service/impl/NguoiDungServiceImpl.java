@@ -25,6 +25,11 @@ public class NguoiDungServiceImpl implements NguoiDungService{
     public List<NguoiDung> getNguoiDungs(Map<String, String> params) {
         return this.nguoiDungRepo.getNguoiDungs(params);
     }
+
+    @Override
+    public Boolean addNguoiDung(NguoiDung user) {
+        return this.nguoiDungRepo.addNguoiDung(user);
+    }
     
     
 }

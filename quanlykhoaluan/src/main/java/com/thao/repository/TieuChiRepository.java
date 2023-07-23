@@ -14,4 +14,5 @@ import java.util.Map;
  */
 public interface TieuChiRepository {
     List<TieuChi> getTieuChis(Map<String, String> params);
+    boolean addTieuChi(TieuChi tc);
 }

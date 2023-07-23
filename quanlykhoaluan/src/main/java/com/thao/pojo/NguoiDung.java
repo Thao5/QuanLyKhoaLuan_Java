@@ -129,6 +129,19 @@ public class NguoiDung implements Serializable {
         this.vaiTro = vaiTro;
         this.createdDate = createdDate;
     }
+    
+    public NguoiDung(String ho, String ten, String taiKhoan, String email, String matKhau, String sdt, String avatar, String vaiTro, Date createdDate) {
+        this.ho = ho;
+        this.ten = ten;
+        this.taiKhoan = taiKhoan;
+        this.email = email;
+        this.matKhau = matKhau;
+        this.sdt = sdt;
+        this.avatar = avatar;
+        this.vaiTro = vaiTro;
+        this.createdDate = createdDate;
+    }
+
 
     public Integer getId() {
         return id;

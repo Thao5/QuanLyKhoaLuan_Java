@@ -4,9 +4,9 @@
  */
 package com.thao.service.impl;
 
-import com.thao.pojo.TieuChi;
-import com.thao.repository.TieuChiRepository;
-import com.thao.service.TieuChiService;
+import com.thao.pojo.GiangVienChamDiem;
+import com.thao.repository.GiangVienChamDiemRepository;
+import com.thao.service.GiangVienChamDiemService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +17,13 @@ import org.springframework.stereotype.Service;
  * @author Chung Vu
  */
 @Service
-public class TieuChiServiceImpl implements TieuChiService{
+public class GiangVienChamDiemServiceImpl implements GiangVienChamDiemService{
     @Autowired
-    private TieuChiRepository tieuChiRepository;
+    private GiangVienChamDiemRepository giangVienChamDiemRepository;
 
     @Override
-    public List<TieuChi> getTieuChis(Map<String, String> params) {
-        return this.tieuChiRepository.getTieuChis(params);
-    }
-
-    @Override
-    public boolean addTieuChi(TieuChi tc) {
-        return this.tieuChiRepository.addTieuChi(tc);
+    public List<GiangVienChamDiem> getDiemKhoaLuan(Map<String, String> params) {
+        return this.giangVienChamDiemRepository.getDiemKhoaLuan(params);
     }
     
     

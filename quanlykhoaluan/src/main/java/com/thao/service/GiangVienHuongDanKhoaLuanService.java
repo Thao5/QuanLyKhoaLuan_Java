@@ -4,8 +4,7 @@
  */
 package com.thao.service;
 
-import com.thao.pojo.NguoiDung;
-import java.time.LocalDateTime;
+import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import java.util.Map;
  *
  * @author Chung Vu
  */
-public interface NguoiDungService {
-    List<NguoiDung> getNguoiDungs(Map<String,String> params);
-    Boolean addNguoiDung(NguoiDung user);
+public interface GiangVienHuongDanKhoaLuanService {
+    List<GiangVienHuongDanKhoaLuan> getGiangVienHuongDans(Map<String, String> params);
 }

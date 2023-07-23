@@ -6,7 +6,11 @@ package com.thao.repository.impl;
 
 import com.thao.pojo.NguoiDung;
 import com.thao.repository.NguoiDungRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -47,8 +51,17 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
             List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("kw");
             if(kw != null && !kw.isEmpty()){
-                predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
+                predicates.add(b.like(root.get("ten"), String.format("%%%s%%", kw)));
             }
+            String role = params.get("vaiTro");
+            if(role != null && !role.isEmpty()){
+                predicates.add(b.equal(root.get("vaiTro"), role));
+            }
+            String userId = params.get("nguoiDungId");
+            if(userId != null && !userId.isEmpty()){
+                predicates.add(b.equal(root.get("id"), Integer.parseInt(userId)));
+            }
+            q.where(predicates.toArray(Predicate[]::new));
         }
         
         Query query = s.createQuery(q);
@@ -62,6 +75,23 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
             }
         }
         return query.getResultList();
+    }
+
+    @Override
+    public Boolean addNguoiDung(NguoiDung user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("from NguoiDung where taiKhoan = :taiKhoan OR email = :email or sdt = :sdt");
+        q.setParameter("taiKhoan", user.getTaiKhoan());
+        q.setParameter("email", user.getEmail());
+        q.setParameter("sdt", user.getSdt());
+        try{
+            NguoiDung tmp = (NguoiDung)q.getSingleResult();
+        }catch(Exception ex){
+            user.setCreatedDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            s.save(user);
+            return true;
+        }
+        return false;
     }
     
     

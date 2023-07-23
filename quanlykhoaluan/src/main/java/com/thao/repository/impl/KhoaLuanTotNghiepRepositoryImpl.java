@@ -4,7 +4,9 @@
  */
 package com.thao.repository.impl;
 
+import com.thao.pojo.GiangVienChamDiem;
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.NguoiDung;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +49,14 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
             List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("kw");
             if(kw != null && !kw.isEmpty()){
-                predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
+                predicates.add(b.like(root.get("tenKhoaLuan"), String.format("%%%s%%", kw)));
             }
+            String khoaLuanId = params.get("khoaLuanId");
+            if(khoaLuanId != null && !khoaLuanId.isEmpty()){
+                predicates.add(b.equal(root.get("id"), Integer.parseInt(khoaLuanId)));
+            }
+            q.where(predicates.toArray(Predicate[]::new));
         }
-        
         Query query = s.createQuery(q);
         
         if(params != null){
@@ -63,5 +69,44 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         }
         return query.getResultList();
     }
+
+    @Override
+    public List<KhoaLuanTotNghiep> getDanhSachSinhVienLamKhoaLuanTheoId(Map<String,String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<NguoiDung> q = b.createQuery(NguoiDung.class);
+        Root root = q.from(NguoiDung.class);
+        q.select(root);
+        if(params != null){
+            List<Predicate> predicates = new ArrayList<>();
+            String id = params.get("klId");
+            if(id != null && !id.isEmpty()){
+                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(id)));
+            }
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<KhoaLuanTotNghiep> getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<KhoaLuanTotNghiep> q = b.createQuery(KhoaLuanTotNghiep.class);
+        Root root = q.from(KhoaLuanTotNghiep.class);
+        q.select(root);
+        if(params != null){
+            List<Predicate> predicates = new ArrayList<>();
+            String giaoVu = params.get("giaoVuId");
+            if(giaoVu != null && !giaoVu.isEmpty()){
+                predicates.add(b.equal(root.get("giaoVuId"), Integer.parseInt(giaoVu)));
+            }
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+    
     
 }

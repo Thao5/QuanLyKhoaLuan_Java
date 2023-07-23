@@ -4,6 +4,7 @@
  */
 package com.thao.service;
 
+import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import java.util.List;
 import java.util.Map;

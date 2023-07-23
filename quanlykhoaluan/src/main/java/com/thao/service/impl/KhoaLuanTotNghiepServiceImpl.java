@@ -25,6 +25,16 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     public List<KhoaLuanTotNghiep> getKhoaLuans(Map<String, String> params) {
         return this.khoaLuanRepo.getKhoaLuans(params);
     }
+
+    @Override
+    public List<KhoaLuanTotNghiep> getDanhSachSinhVienLamKhoaLuanTheoId(Map<String,String> params) {
+        return this.khoaLuanRepo.getDanhSachSinhVienLamKhoaLuanTheoId(params);
+    }
+
+    @Override
+    public List<KhoaLuanTotNghiep> getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(Map<String, String> params) {
+        return this.khoaLuanRepo.getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(params);
+    }
     
     
 }
