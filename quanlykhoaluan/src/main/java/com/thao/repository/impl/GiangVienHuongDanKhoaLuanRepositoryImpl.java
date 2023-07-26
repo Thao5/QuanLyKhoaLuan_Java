@@ -5,8 +5,13 @@
 package com.thao.repository.impl;
 
 import com.thao.pojo.GiangVienHuongDanKhoaLuan;
+import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.NguoiDung;
 import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -14,6 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -63,6 +69,27 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
             }
         }
         return query.getResultList();
+    }
+
+    @Override
+    public boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId,LocalDate ngayHuongDan) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
+            Query q1 = s.createQuery("from NguoiDung where id = :giangVienId");
+            q1.setParameter("giangVienId", giangVienId);
+            Query q2 = s.createQuery("from KhoaLuanTotNghiep where id = :khoaLuanId");
+            q2.setParameter("khoaLuanId", khoaLuanId);
+            gv.setNguoiDungId((NguoiDung)q1.getSingleResult());
+            gv.setKhoaLuanId((KhoaLuanTotNghiep)q2.getSingleResult());
+            gv.setNgayBatDauHuongDan(Date.from(ngayHuongDan.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            s.save(gv);
+            
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
     
     

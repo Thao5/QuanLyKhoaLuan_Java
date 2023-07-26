@@ -4,11 +4,14 @@
  */
 package com.thao.repository.impl;
 
+import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.TieuChi;
 import com.thao.pojo.TieuChiThuocKhoaLuan;
 import com.thao.repository.TieuChiThuocKhoaLuanRepository;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -39,6 +42,25 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
             return q.getResultList();
         }
         return null;
+    }
+
+    @Override
+    public boolean addTieuChiThuocKhoaLuan(int tieuChiId, int khoaLuanId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            Query q1 = s.createQuery("from TieuChi where id = :tieuChiId");
+            q1.setParameter("tieuChiId", tieuChiId);
+            Query q2 = s.createQuery("from KhoaLuanTotNghiep where id = :khoaLuanId");
+            q2.setParameter("khoaLuanId", khoaLuanId);
+            TieuChiThuocKhoaLuan tc = new TieuChiThuocKhoaLuan();
+            tc.setTieuChiId((TieuChi)q1.getSingleResult());
+            tc.setKhoaLuanId((KhoaLuanTotNghiep)q2.getSingleResult());
+            s.save(tc);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
     
     

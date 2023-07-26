@@ -26,6 +26,11 @@ public class HoiDongBaoVeKhoaLuanServiceImpl implements HoiDongBaoVeKhoaLuanServ
     public List<HoiDongBaoVeKhoaLuan> getHoiDongBaoVeKhoaLuans(Map<String, String> params) {
         return this.hoiDongBaoVeKhoaLuanRepository.getHoiDongBaoVeKhoaLuans(params);
     }
+
+    @Override
+    public boolean addHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd) {
+        return this.hoiDongBaoVeKhoaLuanRepository.addHoiDongBaoVeKhoaLuan(hd);
+    }
     
     
 }

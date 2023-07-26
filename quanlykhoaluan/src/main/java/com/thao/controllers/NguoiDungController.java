@@ -25,6 +25,8 @@ public class NguoiDungController {
     @Autowired
     private NguoiDungService nguoiDungService;
     
+    private int userId;
+    
     @GetMapping("/nguoidung")
     public String list(Model model){
         model.addAttribute("nguoiDung", new NguoiDung());
@@ -36,5 +38,11 @@ public class NguoiDungController {
         if(this.nguoiDungService.addNguoiDung(nd) == true)
             return "redirect:/";
         return "nguoidung";
+    }
+    
+    @RequestMapping("/ganKhoaLuanChoSinhVien")
+    public String ganKhoaLuanChoSinhVien(@RequestParam Map<String,String> params){
+        this.nguoiDungService.ganKhoaLuanChoSinhVien(Integer.parseInt(params.get("userId")), Integer.parseInt(params.get("khoaLuanId")));
+        return "index";
     }
 }

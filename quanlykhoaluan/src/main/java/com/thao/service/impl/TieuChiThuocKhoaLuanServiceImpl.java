@@ -25,6 +25,11 @@ public class TieuChiThuocKhoaLuanServiceImpl implements TieuChiThuocKhoaLuanServ
     public List<TieuChiThuocKhoaLuan> getTieuChiThuocKhoaLuans(Map<String, String> params) {
         return this.tieuChiThuocKhoaLuanRepository.getTieuChiThuocKhoaLuans(params);
     }
+
+    @Override
+    public boolean addTieuChiThuocKhoaLuan(int tieuChiId, int khoaLuanId) {
+        return this.tieuChiThuocKhoaLuanRepository.addTieuChiThuocKhoaLuan(tieuChiId, khoaLuanId);
+    }
     
     
 }

@@ -5,8 +5,13 @@
 package com.thao.repository.impl;
 
 import com.thao.pojo.GiangVienThuocHoiDong;
+import com.thao.pojo.HoiDongBaoVeKhoaLuan;
+import com.thao.pojo.NguoiDung;
 import com.thao.repository.GiangVienThuocHoiDongRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -14,6 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -52,4 +58,26 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
         Query query = s.createQuery(q);
         return query.getResultList();
     }
+
+    @Override
+    public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDate ngayVaoHoiDong, int giangVienId, int hoiDongId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            GiangVienThuocHoiDong gv = new GiangVienThuocHoiDong();
+            gv.setVaiTro(vaiTro);
+            gv.setNgayVaoHoiDong(Date.from(ngayVaoHoiDong.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            Query q1 = s.createQuery("from NguoiDung where id = :giangVienId");
+            q1.setParameter("giangVienId", giangVienId);
+            Query q2 = s.createQuery("from HoiDongBaoVeKhoaLuan where id = :hoiDongId");
+            q2.setParameter("hoiDongId", hoiDongId);
+            gv.setNguoiDungId((NguoiDung)q1.getSingleResult());
+            gv.setHoiDongId((HoiDongBaoVeKhoaLuan)q2.getSingleResult());
+            s.save(gv);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
 }

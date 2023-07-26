@@ -35,6 +35,11 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     public List<KhoaLuanTotNghiep> getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(Map<String, String> params) {
         return this.khoaLuanRepo.getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(params);
     }
+
+    @Override
+    public boolean addKhoaLuan(KhoaLuanTotNghiep kl) {
+        return this.khoaLuanRepo.addKhoaLuan(kl);
+    }
     
     
 }

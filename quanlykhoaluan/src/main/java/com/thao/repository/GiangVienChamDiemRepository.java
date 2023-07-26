@@ -5,6 +5,7 @@
 package com.thao.repository;
 
 import com.thao.pojo.GiangVienChamDiem;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +15,5 @@ import java.util.Map;
  */
 public interface GiangVienChamDiemRepository {
     List<GiangVienChamDiem> getDiemKhoaLuan(Map<String,String> params);
+    boolean addGiangVienChamDiem(float diem, LocalDate ngayCham, int giangVienThuocHoiDongId, int khoaLuanId);
 }

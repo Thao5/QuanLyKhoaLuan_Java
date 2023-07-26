@@ -4,6 +4,7 @@
  */
 package com.thao.repository.impl;
 
+import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.NguoiDung;
 import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
@@ -92,6 +93,26 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Boolean ganKhoaLuanChoSinhVien(int userId, int khoaLuanId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("from NguoiDung where id = :userId");
+        q.setParameter("userId", userId);
+        Query q2 = s.createQuery("from KhoaLuanTotNghiep where id= :khoaLuanId");
+        q2.setParameter("khoaLuanId", khoaLuanId);
+        try{
+            NguoiDung tmp = (NguoiDung)q.getSingleResult();
+            KhoaLuanTotNghiep tmp2 = (KhoaLuanTotNghiep) q2.getSingleResult();
+            tmp.setKhoaLuanId(tmp2);
+            s.update(tmp);
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
     
     

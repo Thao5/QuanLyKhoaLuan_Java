@@ -5,8 +5,13 @@
 package com.thao.repository.impl;
 
 import com.thao.pojo.GiangVienChamDiem;
+import com.thao.pojo.GiangVienThuocHoiDong;
+import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.repository.GiangVienChamDiemRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -14,6 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -50,4 +56,27 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         Query query = s.createQuery(q);
         return query.getResultList();
     }
+
+    @Override
+    public boolean addGiangVienChamDiem(float diem, LocalDate ngayCham, int giangVienThuocHoiDongId, int khoaLuanId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            GiangVienChamDiem gv = new GiangVienChamDiem();
+            gv.setDiem(diem);
+            gv.setNgayCham(Date.from(ngayCham.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            Query q1 = s.createQuery("from GiangVienThuocHoiDong where id = :giangVienThuocHoiDongId");
+            q1.setParameter("giangVienThuocHoiDongId", giangVienThuocHoiDongId);
+            Query q2 = s.createQuery("from KhoaLuanTotNghiep where id = :khoaLuanId");
+            q2.setParameter("khoaLuanId", khoaLuanId);
+            gv.setGiangVienThuocHoiDongId((GiangVienThuocHoiDong)q1.getSingleResult());
+            gv.setKhoaLuanId((KhoaLuanTotNghiep)q2.getSingleResult());
+            s.save(gv);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

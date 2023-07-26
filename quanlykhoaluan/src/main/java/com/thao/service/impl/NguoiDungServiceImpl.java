@@ -30,6 +30,11 @@ public class NguoiDungServiceImpl implements NguoiDungService{
     public Boolean addNguoiDung(NguoiDung user) {
         return this.nguoiDungRepo.addNguoiDung(user);
     }
+
+    @Override
+    public Boolean ganKhoaLuanChoSinhVien(int userId, int khoaLuanId) {
+        return this.nguoiDungRepo.ganKhoaLuanChoSinhVien(userId, khoaLuanId);
+    }
     
     
 }
