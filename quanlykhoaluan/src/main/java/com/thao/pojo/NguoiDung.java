@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -100,14 +101,14 @@ public class NguoiDung implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
     private Set<GiangVienHuongDanKhoaLuan> giangVienHuongDanKhoaLuanSet;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     private KhoaLuanTotNghiep khoaLuanId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
     private Set<GiangVienThuocHoiDong> giangVienThuocHoiDongSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "giaoVuId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "giaoVuId", fetch=FetchType.LAZY)
     private Set<KhoaLuanTotNghiep> khoaLuanTotNghiepSet;
 
     public NguoiDung() {

@@ -77,6 +77,37 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         }
         return true;
     }
+
+    @Override
+    public boolean updateGiangVienChamDiem(int id, Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            if(params != null){
+                GiangVienChamDiem gv = (GiangVienChamDiem) s.get(GiangVienChamDiem.class, id);
+                String tmp = params.get("diem");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setDiem(Float.parseFloat(tmp));
+                }
+                tmp = params.get("ngayCham");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setNgayCham(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                tmp = params.get("giangVienThuocHoiDongId");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setGiangVienThuocHoiDongId((GiangVienThuocHoiDong) s.get(GiangVienThuocHoiDong.class, Integer.parseInt(tmp)));
+                }
+                tmp = params.get("khoaLuanId");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                }
+                s.update(gv);
+            }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

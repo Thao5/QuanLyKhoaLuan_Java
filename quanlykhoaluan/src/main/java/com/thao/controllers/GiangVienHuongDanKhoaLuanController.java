@@ -5,6 +5,7 @@
 package com.thao.controllers;
 
 import com.thao.service.GiangVienHuongDanKhoaLuanService;
+import java.time.LocalDate;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class GiangVienHuongDanKhoaLuanController {
     
     @RequestMapping("/giangvienhuongdankhoaluan")
     public String giangVienHuongDanKhoaLuan(@RequestParam Map<String, String> params){
-        this.giangVienHuongDanKhoaLuanService.addGiangVienHuongDanKhoaLuan(Integer.parseInt(params.get("giangVienId")), Integer.parseInt(params.get("khoaLuanId")));
+        this.giangVienHuongDanKhoaLuanService.addGiangVienHuongDanKhoaLuan(Integer.parseInt(params.get("giangVienId")), Integer.parseInt(params.get("khoaLuanId")), LocalDate.parse(params.get("ngayHuongDan")));
         return "index";
     }
 }

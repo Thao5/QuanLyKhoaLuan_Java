@@ -79,5 +79,36 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
         }
         return true;
     }
+
+    @Override
+    public boolean updateGiangVienThuocHoiDong(int id, Map<String, String> params) {
+       Session s = this.factory.getObject().getCurrentSession();
+       try{
+           if(params != null){
+               GiangVienThuocHoiDong gv = (GiangVienThuocHoiDong) s.get(GiangVienThuocHoiDong.class, id);
+               String tmp = params.get("vaiTro");
+               if(tmp != null && !tmp.isEmpty()){
+                   gv.setVaiTro(tmp);
+               }
+               tmp = params.get("ngayVaoHoiDong");
+               if(tmp != null && !tmp.isEmpty()){
+                   gv.setNgayVaoHoiDong(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+               }
+               tmp = params.get("nguoiDungId");
+               if(tmp != null && !tmp.isEmpty()){
+                   gv.setNguoiDungId((NguoiDung) s.get(NguoiDung.class, Integer.parseInt(tmp)));
+               }
+               tmp = params.get("hoiDongId");
+               if(tmp != null && !tmp.isEmpty()){
+                   gv.setHoiDongId((HoiDongBaoVeKhoaLuan) s.get(HoiDongBaoVeKhoaLuan.class, Integer.parseInt(tmp)));
+               }
+               s.update(gv);
+           }
+       }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+       }
+       return true;
+    }
     
 }

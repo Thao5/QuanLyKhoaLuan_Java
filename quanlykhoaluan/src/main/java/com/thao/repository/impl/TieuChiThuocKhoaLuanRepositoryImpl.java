@@ -62,6 +62,28 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
         }
         return true;
     }
-    
+
+    @Override
+    public boolean updateTieuChiThuocKhoaLuan(int id, Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            if(params != null){
+                TieuChiThuocKhoaLuan tc = (TieuChiThuocKhoaLuan) s.get(TieuChiThuocKhoaLuan.class, id);
+                String tmp = params.get("khoaLuanId");
+                if(tmp != null && !tmp.isEmpty()){
+                    tc.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                }
+                tmp = params.get("tieuChiId");
+                if(tmp != null && !tmp.isEmpty()){
+                    tc.setTieuChiId((TieuChi) s.get(TieuChi.class, Integer.parseInt(tmp)));
+                }
+                s.update(tc);
+            }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
 }

@@ -19,6 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -109,6 +110,58 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
             s.update(tmp);
             
         }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateNguoiDung(int id, Map<String,String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            
+            if(params != null){
+                NguoiDung user = (NguoiDung) s.get(NguoiDung.class, id);
+                String tmp = params.get("ho");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setHo(tmp);
+                }
+                tmp = params.get("ten");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setTen(tmp);
+                }
+                tmp = params.get("taiKhoan");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setTaiKhoan(tmp);
+                }
+                tmp = params.get("email");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setEmail(tmp);
+                }
+                tmp = params.get("matKhau");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setMatKhau(tmp);
+                }
+                tmp = params.get("sdt");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setSdt(tmp);
+                }
+                tmp = params.get("avatar");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setAvatar(tmp);
+                }
+                tmp = params.get("vaiTro");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setVaiTro(tmp);
+                }
+                tmp = params.get("khoaLuanId");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                }
+                s.update(user);
+            }
+        }catch(HibernateException ex){
             ex.printStackTrace();
             return false;
         }

@@ -17,4 +17,5 @@ public interface KhoaLuanTotNghiepRepository {
     List<KhoaLuanTotNghiep> getDanhSachSinhVienLamKhoaLuanTheoId(Map<String,String> params);
     List<KhoaLuanTotNghiep> getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(Map<String,String> params);
     boolean addKhoaLuan(KhoaLuanTotNghiep kl);
+    boolean updateKhoaLuan(int id, Map<String,String> params);
 }

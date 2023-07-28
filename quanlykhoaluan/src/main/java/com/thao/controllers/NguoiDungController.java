@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,12 @@ public class NguoiDungController {
     @RequestMapping("/ganKhoaLuanChoSinhVien")
     public String ganKhoaLuanChoSinhVien(@RequestParam Map<String,String> params){
         this.nguoiDungService.ganKhoaLuanChoSinhVien(Integer.parseInt(params.get("userId")), Integer.parseInt(params.get("khoaLuanId")));
+        return "index";
+    }
+    
+    @RequestMapping("/updateNguoiDung/{id}")
+    public String updateNguoiDung(@PathVariable("id") int id, @RequestParam Map<String,String> params){
+        this.nguoiDungService.updateNguoiDung(id, params);
         return "index";
     }
 }

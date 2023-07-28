@@ -5,10 +5,14 @@
 package com.thao.repository.impl;
 
 import com.thao.pojo.GiangVienChamDiem;
+import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.NguoiDung;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -114,6 +118,42 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         Session s = this.factory.getObject().getCurrentSession();
         try{
             s.save(kl);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateKhoaLuan(int id, Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            
+            if(params != null){
+                KhoaLuanTotNghiep kl = (KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, id);
+                String tmp = params.get("tenKhoaLuan");
+                if(tmp != null && !tmp.isEmpty()){
+                    kl.setTenKhoaLuan(tmp);
+                }
+                tmp = params.get("ngayGhiNhan");
+                if(tmp != null && !tmp.isEmpty()){
+                    kl.setNgayGhiNhan(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                tmp = params.get("ngayKetThuc");
+                if(tmp != null && !tmp.isEmpty()){
+                    kl.setNgayGhiNhan(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                tmp = params.get("giaoVuId");
+                if(tmp != null && !tmp.isEmpty()){
+                    kl.setGiaoVuId((NguoiDung) s.get(NguoiDung.class, Integer.parseInt(tmp)));
+                }
+                tmp = params.get("hoiDongId");
+                if(tmp != null && !tmp.isEmpty()){
+                    kl.setHoiDongId((HoiDongBaoVeKhoaLuan) s.get(HoiDongBaoVeKhoaLuan.class, Integer.parseInt(tmp)));
+                }
+                s.update(kl);
+            }
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

@@ -15,4 +15,5 @@ import java.util.Map;
 public interface HoiDongBaoVeKhoaLuanRepository {
     List<HoiDongBaoVeKhoaLuan> getHoiDongBaoVeKhoaLuans(Map<String,String> params);
     boolean addHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd);
+    boolean updateHoiDongBaoVeKhoaLuan(int id, Map<String,String> params);
 }

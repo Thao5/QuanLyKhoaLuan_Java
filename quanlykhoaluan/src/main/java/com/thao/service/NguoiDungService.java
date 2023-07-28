@@ -17,4 +17,5 @@ public interface NguoiDungService {
     List<NguoiDung> getNguoiDungs(Map<String,String> params);
     Boolean addNguoiDung(NguoiDung user);
     Boolean ganKhoaLuanChoSinhVien(int userId, int khoaLuanId);
+    boolean updateNguoiDung(int id, Map<String,String> params);
 }

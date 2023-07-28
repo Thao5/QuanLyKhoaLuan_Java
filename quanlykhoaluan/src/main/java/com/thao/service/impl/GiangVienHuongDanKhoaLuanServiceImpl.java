@@ -31,6 +31,11 @@ public class GiangVienHuongDanKhoaLuanServiceImpl implements GiangVienHuongDanKh
     public boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDate ngayHuongDan) {
         return this.giangVienHuongDanKhoaLuanRepo.addGiangVienHuongDanKhoaLuan(giangVienId, khoaLuanId, ngayHuongDan);
     }
+
+    @Override
+    public boolean updateGiangVienHuongDanKhoaLuan(int id, Map<String, String> params) {
+        return this.giangVienHuongDanKhoaLuanRepo.updateGiangVienHuongDanKhoaLuan(id, params);
+    }
     
     
 }

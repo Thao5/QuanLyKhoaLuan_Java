@@ -91,6 +91,33 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
         }
         return true;
     }
+
+    @Override
+    public boolean updateGiangVienHuongDanKhoaLuan(int id, Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            if(params != null){
+                GiangVienHuongDanKhoaLuan gv = (GiangVienHuongDanKhoaLuan) s.get(GiangVienHuongDanKhoaLuan.class, id);
+                String tmp = params.get("ngayBatDauHuongDan");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setNgayBatDauHuongDan(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                tmp = params.get("nguoiDungId");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setNguoiDungId((NguoiDung) s.get(NguoiDung.class, Integer.parseInt(tmp)));
+                }
+                tmp = params.get("khoaLuanId");
+                if(tmp != null && !tmp.isEmpty()){
+                    gv.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                }
+                s.update(gv);
+            }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

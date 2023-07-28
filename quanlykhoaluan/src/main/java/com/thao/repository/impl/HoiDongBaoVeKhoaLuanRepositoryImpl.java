@@ -7,7 +7,10 @@ package com.thao.repository.impl;
 import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
@@ -79,7 +82,28 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
         return true;
     }
 
-    
+    @Override
+    public boolean updateHoiDongBaoVeKhoaLuan(int id, Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            if(params != null){
+                HoiDongBaoVeKhoaLuan hd = (HoiDongBaoVeKhoaLuan) s.get(HoiDongBaoVeKhoaLuan.class, id);
+                String tmp = params.get("ngayThanhLap");
+                if(tmp != null && !tmp.isEmpty()){
+                    hd.setNgayThanhLap(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                tmp = params.get("ngayKhoa");
+                if(tmp != null && !tmp.isEmpty()){
+                    hd.setNgayKhoa(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                s.update(hd);
+            }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

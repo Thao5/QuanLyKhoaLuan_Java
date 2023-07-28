@@ -16,4 +16,5 @@ import java.util.Map;
 public interface GiangVienChamDiemService {
     List<GiangVienChamDiem> getDiemKhoaLuan(Map<String,String> params);
     boolean addGiangVienChamDiem(float diem, LocalDate ngayCham, int giangVienThuocHoiDongId, int khoaLuanId);
+    boolean updateGiangVienChamDiem(int id, Map<String,String> params);
 }

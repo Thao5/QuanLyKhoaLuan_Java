@@ -30,6 +30,11 @@ public class TieuChiServiceImpl implements TieuChiService{
     public boolean addTieuChi(TieuChi tc) {
         return this.tieuChiRepository.addTieuChi(tc);
     }
+
+    @Override
+    public boolean updateTieuChi(int id, Map<String, String> params) {
+        return this.tieuChiRepository.updateTieuChi(id, params);
+    }
     
     
 }

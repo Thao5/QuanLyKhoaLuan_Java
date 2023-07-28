@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,9 +55,9 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
     @Column(name = "ngay_khoa")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKhoa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoiDongId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoiDongId",fetch=FetchType.LAZY)
     private Set<GiangVienThuocHoiDong> giangVienThuocHoiDongSet;
-    @OneToMany(mappedBy = "hoiDongId")
+    @OneToMany(mappedBy = "hoiDongId",fetch=FetchType.LAZY)
     private Set<KhoaLuanTotNghiep> khoaLuanTotNghiepSet;
 
     public HoiDongBaoVeKhoaLuan() {

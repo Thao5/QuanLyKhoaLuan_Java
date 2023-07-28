@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,19 +62,19 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Column(name = "ngay_ket_thuc")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKetThuc;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
     private Set<TieuChiThuocKhoaLuan> tieuChiThuocKhoaLuanSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
     private Set<GiangVienChamDiem> giangVienChamDiemSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
     private Set<GiangVienHuongDanKhoaLuan> giangVienHuongDanKhoaLuanSet;
-    @OneToMany(mappedBy = "khoaLuanId")
+    @OneToMany(mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
     private Set<NguoiDung> nguoiDungSet;
     @JoinColumn(name = "hoi_dong_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     private HoiDongBaoVeKhoaLuan hoiDongId;
     @JoinColumn(name = "giao_vu_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch=FetchType.LAZY)
     private NguoiDung giaoVuId;
 
     public KhoaLuanTotNghiep() {

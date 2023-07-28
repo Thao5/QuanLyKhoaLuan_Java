@@ -30,6 +30,11 @@ public class TieuChiThuocKhoaLuanServiceImpl implements TieuChiThuocKhoaLuanServ
     public boolean addTieuChiThuocKhoaLuan(int tieuChiId, int khoaLuanId) {
         return this.tieuChiThuocKhoaLuanRepository.addTieuChiThuocKhoaLuan(tieuChiId, khoaLuanId);
     }
+
+    @Override
+    public boolean updateTieuChiThuocKhoaLuan(int id, Map<String, String> params) {
+        return this.tieuChiThuocKhoaLuanRepository.updateTieuChiThuocKhoaLuan(id, params);
+    }
     
     
 }

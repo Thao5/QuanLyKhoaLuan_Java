@@ -86,6 +86,31 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
             return false;
         }
     }
+
+    @Override
+    public boolean updateTieuChi(int id, Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            
+            if(params != null){
+                TieuChi tc = (TieuChi) s.get(TieuChi.class, id);
+                String tmp = params.get("noiDungTieuChi");
+                if(tmp != null && !tmp.isEmpty()){
+                    tc.setNoiDungTieuChi(tmp);
+                }
+                tmp = params.get("diem");
+                if(tmp != null && !tmp.isEmpty()){
+                    tc.setDiem(Float.parseFloat(tmp));
+                }
+                s.update(tc);
+            }
+        }
+        catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

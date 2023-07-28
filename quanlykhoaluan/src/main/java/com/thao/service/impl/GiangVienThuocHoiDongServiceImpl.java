@@ -31,5 +31,10 @@ public class GiangVienThuocHoiDongServiceImpl implements GiangVienThuocHoiDongSe
     public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDate ngayVaoHoiDong, int giangVienId, int hoiDongId) {
         return this.giangVienThuocHoiDongRepository.addGiangVienThuocHoiDong(vaiTro, ngayVaoHoiDong, giangVienId, hoiDongId);
     }
+
+    @Override
+    public boolean updateGiangVienThuocHoiDong(int id, Map<String, String> params) {
+        return this.giangVienThuocHoiDongRepository.updateGiangVienThuocHoiDong(id, params);
+    }
     
 }
