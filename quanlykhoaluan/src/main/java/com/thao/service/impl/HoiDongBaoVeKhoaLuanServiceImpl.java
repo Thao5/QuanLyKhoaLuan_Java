@@ -36,6 +36,16 @@ public class HoiDongBaoVeKhoaLuanServiceImpl implements HoiDongBaoVeKhoaLuanServ
     public boolean updateHoiDongBaoVeKhoaLuan(int id, Map<String, String> params) {
         return this.hoiDongBaoVeKhoaLuanRepository.updateHoiDongBaoVeKhoaLuan(id, params);
     }
+
+    @Override
+    public HoiDongBaoVeKhoaLuan getHoiDongById(int id) {
+        return this.hoiDongBaoVeKhoaLuanRepository.getHoiDongById(id);
+    }
+
+    @Override
+    public boolean updateHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd) {
+        return this.hoiDongBaoVeKhoaLuanRepository.updateHoiDongBaoVeKhoaLuan(hd);
+    }
     
     
 }

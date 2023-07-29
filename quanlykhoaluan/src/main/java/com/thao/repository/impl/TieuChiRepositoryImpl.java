@@ -93,7 +93,7 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
         try{
             
             if(params != null){
-                TieuChi tc = (TieuChi) s.get(TieuChi.class, id);
+                TieuChi tc = getTieuChiById(id);
                 String tmp = params.get("noiDungTieuChi");
                 if(tmp != null && !tmp.isEmpty()){
                     tc.setNoiDungTieuChi(tmp);
@@ -110,6 +110,25 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean updateTieuChi(TieuChi tc) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(tc);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+
+    @Override
+    public TieuChi getTieuChiById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(TieuChi.class, id);
     }
     
     

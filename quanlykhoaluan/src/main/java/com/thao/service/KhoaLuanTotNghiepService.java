@@ -18,4 +18,6 @@ public interface KhoaLuanTotNghiepService {
     List<KhoaLuanTotNghiep> getDanhSachKhoaLuanDuocGhiNhanBoiGiaoVuTheoId(Map<String,String> params);
     boolean addKhoaLuan(KhoaLuanTotNghiep kl);
     boolean updateKhoaLuan(int id, Map<String,String> params);
+    boolean updateKhoaLuan(KhoaLuanTotNghiep kl);
+    KhoaLuanTotNghiep getKhoaLuanById(int id);
 }

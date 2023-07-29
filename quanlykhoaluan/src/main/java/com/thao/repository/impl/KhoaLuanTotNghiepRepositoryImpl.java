@@ -8,7 +8,9 @@ import com.thao.pojo.GiangVienChamDiem;
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.NguoiDung;
+import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
+import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -41,6 +43,10 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
     private LocalSessionFactoryBean factory;
     @Autowired
     private Environment env;
+    @Autowired
+    private NguoiDungRepository nguoiDungRepo;
+    @Autowired
+    private HoiDongBaoVeKhoaLuanRepository hoiDongRepo;
 
     @Override
     public List<KhoaLuanTotNghiep> getKhoaLuans(Map<String, String> params) {
@@ -131,7 +137,7 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         try{
             
             if(params != null){
-                KhoaLuanTotNghiep kl = (KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, id);
+                KhoaLuanTotNghiep kl = getKhoaLuanById(id);
                 String tmp = params.get("tenKhoaLuan");
                 if(tmp != null && !tmp.isEmpty()){
                     kl.setTenKhoaLuan(tmp);
@@ -146,14 +152,32 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
                 }
                 tmp = params.get("giaoVuId");
                 if(tmp != null && !tmp.isEmpty()){
-                    kl.setGiaoVuId((NguoiDung) s.get(NguoiDung.class, Integer.parseInt(tmp)));
+                    kl.setGiaoVuId(this.nguoiDungRepo.getNguoiDungById(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("hoiDongId");
                 if(tmp != null && !tmp.isEmpty()){
-                    kl.setHoiDongId((HoiDongBaoVeKhoaLuan) s.get(HoiDongBaoVeKhoaLuan.class, Integer.parseInt(tmp)));
+                    kl.setHoiDongId(this.hoiDongRepo.getHoiDongById(Integer.parseInt(tmp)));
                 }
                 s.update(kl);
             }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public KhoaLuanTotNghiep getKhoaLuanById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(KhoaLuanTotNghiep.class, id);
+    }
+
+    @Override
+    public boolean updateKhoaLuan(KhoaLuanTotNghiep kl) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(kl);
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

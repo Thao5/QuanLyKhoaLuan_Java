@@ -35,6 +35,15 @@ public class TieuChiThuocKhoaLuanServiceImpl implements TieuChiThuocKhoaLuanServ
     public boolean updateTieuChiThuocKhoaLuan(int id, Map<String, String> params) {
         return this.tieuChiThuocKhoaLuanRepository.updateTieuChiThuocKhoaLuan(id, params);
     }
-    
+
+    @Override
+    public TieuChiThuocKhoaLuan getTieuChiThuocKhoaLuanById(int id) {
+        return this.tieuChiThuocKhoaLuanRepository.getTieuChiThuocKhoaLuanById(id);
+    }
+
+    @Override
+    public boolean updateTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
+        return this.tieuChiThuocKhoaLuanRepository.updateTieuChiThuocKhoaLuan(tc);
+    }
     
 }

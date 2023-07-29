@@ -6,6 +6,7 @@ package com.thao.repository.impl;
 
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.NguoiDung;
+import com.thao.repository.KhoaLuanTotNghiepRepository;
 import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,6 +41,8 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
     private LocalSessionFactoryBean factory;
     @Autowired
     private Environment env;
+    @Autowired
+    private KhoaLuanTotNghiepRepository khoaLuanRepo;
 
     @Override
     public List<NguoiDung> getNguoiDungs(Map<String, String> params) {
@@ -122,7 +125,7 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
         try{
             
             if(params != null){
-                NguoiDung user = (NguoiDung) s.get(NguoiDung.class, id);
+                NguoiDung user = getNguoiDungById(id);
                 String tmp = params.get("ho");
                 if(tmp != null && !tmp.isEmpty()){
                     user.setHo(tmp);
@@ -157,7 +160,7 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
                 }
                 tmp = params.get("khoaLuanId");
                 if(tmp != null && !tmp.isEmpty()){
-                    user.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                    user.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
                 s.update(user);
             }
@@ -166,6 +169,25 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean updateNguoiDung(NguoiDung nd) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(nd);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+
+    @Override
+    public NguoiDung getNguoiDungById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(NguoiDung.class, id);
     }
     
     

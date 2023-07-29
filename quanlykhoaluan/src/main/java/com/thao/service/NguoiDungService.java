@@ -18,4 +18,6 @@ public interface NguoiDungService {
     Boolean addNguoiDung(NguoiDung user);
     Boolean ganKhoaLuanChoSinhVien(int userId, int khoaLuanId);
     boolean updateNguoiDung(int id, Map<String,String> params);
+    boolean updateNguoiDung(NguoiDung nd);
+    NguoiDung getNguoiDungById(int id);
 }

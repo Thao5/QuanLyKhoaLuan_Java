@@ -17,4 +17,6 @@ public interface GiangVienThuocHoiDongService {
     List<GiangVienThuocHoiDong> getGiangVienThuocHoiDong(Map<String, String> params);
     boolean addGiangVienThuocHoiDong(String vaiTro, LocalDate ngayVaoHoiDong, int giangVienId, int hoiDongId);
     boolean updateGiangVienThuocHoiDong(int id, Map<String,String> params);
+    boolean updateGiangvienThuocHoiDong(GiangVienThuocHoiDong gv);
+    GiangVienThuocHoiDong getGiangVienThuocHoiDong(int id);
 }

@@ -16,4 +16,6 @@ public interface TieuChiRepository {
     List<TieuChi> getTieuChis(Map<String, String> params);
     boolean addTieuChi(TieuChi tc);
     boolean updateTieuChi(int id, Map<String, String> params);
+    boolean updateTieuChi(TieuChi tc);
+    TieuChi getTieuChiById(int id);
 }

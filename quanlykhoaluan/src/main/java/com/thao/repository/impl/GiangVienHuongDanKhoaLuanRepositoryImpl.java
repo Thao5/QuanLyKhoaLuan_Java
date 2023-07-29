@@ -8,6 +8,8 @@ import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.NguoiDung;
 import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
+import com.thao.repository.KhoaLuanTotNghiepRepository;
+import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
     private LocalSessionFactoryBean factory;
     @Autowired
     private Environment env;
+    @Autowired
+    private NguoiDungRepository nguoiDungRepo;
+    @Autowired
+    private KhoaLuanTotNghiepRepository khoaLuanRepo;
 
     @Override
     public List<GiangVienHuongDanKhoaLuan> getGiangVienHuongDans(Map<String, String> params) {
@@ -97,21 +103,39 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
         Session s = this.factory.getObject().getCurrentSession();
         try{
             if(params != null){
-                GiangVienHuongDanKhoaLuan gv = (GiangVienHuongDanKhoaLuan) s.get(GiangVienHuongDanKhoaLuan.class, id);
+                GiangVienHuongDanKhoaLuan gv = getGiangVienHuongDanKhoaLuanById(id);
                 String tmp = params.get("ngayBatDauHuongDan");
                 if(tmp != null && !tmp.isEmpty()){
                     gv.setNgayBatDauHuongDan(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("nguoiDungId");
                 if(tmp != null && !tmp.isEmpty()){
-                    gv.setNguoiDungId((NguoiDung) s.get(NguoiDung.class, Integer.parseInt(tmp)));
+                    gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("khoaLuanId");
                 if(tmp != null && !tmp.isEmpty()){
-                    gv.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                    gv.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
                 s.update(gv);
             }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public GiangVienHuongDanKhoaLuan getGiangVienHuongDanKhoaLuanById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return  s.get(GiangVienHuongDanKhoaLuan.class, id);
+    }
+
+    @Override
+    public boolean updateGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(gv);
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

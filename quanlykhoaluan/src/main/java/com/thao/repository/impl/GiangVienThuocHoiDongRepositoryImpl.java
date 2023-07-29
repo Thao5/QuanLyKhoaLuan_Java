@@ -8,6 +8,8 @@ import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.pojo.NguoiDung;
 import com.thao.repository.GiangVienThuocHoiDongRepository;
+import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
+import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -35,6 +37,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDongRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private NguoiDungRepository nguoiDungRepo;
+    @Autowired
+    private HoiDongBaoVeKhoaLuanRepository hoiDongRepo;
     
     @Override
     public List<GiangVienThuocHoiDong> getGiangVienThuocHoiDong(Map<String, String> params) {
@@ -85,7 +91,7 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
        Session s = this.factory.getObject().getCurrentSession();
        try{
            if(params != null){
-               GiangVienThuocHoiDong gv = (GiangVienThuocHoiDong) s.get(GiangVienThuocHoiDong.class, id);
+               GiangVienThuocHoiDong gv = getGiangVienThuocHoiDong(id);
                String tmp = params.get("vaiTro");
                if(tmp != null && !tmp.isEmpty()){
                    gv.setVaiTro(tmp);
@@ -96,11 +102,11 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
                }
                tmp = params.get("nguoiDungId");
                if(tmp != null && !tmp.isEmpty()){
-                   gv.setNguoiDungId((NguoiDung) s.get(NguoiDung.class, Integer.parseInt(tmp)));
+                   gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(Integer.parseInt(tmp)));
                }
                tmp = params.get("hoiDongId");
                if(tmp != null && !tmp.isEmpty()){
-                   gv.setHoiDongId((HoiDongBaoVeKhoaLuan) s.get(HoiDongBaoVeKhoaLuan.class, Integer.parseInt(tmp)));
+                   gv.setHoiDongId(this.hoiDongRepo.getHoiDongById(Integer.parseInt(tmp)));
                }
                s.update(gv);
            }
@@ -109,6 +115,24 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
             return false;
        }
        return true;
+    }
+
+    @Override
+    public GiangVienThuocHoiDong getGiangVienThuocHoiDong(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(GiangVienThuocHoiDong.class, id);
+    }
+
+    @Override
+    public boolean updateGiangvienThuocHoiDong(GiangVienThuocHoiDong gv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(gv);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
     }
     
 }

@@ -8,6 +8,8 @@ import com.thao.pojo.GiangVienChamDiem;
 import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.repository.GiangVienChamDiemRepository;
+import com.thao.repository.GiangVienThuocHoiDongRepository;
+import com.thao.repository.KhoaLuanTotNghiepRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -37,6 +39,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private KhoaLuanTotNghiepRepository khoaLuanRepo;
+    @Autowired
+    private GiangVienThuocHoiDongRepository giangVienThuocHoiDongRepo;
+    
     @Override
     public List<GiangVienChamDiem> getDiemKhoaLuan(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -83,7 +90,7 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         Session s = this.factory.getObject().getCurrentSession();
         try{
             if(params != null){
-                GiangVienChamDiem gv = (GiangVienChamDiem) s.get(GiangVienChamDiem.class, id);
+                GiangVienChamDiem gv = getGiangVienChamDiemById(id);
                 String tmp = params.get("diem");
                 if(tmp != null && !tmp.isEmpty()){
                     gv.setDiem(Float.parseFloat(tmp));
@@ -94,14 +101,32 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
                 }
                 tmp = params.get("giangVienThuocHoiDongId");
                 if(tmp != null && !tmp.isEmpty()){
-                    gv.setGiangVienThuocHoiDongId((GiangVienThuocHoiDong) s.get(GiangVienThuocHoiDong.class, Integer.parseInt(tmp)));
+                    gv.setGiangVienThuocHoiDongId(this.giangVienThuocHoiDongRepo.getGiangVienThuocHoiDong(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("khoaLuanId");
                 if(tmp != null && !tmp.isEmpty()){
-                    gv.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                    gv.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
                 s.update(gv);
             }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public GiangVienChamDiem getGiangVienChamDiemById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(GiangVienChamDiem.class, id);
+    }
+
+    @Override
+    public boolean updateGiangVienChamDiem(GiangVienChamDiem gv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(gv);
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

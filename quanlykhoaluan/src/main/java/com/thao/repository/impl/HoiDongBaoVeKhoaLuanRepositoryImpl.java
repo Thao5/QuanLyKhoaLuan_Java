@@ -87,7 +87,7 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
         Session s = this.factory.getObject().getCurrentSession();
         try{
             if(params != null){
-                HoiDongBaoVeKhoaLuan hd = (HoiDongBaoVeKhoaLuan) s.get(HoiDongBaoVeKhoaLuan.class, id);
+                HoiDongBaoVeKhoaLuan hd = getHoiDongById(id);
                 String tmp = params.get("ngayThanhLap");
                 if(tmp != null && !tmp.isEmpty()){
                     hd.setNgayThanhLap(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -98,6 +98,24 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
                 }
                 s.update(hd);
             }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public HoiDongBaoVeKhoaLuan getHoiDongById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(HoiDongBaoVeKhoaLuan.class, id);
+    }
+
+    @Override
+    public boolean updateHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(hd);
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

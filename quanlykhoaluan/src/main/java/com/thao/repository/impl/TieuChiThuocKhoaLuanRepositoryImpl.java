@@ -7,6 +7,8 @@ package com.thao.repository.impl;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.TieuChi;
 import com.thao.pojo.TieuChiThuocKhoaLuan;
+import com.thao.repository.KhoaLuanTotNghiepRepository;
+import com.thao.repository.TieuChiRepository;
 import com.thao.repository.TieuChiThuocKhoaLuanRepository;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,10 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     private LocalSessionFactoryBean factory;
     @Autowired
     private Environment env;
+    @Autowired
+    private KhoaLuanTotNghiepRepository khoaLuanRepo;
+    @Autowired
+    private TieuChiRepository tieuChiRepo;
 
     @Override
     public List<TieuChiThuocKhoaLuan> getTieuChiThuocKhoaLuans(Map<String, String> params) {
@@ -68,17 +74,35 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
         Session s = this.factory.getObject().getCurrentSession();
         try{
             if(params != null){
-                TieuChiThuocKhoaLuan tc = (TieuChiThuocKhoaLuan) s.get(TieuChiThuocKhoaLuan.class, id);
+                TieuChiThuocKhoaLuan tc = getTieuChiThuocKhoaLuanById(id);
                 String tmp = params.get("khoaLuanId");
                 if(tmp != null && !tmp.isEmpty()){
-                    tc.setKhoaLuanId((KhoaLuanTotNghiep) s.get(KhoaLuanTotNghiep.class, Integer.parseInt(tmp)));
+                    tc.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("tieuChiId");
                 if(tmp != null && !tmp.isEmpty()){
-                    tc.setTieuChiId((TieuChi) s.get(TieuChi.class, Integer.parseInt(tmp)));
+                    tc.setTieuChiId(this.tieuChiRepo.getTieuChiById(Integer.parseInt(tmp)));
                 }
                 s.update(tc);
             }
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public TieuChiThuocKhoaLuan getTieuChiThuocKhoaLuanById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(TieuChiThuocKhoaLuan.class, id);
+    }
+
+    @Override
+    public boolean updateTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.update(tc);
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

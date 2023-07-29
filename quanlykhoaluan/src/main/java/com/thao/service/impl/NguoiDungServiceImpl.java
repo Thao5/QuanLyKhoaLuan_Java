@@ -40,6 +40,16 @@ public class NguoiDungServiceImpl implements NguoiDungService{
     public boolean updateNguoiDung(int id, Map<String,String> params) {
         return this.nguoiDungRepo.updateNguoiDung(id, params);
     }
+
+    @Override
+    public NguoiDung getNguoiDungById(int id) {
+        return this.nguoiDungRepo.getNguoiDungById(id);
+    }
+
+    @Override
+    public boolean updateNguoiDung(NguoiDung nd) {
+        return this.nguoiDungRepo.updateNguoiDung(nd);
+    }
     
     
 }
