@@ -189,6 +189,31 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(NguoiDung.class, id);
     }
+
+    @Override
+    public boolean deleteNguoiDung(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            NguoiDung nd = this.getNguoiDungById(id);
+//            if(nd.getKhoaLuanId() != null){
+//                nd.getKhoaLuanId().setGiaoVuId(this.getNguoiDungById(1));
+//                s.update(nd.getKhoaLuanId());
+//            }
+//            if(!nd.getGiangVienHuongDanKhoaLuanSet().isEmpty())
+//                nd.getGiangVienHuongDanKhoaLuanSet().forEach((gv) -> {
+//                    s.delete(gv);
+//                });
+//            if(!nd.getGiangVienThuocHoiDongSet().isEmpty())
+//                nd.getGiangVienThuocHoiDongSet().forEach((gv) -> {
+//                    s.delete(gv);
+//                });
+//            s.delete(nd);
+            return true;
+        }catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     
     
 }

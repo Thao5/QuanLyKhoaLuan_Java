@@ -19,4 +19,5 @@ public interface GiangVienHuongDanKhoaLuanService {
     boolean updateGiangVienHuongDanKhoaLuan(int id, Map<String, String> params);
     boolean updateGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv);
     GiangVienHuongDanKhoaLuan getGiangVienHuongDanKhoaLuanById(int id);
+    boolean deleteGiangVienHuongDanKhoaLuan(int id);
 }

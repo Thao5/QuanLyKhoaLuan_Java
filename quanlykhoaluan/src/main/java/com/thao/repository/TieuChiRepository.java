@@ -18,4 +18,5 @@ public interface TieuChiRepository {
     boolean updateTieuChi(int id, Map<String, String> params);
     boolean updateTieuChi(TieuChi tc);
     TieuChi getTieuChiById(int id);
+    boolean deleteTieuChi(int id);
 }

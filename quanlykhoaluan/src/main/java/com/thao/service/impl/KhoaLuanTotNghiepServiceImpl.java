@@ -55,6 +55,11 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     public boolean updateKhoaLuan(KhoaLuanTotNghiep kl) {
         return this.khoaLuanRepo.updateKhoaLuan(kl);
     }
+
+    @Override
+    public boolean deleteKhoaLuan(int id) {
+        return this.khoaLuanRepo.deleteKhoaLuan(id);
+    }
     
     
 }

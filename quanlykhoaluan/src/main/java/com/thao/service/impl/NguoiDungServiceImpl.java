@@ -50,6 +50,11 @@ public class NguoiDungServiceImpl implements NguoiDungService{
     public boolean updateNguoiDung(NguoiDung nd) {
         return this.nguoiDungRepo.updateNguoiDung(nd);
     }
+
+    @Override
+    public boolean deleteNguoiDung(int id) {
+        return this.nguoiDungRepo.deleteNguoiDung(id);
+    }
     
     
 }

@@ -184,6 +184,28 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         }
         return true;
     }
+
+    @Override
+    public boolean deleteKhoaLuan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            KhoaLuanTotNghiep kl = this.getKhoaLuanById(id);
+            if(!kl.getGiangVienChamDiemSet().isEmpty()){
+                kl.getGiangVienChamDiemSet().forEach((gv) -> s.delete(gv));
+            }
+            if(!kl.getGiangVienHuongDanKhoaLuanSet().isEmpty()){
+                kl.getGiangVienHuongDanKhoaLuanSet().forEach((gv) -> s.delete(gv));
+            }
+            if(!kl.getTieuChiThuocKhoaLuanSet().isEmpty()){
+                kl.getTieuChiThuocKhoaLuanSet().forEach((tc) -> s.delete(tc));
+            }
+            s.delete(kl);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

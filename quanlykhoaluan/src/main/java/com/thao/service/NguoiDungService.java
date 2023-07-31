@@ -20,4 +20,5 @@ public interface NguoiDungService {
     boolean updateNguoiDung(int id, Map<String,String> params);
     boolean updateNguoiDung(NguoiDung nd);
     NguoiDung getNguoiDungById(int id);
+    boolean deleteNguoiDung(int id);
 }

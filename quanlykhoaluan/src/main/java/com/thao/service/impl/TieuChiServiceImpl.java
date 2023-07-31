@@ -45,6 +45,11 @@ public class TieuChiServiceImpl implements TieuChiService{
     public boolean updateTieuChi(TieuChi tc) {
         return this.tieuChiRepository.updateTieuChi(tc);
     }
+
+    @Override
+    public boolean deleteTieuChi(int id) {
+        return this.tieuChiRepository.deleteTieuChi(id);
+    }
     
     
 }

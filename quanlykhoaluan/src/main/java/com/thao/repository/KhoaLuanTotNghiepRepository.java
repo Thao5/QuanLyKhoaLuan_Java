@@ -20,4 +20,5 @@ public interface KhoaLuanTotNghiepRepository {
     boolean updateKhoaLuan(int id, Map<String,String> params);
     boolean updateKhoaLuan(KhoaLuanTotNghiep kl);
     KhoaLuanTotNghiep getKhoaLuanById(int id);
+    boolean deleteKhoaLuan(int id);
 }

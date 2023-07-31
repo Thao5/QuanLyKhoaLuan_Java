@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -55,6 +56,11 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
     @Column(name = "ngay_khoa")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKhoa;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "ten_hoi_dong")
+    private String tenHoiDong;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoiDongId",fetch=FetchType.LAZY)
     private Set<GiangVienThuocHoiDong> giangVienThuocHoiDongSet;
     @OneToMany(mappedBy = "hoiDongId",fetch=FetchType.LAZY)
@@ -138,6 +144,20 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
     @Override
     public String toString() {
         return "com.thao.pojo.HoiDongBaoVeKhoaLuan[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the tenHoiDong
+     */
+    public String getTenHoiDong() {
+        return tenHoiDong;
+    }
+
+    /**
+     * @param tenHoiDong the tenHoiDong to set
+     */
+    public void setTenHoiDong(String tenHoiDong) {
+        this.tenHoiDong = tenHoiDong;
     }
     
 }

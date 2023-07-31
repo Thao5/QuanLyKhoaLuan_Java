@@ -39,6 +39,7 @@ create table hoi_dong_bao_ve_khoa_luan(
 	id int not null auto_increment,
     ngay_thanh_lap datetime not null,
     ngay_khoa datetime not null,
+    ten_hoi_dong nvarchar(100) not null,
     primary key(id)
 );
 

@@ -96,6 +96,10 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
                 if(tmp != null && !tmp.isEmpty()){
                     hd.setNgayKhoa(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
                 }
+                tmp = params.get("tenHoiDong");
+                if(tmp != null && !tmp.isEmpty()){
+                    hd.setTenHoiDong(tmp);
+                }
                 s.update(hd);
             }
         }catch(HibernateException ex){

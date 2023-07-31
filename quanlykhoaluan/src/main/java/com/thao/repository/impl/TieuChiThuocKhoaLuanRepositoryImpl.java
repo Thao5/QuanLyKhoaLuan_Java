@@ -109,5 +109,17 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
         }
         return true;
     }
+
+    @Override
+    public boolean deleteTieuChiThuocKhoaLuan(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.delete(this.getTieuChiThuocKhoaLuanById(id));
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
 }

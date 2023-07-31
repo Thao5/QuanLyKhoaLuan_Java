@@ -46,6 +46,11 @@ public class GiangVienChamDiemServiceImpl implements GiangVienChamDiemService{
     public boolean updateGiangVienChamDiem(GiangVienChamDiem gv) {
         return this.giangVienChamDiemRepository.updateGiangVienChamDiem(gv);
     }
+
+    @Override
+    public boolean deleteGiangVienChamDiem(int id) {
+        return this.giangVienChamDiemRepository.deleteGiangVienChamDiem(id);
+    }
     
     
 }

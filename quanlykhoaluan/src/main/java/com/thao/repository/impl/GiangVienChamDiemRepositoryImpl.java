@@ -133,6 +133,18 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         }
         return true;
     }
+
+    @Override
+    public boolean deleteGiangVienChamDiem(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.delete(this.getGiangVienChamDiemById(id));
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

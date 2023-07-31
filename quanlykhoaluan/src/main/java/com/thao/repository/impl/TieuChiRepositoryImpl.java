@@ -130,6 +130,22 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(TieuChi.class, id);
     }
+
+    @Override
+    public boolean deleteTieuChi(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            TieuChi tc = this.getTieuChiById(id);
+            if(!tc.getTieuChiThuocKhoaLuanSet().isEmpty()){
+                tc.getTieuChiThuocKhoaLuanSet().forEach((t) -> s.delete(t));
+            }
+            s.delete(tc);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

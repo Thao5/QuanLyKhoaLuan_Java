@@ -19,4 +19,5 @@ public interface GiangVienChamDiemRepository {
     boolean updateGiangVienChamDiem(int id, Map<String,String> params);
     boolean updateGiangVienChamDiem(GiangVienChamDiem gv);
     GiangVienChamDiem getGiangVienChamDiemById(int id);
+    boolean deleteGiangVienChamDiem(int id);
 }
