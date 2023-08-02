@@ -46,6 +46,11 @@ public class HoiDongBaoVeKhoaLuanServiceImpl implements HoiDongBaoVeKhoaLuanServ
     public boolean updateHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd) {
         return this.hoiDongBaoVeKhoaLuanRepository.updateHoiDongBaoVeKhoaLuan(hd);
     }
+
+    @Override
+    public boolean deleteHoiDong(int id) {
+        return this.hoiDongBaoVeKhoaLuanRepository.deleteHoiDong(id);
+    }
     
     
 }

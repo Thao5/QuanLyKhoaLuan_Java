@@ -12,6 +12,7 @@ create table nguoi_dung(
     vai_tro nvarchar(10) not null,
     created_date datetime not null,
     khoa_luan_id int,
+    is_active tinyint not null,
     primary key(id)
 );
 
@@ -40,6 +41,7 @@ create table hoi_dong_bao_ve_khoa_luan(
     ngay_thanh_lap datetime not null,
     ngay_khoa datetime not null,
     ten_hoi_dong nvarchar(100) not null,
+    is_active tinyint not null,
     primary key(id)
 );
 

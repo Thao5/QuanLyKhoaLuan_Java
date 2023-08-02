@@ -42,7 +42,7 @@ public class GiangVienHuongDanKhoaLuan implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{giangVienHuongDan.ngayBatDauHuongDan.nullErr}")
     @Column(name = "ngay_bat_dau_huong_dan")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayBatDauHuongDan;

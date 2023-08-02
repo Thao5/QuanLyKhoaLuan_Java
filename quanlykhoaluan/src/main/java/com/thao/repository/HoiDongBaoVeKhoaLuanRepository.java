@@ -18,4 +18,5 @@ public interface HoiDongBaoVeKhoaLuanRepository {
     boolean updateHoiDongBaoVeKhoaLuan(int id, Map<String,String> params);
     boolean updateHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd);
     HoiDongBaoVeKhoaLuan getHoiDongById(int id);
+    boolean deleteHoiDong(int id);
 }

@@ -17,10 +17,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.validator.constraints.Range;
 
 /**
  *
@@ -43,12 +46,13 @@ public class TieuChi implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "{tieuChi.noiDungTieuChi.nullError}")
+    @Size(min = 3, max = 255, message = "{tieuChi.noiDungTieuChi.lenError}")
     @Column(name = "noi_dung_tieu_chi")
     private String noiDungTieuChi;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{tieuChi.diem.nullErr}")
+    @Range(min=0,max=4, message = "{tieuChi.diem.limError}")
     @Column(name = "diem")
     private float diem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tieuChiId")

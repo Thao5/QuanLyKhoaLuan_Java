@@ -48,12 +48,12 @@ public class GiangVienThuocHoiDong implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{giangVienThuocHoiDong.vaiTro.nullErr}")
     @Size(min = 1, max = 13)
     @Column(name = "vai_tro")
     private String vaiTro;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{giangVienThuocHoiDong.ngayVaoHoiDong.nullErr}")
     @Column(name = "ngay_vao_hoi_dong")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayVaoHoiDong;

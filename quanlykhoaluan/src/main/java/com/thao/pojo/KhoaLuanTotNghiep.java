@@ -50,12 +50,12 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull(message = "{khoaLuan.tenKhoaLuan.nullErr}")
+    @Size(min = 1, max = 100, message = "{khoaLuan.tenKhoaLuan.lenErr}")
     @Column(name = "ten_khoa_luan")
     private String tenKhoaLuan;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{khoaLuan.ngayGhiNhan.nullErr}")
     @Column(name = "ngay_ghi_nhan")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayGhiNhan;

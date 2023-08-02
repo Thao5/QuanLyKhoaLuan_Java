@@ -23,10 +23,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -56,34 +59,34 @@ public class NguoiDung implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{nguoiDung.ho.nullErr}")
+    @Size(min = 1, max = 50, message = "{nguoiDung.ho.lenErr}")
     @Column(name = "ho")
     private String ho;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
+    @NotNull(message = "{nguoiDung.ten.nullErr}")
+    @Size(min = 1, max = 25, message = "{nguoiDung.ten.lenErr}")
     @Column(name = "ten")
     private String ten;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{nguoiDung.taiKhoan.nullErr}")
+    @Size(min = 3, max = 50, message = "{nguoiDung.taiKhoan.lenErr}")
     @Column(name = "tai_khoan")
     private String taiKhoan;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{nguoiDung.email.nullErr}")
+    @Size(min = 7, max = 50, message = "{nguoiDung.email.lenErr}")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 18)
+    @NotNull(message = "{nguoiDung.matKhau.nullErr}")
+    @Size(min = 6, max = 18, message = "{nguoiDung.matKhau.lenErr}")
     @Column(name = "mat_khau")
     private String matKhau;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @NotNull(message = "{nguoiDung.sdt.nullErr}")
+    @Size(min = 10, max = 10, message = "{nguoiDung.sdt.lenErr}")
     @Column(name = "sdt")
     private String sdt;
     @Basic(optional = false)
@@ -97,10 +100,16 @@ public class NguoiDung implements Serializable {
     @Column(name = "vai_tro")
     private String vaiTro;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Basic(optional = false)
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @NotNull
+    @Column(name = "is_active")
+    private boolean isActive;
+    @Transient
+    private MultipartFile img;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
     private Set<GiangVienHuongDanKhoaLuan> giangVienHuongDanKhoaLuanSet;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
@@ -118,7 +127,7 @@ public class NguoiDung implements Serializable {
         this.id = id;
     }
 
-    public NguoiDung(Integer id, String ho, String ten, String taiKhoan, String email, String matKhau, String sdt, String avatar, String vaiTro, Date createdDate) {
+    public NguoiDung(Integer id, String ho, String ten, String taiKhoan, String email, String matKhau, String sdt, String avatar, String vaiTro, Date createdDate, boolean isActive) {
         this.id = id;
         this.ho = ho;
         this.ten = ten;
@@ -129,9 +138,10 @@ public class NguoiDung implements Serializable {
         this.avatar = avatar;
         this.vaiTro = vaiTro;
         this.createdDate = createdDate;
+        this.isActive = isActive;
     }
     
-    public NguoiDung(String ho, String ten, String taiKhoan, String email, String matKhau, String sdt, String avatar, String vaiTro, Date createdDate) {
+    public NguoiDung(String ho, String ten, String taiKhoan, String email, String matKhau, String sdt, String avatar, String vaiTro, Date createdDate, boolean isActive) {
         this.ho = ho;
         this.ten = ten;
         this.taiKhoan = taiKhoan;
@@ -141,6 +151,7 @@ public class NguoiDung implements Serializable {
         this.avatar = avatar;
         this.vaiTro = vaiTro;
         this.createdDate = createdDate;
+        this.isActive = isActive;
     }
 
 
@@ -282,6 +293,34 @@ public class NguoiDung implements Serializable {
     @Override
     public String toString() {
         return "com.thao.pojo.NguoiDung[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the img
+     */
+    public MultipartFile getImg() {
+        return img;
+    }
+
+    /**
+     * @param img the img to set
+     */
+    public void setImg(MultipartFile img) {
+        this.img = img;
+    }
+
+    /**
+     * @return the isActive
+     */
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
     
 }

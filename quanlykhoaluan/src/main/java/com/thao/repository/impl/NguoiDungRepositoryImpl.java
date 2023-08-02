@@ -85,14 +85,17 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
     @Override
     public Boolean addNguoiDung(NguoiDung user) {
         Session s = this.factory.getObject().getCurrentSession();
+        System.out.println(user.getHo());
         Query q = s.createQuery("from NguoiDung where taiKhoan = :taiKhoan OR email = :email or sdt = :sdt");
         q.setParameter("taiKhoan", user.getTaiKhoan());
         q.setParameter("email", user.getEmail());
         q.setParameter("sdt", user.getSdt());
         try{
             NguoiDung tmp = (NguoiDung)q.getSingleResult();
+            
         }catch(Exception ex){
             user.setCreatedDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            user.setIsActive(true);
             s.save(user);
             return true;
         }
@@ -190,24 +193,16 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
         return s.get(NguoiDung.class, id);
     }
 
+    //do van de nghiep vu nen khong the xoa cung duoc phai xoa mem
     @Override
     public boolean deleteNguoiDung(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         try{
             NguoiDung nd = this.getNguoiDungById(id);
-//            if(nd.getKhoaLuanId() != null){
-//                nd.getKhoaLuanId().setGiaoVuId(this.getNguoiDungById(1));
-//                s.update(nd.getKhoaLuanId());
-//            }
-//            if(!nd.getGiangVienHuongDanKhoaLuanSet().isEmpty())
-//                nd.getGiangVienHuongDanKhoaLuanSet().forEach((gv) -> {
-//                    s.delete(gv);
-//                });
-//            if(!nd.getGiangVienThuocHoiDongSet().isEmpty())
-//                nd.getGiangVienThuocHoiDongSet().forEach((gv) -> {
-//                    s.delete(gv);
-//                });
-//            s.delete(nd);
+            if(nd.isIsActive()){
+                nd.setIsActive(false);
+            }
+            s.update(nd);
             return true;
         }catch (HibernateException ex) {
             ex.printStackTrace();

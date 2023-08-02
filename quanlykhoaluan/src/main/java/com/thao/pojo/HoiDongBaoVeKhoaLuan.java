@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -47,20 +48,25 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{hoiDong.ngayThanhLap.nullErr}")
     @Column(name = "ngay_thanh_lap")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayThanhLap;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{hoiDong.ngayKhoa.nullErr}")
     @Column(name = "ngay_khoa")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKhoa;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull(message = "{hoiDong.tenHoiDong.nullErr}")
+    @Size(min = 1, max = 100, message = "{hoiDong.tenHoiDong.lenErr}")
     @Column(name = "ten_hoi_dong")
     private String tenHoiDong;
+    @Basic(optional = false)
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @NotNull
+    @Column(name = "is_active")
+    private boolean isActive;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoiDongId",fetch=FetchType.LAZY)
     private Set<GiangVienThuocHoiDong> giangVienThuocHoiDongSet;
     @OneToMany(mappedBy = "hoiDongId",fetch=FetchType.LAZY)
@@ -73,10 +79,11 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
         this.id = id;
     }
 
-    public HoiDongBaoVeKhoaLuan(Integer id, Date ngayThanhLap, Date ngayKhoa) {
+    public HoiDongBaoVeKhoaLuan(Integer id, Date ngayThanhLap, Date ngayKhoa, boolean isActive) {
         this.id = id;
         this.ngayThanhLap = ngayThanhLap;
         this.ngayKhoa = ngayKhoa;
+        this.isActive = isActive;
     }
 
     public Integer getId() {
@@ -158,6 +165,20 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
      */
     public void setTenHoiDong(String tenHoiDong) {
         this.tenHoiDong = tenHoiDong;
+    }
+
+    /**
+     * @return the isActive
+     */
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
     
 }

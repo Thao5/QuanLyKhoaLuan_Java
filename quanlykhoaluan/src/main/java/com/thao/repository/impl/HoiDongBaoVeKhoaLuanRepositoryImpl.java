@@ -74,6 +74,7 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
     public boolean addHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd) {
         Session s = this.factory.getObject().getCurrentSession();
         try{
+            hd.setIsActive(true);
             s.save(hd);
         }catch(HibernateException ex){
             ex.printStackTrace();
@@ -119,6 +120,22 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
     public boolean updateHoiDongBaoVeKhoaLuan(HoiDongBaoVeKhoaLuan hd) {
         Session s = this.factory.getObject().getCurrentSession();
         try{
+            s.update(hd);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteHoiDong(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            HoiDongBaoVeKhoaLuan hd = this.getHoiDongById(id);
+            if(hd.isIsActive()){
+                hd.setIsActive(false);
+            }
             s.update(hd);
         }catch(HibernateException ex){
             ex.printStackTrace();

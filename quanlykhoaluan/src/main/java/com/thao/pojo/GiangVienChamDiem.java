@@ -21,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.validator.constraints.Range;
 
 /**
  *
@@ -43,11 +44,12 @@ public class GiangVienChamDiem implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{giangVienChamDiem.diem.nullErr}")
     @Column(name = "diem")
+    @Range(min=0, max=4, message = "{giangVienChamDiem.diem.limErr}")
     private float diem;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{giangVienChamDiem.ngayCham.nullErr}")
     @Column(name = "ngay_cham")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayCham;
