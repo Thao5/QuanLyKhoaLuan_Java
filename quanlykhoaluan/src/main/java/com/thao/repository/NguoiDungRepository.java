@@ -21,4 +21,5 @@ public interface NguoiDungRepository {
     boolean updateNguoiDung(NguoiDung nd);
     NguoiDung getNguoiDungById(int id);
     boolean deleteNguoiDung(int id);
+    NguoiDung getNguoiDungByUsername(String username);
 }

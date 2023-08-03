@@ -7,19 +7,29 @@ package com.thao.service.impl;
 import com.thao.pojo.NguoiDung;
 import com.thao.repository.NguoiDungRepository;
 import com.thao.service.NguoiDungService;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Chung Vu
  */
-@Service
-public class NguoiDungServiceImpl implements NguoiDungService{
+@Service("userDetailsService")
+public class NguoiDungServiceImpl implements NguoiDungService {
+
     @Autowired
     private NguoiDungRepository nguoiDungRepo;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<NguoiDung> getNguoiDungs(Map<String, String> params) {
@@ -28,6 +38,7 @@ public class NguoiDungServiceImpl implements NguoiDungService{
 
     @Override
     public Boolean addNguoiDung(NguoiDung user) {
+        user.setMatKhau(this.passwordEncoder.encode(user.getMatKhau()));
         return this.nguoiDungRepo.addNguoiDung(user);
     }
 
@@ -37,7 +48,8 @@ public class NguoiDungServiceImpl implements NguoiDungService{
     }
 
     @Override
-    public boolean updateNguoiDung(int id, Map<String,String> params) {
+    public boolean updateNguoiDung(int id, Map<String, String> params) {
+        params.put("matKhau",this.passwordEncoder.encode(params.get("matKhau")));
         return this.nguoiDungRepo.updateNguoiDung(id, params);
     }
 
@@ -55,6 +67,18 @@ public class NguoiDungServiceImpl implements NguoiDungService{
     public boolean deleteNguoiDung(int id) {
         return this.nguoiDungRepo.deleteNguoiDung(id);
     }
-    
-    
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        NguoiDung nd = this.nguoiDungRepo.getNguoiDungByUsername(username);
+        if (nd == null) {
+            throw new UsernameNotFoundException("Invalid");
+        }
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(nd.getVaiTro()));
+        return new org.springframework.security.core.userdetails.User(
+                nd.getTaiKhoan(), nd.getMatKhau(), authorities);
+
+    }
+
 }

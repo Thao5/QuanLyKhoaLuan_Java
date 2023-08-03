@@ -8,12 +8,13 @@ import com.thao.pojo.NguoiDung;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author Chung Vu
  */
-public interface NguoiDungService {
+public interface NguoiDungService extends UserDetailsService {
     List<NguoiDung> getNguoiDungs(Map<String,String> params);
     Boolean addNguoiDung(NguoiDung user);
     Boolean ganKhoaLuanChoSinhVien(int userId, int khoaLuanId);

@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,7 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
     private Environment env;
     @Autowired
     private KhoaLuanTotNghiepRepository khoaLuanRepo;
+
 
     @Override
     public List<NguoiDung> getNguoiDungs(Map<String, String> params) {
@@ -208,6 +210,14 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public NguoiDung getNguoiDungByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From NguoiDung where taiKhoan = :tk");
+        q.setParameter("tk", username);
+        return (NguoiDung) q.getSingleResult();
     }
     
     

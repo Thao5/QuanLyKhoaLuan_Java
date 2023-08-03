@@ -71,23 +71,23 @@ public class NguoiDung implements Serializable {
     @Basic(optional = false)
     @NotNull(message = "{nguoiDung.taiKhoan.nullErr}")
     @Size(min = 3, max = 50, message = "{nguoiDung.taiKhoan.lenErr}")
-    @Column(name = "tai_khoan")
+    @Column(name = "tai_khoan", unique = true)
     private String taiKhoan;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull(message = "{nguoiDung.email.nullErr}")
     @Size(min = 7, max = 50, message = "{nguoiDung.email.lenErr}")
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Basic(optional = false)
     @NotNull(message = "{nguoiDung.matKhau.nullErr}")
-    @Size(min = 6, max = 18, message = "{nguoiDung.matKhau.lenErr}")
+    @Size(min = 6, max = 100, message = "{nguoiDung.matKhau.lenErr}")
     @Column(name = "mat_khau")
     private String matKhau;
     @Basic(optional = false)
     @NotNull(message = "{nguoiDung.sdt.nullErr}")
     @Size(min = 10, max = 10, message = "{nguoiDung.sdt.lenErr}")
-    @Column(name = "sdt")
+    @Column(name = "sdt", unique = true)
     private String sdt;
     @Basic(optional = false)
     @NotNull

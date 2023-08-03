@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: quanlykhoaluan
+-- Host: localhost    Database: quanlykhoaluan2
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -116,7 +116,7 @@ CREATE TABLE `hoi_dong_bao_ve_khoa_luan` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ngay_thanh_lap` datetime NOT NULL,
   `ngay_khoa` datetime NOT NULL,
-  `ten_hoi_dong` varchar(60) COLLATE utf8mb4_vi_0900_ai_ci NOT NULL,
+  `ten_hoi_dong` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_vi_0900_ai_ci NOT NULL,
   `is_active` tinyint NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
@@ -173,21 +173,24 @@ DROP TABLE IF EXISTS `nguoi_dung`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nguoi_dung` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `ho` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `ten` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `tai_khoan` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `mat_khau` varchar(18) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `sdt` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `avatar` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `vai_tro` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `ho` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ten` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tai_khoan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mat_khau` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sdt` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vai_tro` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_date` datetime NOT NULL,
   `khoa_luan_id` int DEFAULT NULL,
   `is_active` tinyint NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `tai_khoan_UNIQUE` (`tai_khoan`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `sdt_UNIQUE` (`sdt`),
   KEY `khoa_luan_id` (`khoa_luan_id`),
   CONSTRAINT `nguoi_dung_ibfk_1` FOREIGN KEY (`khoa_luan_id`) REFERENCES `khoa_luan_tot_nghiep` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +199,7 @@ CREATE TABLE `nguoi_dung` (
 
 LOCK TABLES `nguoi_dung` WRITE;
 /*!40000 ALTER TABLE `nguoi_dung` DISABLE KEYS */;
-INSERT INTO `nguoi_dung` VALUES (1,'adm','in','admin','admin','123','test','test','test','2023-07-18 00:00:00',2,0),(2,'test','test','test','test','test','test','test','test1','2023-07-18 00:00:00',NULL,0),(3,'test5','test5','test5','test5','test5','test5','test5','test5','2023-07-22 00:00:00',NULL,0);
+INSERT INTO `nguoi_dung` VALUES (1,'adm','in','admin','admin','123','test','test','test','2023-07-18 00:00:00',2,1),(3,'test5','test5','test5','test5','test5','test5','test5','test5','2023-07-22 00:00:00',NULL,1),(16,'asdsad','asdasd','sadasd','asdasdasd','asdsadas','1234567891','asdasdas','asdsadas','2023-08-02 00:00:00',NULL,1),(17,'thao','thao','thao','already@gmail.com','$2a$10$nB7wfbdw0DHdMXCk.7fJGeZcyo6bDVBGEBFcRP2sHISp4apQuld/2','1234567892','asdasda','admin','2023-08-03 00:00:00',NULL,1);
 /*!40000 ALTER TABLE `nguoi_dung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-01  8:11:56
+-- Dump completed on 2023-08-03 14:45:09
