@@ -4,6 +4,7 @@
  */
 package com.thao.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -63,12 +64,16 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKetThuc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<TieuChiThuocKhoaLuan> tieuChiThuocKhoaLuanSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<GiangVienChamDiem> giangVienChamDiemSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<GiangVienHuongDanKhoaLuan> giangVienHuongDanKhoaLuanSet;
     @OneToMany(mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<NguoiDung> nguoiDungSet;
     @JoinColumn(name = "hoi_dong_id", referencedColumnName = "id")
     @ManyToOne(fetch=FetchType.LAZY)

@@ -4,6 +4,7 @@
  */
 package com.thao.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -111,13 +112,16 @@ public class NguoiDung implements Serializable {
     @Transient
     private MultipartFile img;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<GiangVienHuongDanKhoaLuan> giangVienHuongDanKhoaLuanSet;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
     @ManyToOne(fetch=FetchType.LAZY)
     private KhoaLuanTotNghiep khoaLuanId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<GiangVienThuocHoiDong> giangVienThuocHoiDongSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "giaoVuId", fetch=FetchType.LAZY)
+    @JsonIgnore
     private Set<KhoaLuanTotNghiep> khoaLuanTotNghiepSet;
 
     public NguoiDung() {
