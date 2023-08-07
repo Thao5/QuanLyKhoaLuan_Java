@@ -4,6 +4,7 @@
  */
 package com.thao.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -58,6 +59,7 @@ public class GiangVienThuocHoiDong implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayVaoHoiDong;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "giangVienThuocHoiDongId")
+    @JsonIgnore
     private Set<GiangVienChamDiem> giangVienChamDiemSet;
     @JoinColumn(name = "hoi_dong_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

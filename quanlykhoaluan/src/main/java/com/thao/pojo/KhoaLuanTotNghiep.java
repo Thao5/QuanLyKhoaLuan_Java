@@ -76,10 +76,10 @@ public class KhoaLuanTotNghiep implements Serializable {
     @JsonIgnore
     private Set<NguoiDung> nguoiDungSet;
     @JoinColumn(name = "hoi_dong_id", referencedColumnName = "id")
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private HoiDongBaoVeKhoaLuan hoiDongId;
     @JoinColumn(name = "giao_vu_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch=FetchType.LAZY)
+    @ManyToOne(optional = false)
     private NguoiDung giaoVuId;
 
     public KhoaLuanTotNghiep() {
