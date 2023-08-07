@@ -50,5 +50,11 @@ public class TieuChiThuocKhoaLuanServiceImpl implements TieuChiThuocKhoaLuanServ
     public boolean deleteTieuChiThuocKhoaLuan(int id) {
         return this.tieuChiThuocKhoaLuanRepository.deleteTieuChiThuocKhoaLuan(id);
     }
+
+    @Override
+    public boolean addTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
+        return this.tieuChiThuocKhoaLuanRepository.addTieuChiThuocKhoaLuan(tc);
+    }
+    
     
 }

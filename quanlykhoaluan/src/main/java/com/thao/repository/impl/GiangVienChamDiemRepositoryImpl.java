@@ -101,7 +101,7 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
                 }
                 tmp = params.get("giangVienThuocHoiDongId");
                 if(tmp != null && !tmp.isEmpty()){
-                    gv.setGiangVienThuocHoiDongId(this.giangVienThuocHoiDongRepo.getGiangVienThuocHoiDong(Integer.parseInt(tmp)));
+                    gv.setGiangVienThuocHoiDongId(this.giangVienThuocHoiDongRepo.getGiangVienThuocHoiDongById(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("khoaLuanId");
                 if(tmp != null && !tmp.isEmpty()){
@@ -139,6 +139,18 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         Session s = this.factory.getObject().getCurrentSession();
         try{
             s.delete(this.getGiangVienChamDiemById(id));
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addGiangVienChamDiem(GiangVienChamDiem gv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.save(gv);
         }catch(HibernateException ex){
             ex.printStackTrace();
             return false;

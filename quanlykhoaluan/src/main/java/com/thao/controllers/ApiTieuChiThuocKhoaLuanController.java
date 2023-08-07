@@ -4,8 +4,8 @@
  */
 package com.thao.controllers;
 
-import com.thao.pojo.HoiDongBaoVeKhoaLuan;
-import com.thao.service.HoiDongBaoVeKhoaLuanService;
+import com.thao.pojo.TieuChiThuocKhoaLuan;
+import com.thao.service.TieuChiThuocKhoaLuanService;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
@@ -29,25 +29,25 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiHoiDongBaoVeKhoaLuanController {
+public class ApiTieuChiThuocKhoaLuanController {
     @Autowired
-    private HoiDongBaoVeKhoaLuanService hdSer;
+    private TieuChiThuocKhoaLuanService tcService;
     
-    @GetMapping("/hoiDongs/")
-    public ResponseEntity<List<HoiDongBaoVeKhoaLuan>> list(@RequestParam Map<String,String> params){
-        return new ResponseEntity<>(this.hdSer.getHoiDongBaoVeKhoaLuans(params), HttpStatus.OK);
+    @GetMapping("/tieuChiThuocKhoaLuans/")
+    public ResponseEntity<List<TieuChiThuocKhoaLuan>> list(@RequestParam Map<String,String> params){
+        return new ResponseEntity<>(this.tcService.getTieuChiThuocKhoaLuans(params), HttpStatus.OK);
     }
     
-    @PostMapping("/hoiDongs/addHoiDong/")
+    @PostMapping("/tieuChiThuocKhoaLuans/addTieuChiThuocKhoaLuan/")
     @ResponseStatus(HttpStatus.OK)
-    public void addHoiDong(@ModelAttribute(value="hoiDong") @Valid HoiDongBaoVeKhoaLuan hd, BindingResult rs){
+    public void addTieuChiThuocKhoaLuan(@ModelAttribute(value="tieuChiThuocKhoaLuan") @Valid TieuChiThuocKhoaLuan tc, BindingResult rs){
         if(!rs.hasErrors())
-            this.hdSer.addHoiDongBaoVeKhoaLuan(hd);
+            this.tcService.addTieuChiThuocKhoaLuan(tc);
     }
     
-    @DeleteMapping("/hoiDongs/delHoiDong/")
+    @DeleteMapping("/tieuChiThuocKhoaLuans/delTieuChiThuocKhoaLuan/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delHoiDong(@PathVariable(value = "id") int id){
-        this.hdSer.deleteHoiDong(id);
+    public void delTieuChiThuocKhoaLuan(@PathVariable(value = "id") int id){
+        this.delTieuChiThuocKhoaLuan(id);
     }
 }

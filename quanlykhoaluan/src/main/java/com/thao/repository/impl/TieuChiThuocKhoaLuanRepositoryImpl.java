@@ -42,12 +42,14 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     @Override
     public List<TieuChiThuocKhoaLuan> getTieuChiThuocKhoaLuans(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("from TieuChiThuocKhoaLuan");
         if(params != null){
-            Query q = s.createQuery("from TieuChiThuocKhoaLuan where khoaLuanId = :khoaLuanId");
-            q.setParameter("khoaLuanId", params.get("klId"));
-            return q.getResultList();
+            if(params.get("klId")!= null && !params.get("klId").isEmpty()){
+                q = s.createQuery("from TieuChiThuocKhoaLuan where khoaLuanId = :khoaLuanId");
+                q.setParameter("khoaLuanId", params.get("klId")); 
+            }
         }
-        return null;
+        return q.getResultList();
     }
 
     @Override
@@ -121,5 +123,19 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
         }
         return true;
     }
+
+    @Override
+    public boolean addTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.save(tc);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

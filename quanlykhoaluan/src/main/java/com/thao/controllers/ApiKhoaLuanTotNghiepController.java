@@ -8,12 +8,19 @@ import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.service.KhoaLuanTotNghiepService;
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,5 +36,18 @@ public class ApiKhoaLuanTotNghiepController {
     @GetMapping("/khoaLuans/")
     public ResponseEntity<List<KhoaLuanTotNghiep>> list(@RequestParam Map<String,String> params){
         return new ResponseEntity<>(this.klSer.getKhoaLuans(params), HttpStatus.OK);
+    }
+    
+    @PostMapping("/khoaLuans/addKhoaLuan/")
+    @ResponseStatus(HttpStatus.OK)
+    public void addKhoaLuan(@ModelAttribute(value = "khoaLuan") @Valid KhoaLuanTotNghiep kl, BindingResult rs){
+        if(!rs.hasErrors())
+            this.klSer.addKhoaLuan(kl);
+    }
+    
+    @DeleteMapping("/khoaLuans/delKhoaLuan/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delKhoaLuan(@PathVariable(value = "id") int id){
+        this.klSer.deleteKhoaLuan(id);
     }
 }

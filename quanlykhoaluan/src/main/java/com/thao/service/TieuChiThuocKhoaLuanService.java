@@ -19,4 +19,5 @@ public interface TieuChiThuocKhoaLuanService {
     boolean updateTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc);
     TieuChiThuocKhoaLuan getTieuChiThuocKhoaLuanById(int id);
     boolean deleteTieuChiThuocKhoaLuan(int id);
+    boolean addTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc);
 }

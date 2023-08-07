@@ -154,6 +154,18 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
         }
         return true;
     }
+
+    @Override
+    public boolean addGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.save(gv);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     
     
 }

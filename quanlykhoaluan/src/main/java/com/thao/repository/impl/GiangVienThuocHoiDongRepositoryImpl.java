@@ -91,7 +91,7 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
        Session s = this.factory.getObject().getCurrentSession();
        try{
            if(params != null){
-               GiangVienThuocHoiDong gv = getGiangVienThuocHoiDong(id);
+               GiangVienThuocHoiDong gv = getGiangVienThuocHoiDongById(id);
                String tmp = params.get("vaiTro");
                if(tmp != null && !tmp.isEmpty()){
                    gv.setVaiTro(tmp);
@@ -118,7 +118,7 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
     }
 
     @Override
-    public GiangVienThuocHoiDong getGiangVienThuocHoiDong(int id) {
+    public GiangVienThuocHoiDong getGiangVienThuocHoiDongById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(GiangVienThuocHoiDong.class, id);
     }
@@ -134,5 +134,18 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
         }
         return true;
     }
+
+    @Override
+    public boolean addGiangVienThuocHoiDong(GiangVienThuocHoiDong gv) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            s.save(gv);
+        }catch(HibernateException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
     
 }

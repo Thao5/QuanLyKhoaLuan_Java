@@ -20,4 +20,5 @@ public interface GiangVienHuongDanKhoaLuanRepository {
     boolean updateGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv);
     GiangVienHuongDanKhoaLuan getGiangVienHuongDanKhoaLuanById(int id);
     boolean deleteGiangVienHuongDanKhoaLuan(int id);
+    boolean addGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv);
 }

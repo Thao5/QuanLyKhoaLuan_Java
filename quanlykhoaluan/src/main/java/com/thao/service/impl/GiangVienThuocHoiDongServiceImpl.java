@@ -38,13 +38,18 @@ public class GiangVienThuocHoiDongServiceImpl implements GiangVienThuocHoiDongSe
     }
 
     @Override
-    public GiangVienThuocHoiDong getGiangVienThuocHoiDong(int id) {
-        return this.giangVienThuocHoiDongRepository.getGiangVienThuocHoiDong(id);
+    public GiangVienThuocHoiDong getGiangVienThuocHoiDongById(int id) {
+        return this.giangVienThuocHoiDongRepository.getGiangVienThuocHoiDongById(id);
     }
 
     @Override
     public boolean updateGiangvienThuocHoiDong(GiangVienThuocHoiDong gv) {
         return this.giangVienThuocHoiDongRepository.updateGiangvienThuocHoiDong(gv);
+    }
+
+    @Override
+    public boolean addGiangVienThuocHoiDong(GiangVienThuocHoiDong gv) {
+        return this.giangVienThuocHoiDongRepository.addGiangVienThuocHoiDong(gv);
     }
     
     

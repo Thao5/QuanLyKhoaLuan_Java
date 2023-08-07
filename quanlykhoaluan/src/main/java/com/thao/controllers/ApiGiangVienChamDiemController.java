@@ -4,8 +4,8 @@
  */
 package com.thao.controllers;
 
-import com.thao.pojo.HoiDongBaoVeKhoaLuan;
-import com.thao.service.HoiDongBaoVeKhoaLuanService;
+import com.thao.pojo.GiangVienChamDiem;
+import com.thao.service.GiangVienChamDiemService;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
@@ -29,25 +29,26 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiHoiDongBaoVeKhoaLuanController {
+public class ApiGiangVienChamDiemController {
     @Autowired
-    private HoiDongBaoVeKhoaLuanService hdSer;
+    private GiangVienChamDiemService gvcds;
     
-    @GetMapping("/hoiDongs/")
-    public ResponseEntity<List<HoiDongBaoVeKhoaLuan>> list(@RequestParam Map<String,String> params){
-        return new ResponseEntity<>(this.hdSer.getHoiDongBaoVeKhoaLuans(params), HttpStatus.OK);
+    @GetMapping("/giangVienChamDiems/")
+    public ResponseEntity<List<GiangVienChamDiem>> list(@RequestParam Map<String,String> params){
+        return new ResponseEntity<>(this.gvcds.getDiemKhoaLuan(params), HttpStatus.OK);
     }
     
-    @PostMapping("/hoiDongs/addHoiDong/")
+    @PostMapping("/giangVienChamDiems/addGiangVienChamDiem/")
     @ResponseStatus(HttpStatus.OK)
-    public void addHoiDong(@ModelAttribute(value="hoiDong") @Valid HoiDongBaoVeKhoaLuan hd, BindingResult rs){
-        if(!rs.hasErrors())
-            this.hdSer.addHoiDongBaoVeKhoaLuan(hd);
+    public void addGiangVienChamDiem(@ModelAttribute(value="giangVienChamDiem") @Valid GiangVienChamDiem gv, BindingResult rs){
+        if(!rs.hasErrors()){
+            this.gvcds.addGiangVienChamDiem(gv);
+        }
     }
     
-    @DeleteMapping("/hoiDongs/delHoiDong/")
+    @DeleteMapping("/giangVienChamDiems/delGiangVienChamDiem/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delHoiDong(@PathVariable(value = "id") int id){
-        this.hdSer.deleteHoiDong(id);
+    public void delGiangVienChamDiem(@PathVariable(value = "id") int id){
+        this.gvcds.deleteGiangVienChamDiem(id);
     }
 }

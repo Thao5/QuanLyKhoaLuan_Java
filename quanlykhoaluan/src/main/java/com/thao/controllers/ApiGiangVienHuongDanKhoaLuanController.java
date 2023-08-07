@@ -4,8 +4,8 @@
  */
 package com.thao.controllers;
 
-import com.thao.pojo.HoiDongBaoVeKhoaLuan;
-import com.thao.service.HoiDongBaoVeKhoaLuanService;
+import com.thao.pojo.GiangVienHuongDanKhoaLuan;
+import com.thao.service.GiangVienHuongDanKhoaLuanService;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
@@ -29,25 +29,25 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiHoiDongBaoVeKhoaLuanController {
+public class ApiGiangVienHuongDanKhoaLuanController {
     @Autowired
-    private HoiDongBaoVeKhoaLuanService hdSer;
+    private GiangVienHuongDanKhoaLuanService gvhdkls;
     
-    @GetMapping("/hoiDongs/")
-    public ResponseEntity<List<HoiDongBaoVeKhoaLuan>> list(@RequestParam Map<String,String> params){
-        return new ResponseEntity<>(this.hdSer.getHoiDongBaoVeKhoaLuans(params), HttpStatus.OK);
+    @GetMapping("/giangVienHuongDans/")
+    public ResponseEntity<List<GiangVienHuongDanKhoaLuan>> list(@RequestParam Map<String,String> params){
+        return new ResponseEntity<>(this.gvhdkls.getGiangVienHuongDans(params), HttpStatus.OK);
     }
     
-    @PostMapping("/hoiDongs/addHoiDong/")
+    @PostMapping("/giangVienHuongDans/addGiangVienHuongDan/")
     @ResponseStatus(HttpStatus.OK)
-    public void addHoiDong(@ModelAttribute(value="hoiDong") @Valid HoiDongBaoVeKhoaLuan hd, BindingResult rs){
+    public void addGiangVienHuongDan(@ModelAttribute(value="giangVienHuongDan")@Valid GiangVienHuongDanKhoaLuan gv, BindingResult rs){
         if(!rs.hasErrors())
-            this.hdSer.addHoiDongBaoVeKhoaLuan(hd);
+            this.gvhdkls.addGiangVienHuongDanKhoaLuan(gv);
     }
     
-    @DeleteMapping("/hoiDongs/delHoiDong/")
+    @DeleteMapping("/giangVienHuongDans/delGiangVienHuongDan/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delHoiDong(@PathVariable(value = "id") int id){
-        this.hdSer.deleteHoiDong(id);
+    public void delGiangVienHuongDan(@PathVariable(value = "id") int id){
+        this.gvhdkls.deleteGiangVienHuongDanKhoaLuan(id);
     }
 }

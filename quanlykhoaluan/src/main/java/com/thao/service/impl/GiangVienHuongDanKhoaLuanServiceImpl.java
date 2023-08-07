@@ -51,6 +51,11 @@ public class GiangVienHuongDanKhoaLuanServiceImpl implements GiangVienHuongDanKh
     public boolean deleteGiangVienHuongDanKhoaLuan(int id) {
         return this.giangVienHuongDanKhoaLuanRepo.deleteGiangVienHuongDanKhoaLuan(id);
     }
+
+    @Override
+    public boolean addGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv) {
+        return this.giangVienHuongDanKhoaLuanRepo.addGiangVienHuongDanKhoaLuan(gv);
+    }
     
     
 }
