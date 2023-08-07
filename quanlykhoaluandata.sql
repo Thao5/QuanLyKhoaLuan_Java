@@ -33,7 +33,7 @@ CREATE TABLE `giang_vien_cham_diem` (
   KEY `khoa_luan_id` (`khoa_luan_id`),
   CONSTRAINT `giang_vien_cham_diem_ibfk_1` FOREIGN KEY (`giang_vien_thuoc_hoi_dong_id`) REFERENCES `giang_vien_thuoc_hoi_dong` (`id`),
   CONSTRAINT `giang_vien_cham_diem_ibfk_2` FOREIGN KEY (`khoa_luan_id`) REFERENCES `khoa_luan_tot_nghiep` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `giang_vien_cham_diem` (
 
 LOCK TABLES `giang_vien_cham_diem` WRITE;
 /*!40000 ALTER TABLE `giang_vien_cham_diem` DISABLE KEYS */;
+INSERT INTO `giang_vien_cham_diem` VALUES (3,8,'2023-07-18 00:00:00',1,1);
 /*!40000 ALTER TABLE `giang_vien_cham_diem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +94,7 @@ CREATE TABLE `giang_vien_thuoc_hoi_dong` (
   KEY `hoi_dong_id` (`hoi_dong_id`),
   CONSTRAINT `giang_vien_thuoc_hoi_dong_ibfk_1` FOREIGN KEY (`nguoi_dung_id`) REFERENCES `nguoi_dung` (`id`),
   CONSTRAINT `giang_vien_thuoc_hoi_dong_ibfk_2` FOREIGN KEY (`hoi_dong_id`) REFERENCES `hoi_dong_bao_ve_khoa_luan` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +103,7 @@ CREATE TABLE `giang_vien_thuoc_hoi_dong` (
 
 LOCK TABLES `giang_vien_thuoc_hoi_dong` WRITE;
 /*!40000 ALTER TABLE `giang_vien_thuoc_hoi_dong` DISABLE KEYS */;
+INSERT INTO `giang_vien_thuoc_hoi_dong` VALUES (1,'test','2023-07-18 00:00:00',1,1);
 /*!40000 ALTER TABLE `giang_vien_thuoc_hoi_dong` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +162,7 @@ CREATE TABLE `khoa_luan_tot_nghiep` (
 
 LOCK TABLES `khoa_luan_tot_nghiep` WRITE;
 /*!40000 ALTER TABLE `khoa_luan_tot_nghiep` DISABLE KEYS */;
-INSERT INTO `khoa_luan_tot_nghiep` VALUES (1,'kltest','2023-07-18 00:00:00',NULL,1,1),(2,'sada','2023-07-18 00:00:00',NULL,1,1);
+INSERT INTO `khoa_luan_tot_nghiep` VALUES (1,'kltest','2023-07-18 00:00:00',NULL,1,1),(2,'sada','2023-07-18 00:00:00',NULL,3,1);
 /*!40000 ALTER TABLE `khoa_luan_tot_nghiep` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +246,7 @@ CREATE TABLE `tieu_chi_thuoc_khoa_luan` (
   KEY `khoa_luan_id` (`khoa_luan_id`),
   CONSTRAINT `tieu_chi_thuoc_khoa_luan_ibfk_1` FOREIGN KEY (`tieu_chi_id`) REFERENCES `tieu_chi` (`id`),
   CONSTRAINT `tieu_chi_thuoc_khoa_luan_ibfk_2` FOREIGN KEY (`khoa_luan_id`) REFERENCES `khoa_luan_tot_nghiep` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,6 +255,7 @@ CREATE TABLE `tieu_chi_thuoc_khoa_luan` (
 
 LOCK TABLES `tieu_chi_thuoc_khoa_luan` WRITE;
 /*!40000 ALTER TABLE `tieu_chi_thuoc_khoa_luan` DISABLE KEYS */;
+INSERT INTO `tieu_chi_thuoc_khoa_luan` VALUES (1,1,1);
 /*!40000 ALTER TABLE `tieu_chi_thuoc_khoa_luan` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -265,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-03 14:45:09
+-- Dump completed on 2023-08-07 12:47:06
