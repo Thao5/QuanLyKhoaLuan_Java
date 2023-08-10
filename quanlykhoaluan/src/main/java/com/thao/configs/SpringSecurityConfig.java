@@ -6,16 +6,20 @@ package com.thao.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.thao.validator.GiangVienHuongDanWebAppValidator;
 //import com.thao.validator.GiangVienHuongDanWebAppValidator;
 import com.thao.validator.SoLuongKhoaLuanValidator;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
  *
@@ -34,9 +39,9 @@ import org.springframework.validation.Validator;
 @EnableWebSecurity
 @EnableTransactionManagement
 @ComponentScan({
-    "com.thao.controllers",
     "com.thao.repository",
     "com.thao.service",
+    "com.thao.controllers",
     "com.thao.validator"
 })
 @PropertySource("classpath:configs.properties")
@@ -103,4 +108,21 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        validator.setSpringValidators(springValidators);
 //        return validator;
 //    }
+    
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource m = new ResourceBundleMessageSource();
+//        m.setBasename("messages");
+//        return m;
+//    }
+    
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean bean
+                = new LocalValidatorFactoryBean();
+//        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
+    
+    
 }

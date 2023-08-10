@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,17 +36,26 @@ public class ApiGiangVienChamDiemController {
     private GiangVienChamDiemService gvcds;
     
     @GetMapping("/giangVienChamDiems/")
-    public ResponseEntity<List<GiangVienChamDiem>> list(@RequestParam Map<String,String> params){
+    public ResponseEntity<List<GiangVienChamDiem>> list(@RequestBody Map<String,String> params){
         return new ResponseEntity<>(this.gvcds.getDiemKhoaLuan(params), HttpStatus.OK);
     }
     
-//    @PostMapping("/giangVienChamDiems/addGiangVienChamDiem/")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void addGiangVienChamDiem(@ModelAttribute(value="giangVienChamDiem") @Valid GiangVienChamDiem gv, BindingResult rs){
-//        if(!rs.hasErrors()){
-//            this.gvcds.addGiangVienChamDiem(gv);
-//        }
-//    }
+    @PostMapping("/giangVienChamDiems/")
+    @ResponseStatus(HttpStatus.OK)
+    public void addGiangVienChamDiem(@RequestBody @Valid GiangVienChamDiem gv, BindingResult rs){
+        if(!rs.hasErrors()){
+            this.gvcds.addGiangVienChamDiem(gv);
+        }
+    }
+    
+    @PutMapping("/giangVienChamDiems/{id}/")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable("id") int id, @RequestBody Map<String,String> params , BindingResult rs){
+        if(!rs.hasErrors()){
+            this.gvcds.updateGiangVienChamDiem(id, params);
+        }
+    }
+    
 //    
 //    @DeleteMapping("/giangVienChamDiems/delGiangVienChamDiem/{id}/")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)

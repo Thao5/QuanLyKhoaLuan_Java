@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -35,7 +36,7 @@ public class ApiTieuChiThuocKhoaLuanController {
     private TieuChiThuocKhoaLuanService tcService;
     
     @GetMapping("/tieuChiThuocKhoaLuans/")
-    public ResponseEntity<List<TieuChiThuocKhoaLuan>> list(@RequestParam Map<String,String> params){
+    public ResponseEntity<List<TieuChiThuocKhoaLuan>> list(@RequestBody Map<String,String> params){
         return new ResponseEntity<>(this.tcService.getTieuChiThuocKhoaLuans(params), HttpStatus.OK);
     }
     

@@ -36,12 +36,12 @@ public class ApiNguoiDungController {
     @Autowired
     private NguoiDungService ndSer;
     
-    @GetMapping("/nguoiDungs/{id}")
+    @GetMapping("/nguoiDungs/{id}/")
     public ResponseEntity<NguoiDung> list(@PathVariable("id") int id){
         return new ResponseEntity<>(this.ndSer.getNguoiDungById(id), HttpStatus.OK);
     }
     
-    @PutMapping("/nguoiDungs/doiMatKhau/{id}/")
+    @PutMapping("/nguoiDungs/{id}/")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") int id, @RequestBody Map<String,String> params){
         Map<String,String> tmp = new HashMap<>();

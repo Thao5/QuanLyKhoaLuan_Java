@@ -7,6 +7,8 @@ package com.thao.validator;
 import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -16,6 +18,7 @@ import org.springframework.validation.Validator;
  * @author Chung Vu
  */
 @Component
+@DependsOn({"GiangVienHuongDanKhoaLuanRepository"})
 public class SoLuongKhoaLuanValidator implements Validator{
     @Autowired
     private GiangVienHuongDanKhoaLuanRepository gvRepo;

@@ -56,7 +56,11 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
             List<Predicate> predicates = new ArrayList<>();
             String khoaLuanId = params.get("khoaLuanId");
             if(khoaLuanId != null && !khoaLuanId.isEmpty()){
-                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(khoaLuanId)));
+                predicates.add(b.equal(root.get("khoaLuanId.id"), Integer.parseInt(khoaLuanId)));
+            }
+            String giangVienId = params.get("giangVienId");
+            if(giangVienId != null && !giangVienId.isEmpty()){
+                predicates.add(b.equal(root.get("giangVienThuocHoiDongId.id"), Integer.parseInt(giangVienId)));
             }
             q.where(predicates.toArray(Predicate[]::new));
         }

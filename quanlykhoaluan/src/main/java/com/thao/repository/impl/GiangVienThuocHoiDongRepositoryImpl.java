@@ -53,7 +53,7 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
             List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("hoiDongId");
             if(kw != null && !kw.isEmpty()){
-                predicates.add(b.equal(root.get("hoiDongId"), Integer.parseInt(kw)));
+                predicates.add(b.equal(root.get("hoiDongId.id"), Integer.parseInt(kw)));
             }
             String role = params.get("vaiTro");
             if(role != null && !role.isEmpty()){
