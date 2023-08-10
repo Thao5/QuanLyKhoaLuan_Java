@@ -37,10 +37,10 @@ public class ApiGiangVienThuocHoiDongController {
         return new ResponseEntity<>(this.gvthds.getGiangVienThuocHoiDong(params), HttpStatus.OK);
     }
     
-    @PostMapping("/giangVienThuocHoiDongs/addGiangVienThuocHoiDong/")
-    @ResponseStatus(HttpStatus.OK)
-    public void addGiangVienThuocHoiDong(@ModelAttribute(value="giangVienThuocHoiDong") @Valid GiangVienThuocHoiDong gv, BindingResult rs){
-        if(!rs.hasErrors())
-            this.gvthds.addGiangVienThuocHoiDong(gv);
-    }
+//    @PostMapping("/giangVienThuocHoiDongs/addGiangVienThuocHoiDong/")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void addGiangVienThuocHoiDong(@ModelAttribute(value="giangVienThuocHoiDong") @Valid GiangVienThuocHoiDong gv, BindingResult rs){
+//        if(!rs.hasErrors())
+//            this.gvthds.addGiangVienThuocHoiDong(gv);
+//    }
 }

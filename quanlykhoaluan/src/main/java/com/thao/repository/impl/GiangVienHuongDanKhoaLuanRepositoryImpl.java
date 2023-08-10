@@ -61,6 +61,10 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
             if(kw != null && !kw.isEmpty()){
                 predicates.add(b.like(root.get("nguoiDungId.ten"), String.format("%%%s%%", kw)));
             }
+            kw = params.get("giangVienId");
+            if(kw != null && !kw.isEmpty()){
+                predicates.add(b.equal(root.get("nguoiDungId.id"), Integer.parseInt(kw)));
+            }
             q.where(predicates.toArray(Predicate[]::new));
         }
         
@@ -165,6 +169,14 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Long demGiangVienHuongDanCuaKhoaLuan(int klId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("select count(*) from GiangVienHuongDanKhoaLuan where khoaLuanId.id = :klId group by khoaLuanId");
+        q.setParameter("klId", klId);
+        return (Long)q.getSingleResult();
     }
     
     

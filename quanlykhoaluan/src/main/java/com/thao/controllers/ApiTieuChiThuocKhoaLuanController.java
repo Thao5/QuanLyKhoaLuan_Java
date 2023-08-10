@@ -6,6 +6,7 @@ package com.thao.controllers;
 
 import com.thao.pojo.TieuChiThuocKhoaLuan;
 import com.thao.service.TieuChiThuocKhoaLuanService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
@@ -38,16 +39,16 @@ public class ApiTieuChiThuocKhoaLuanController {
         return new ResponseEntity<>(this.tcService.getTieuChiThuocKhoaLuans(params), HttpStatus.OK);
     }
     
-    @PostMapping("/tieuChiThuocKhoaLuans/addTieuChiThuocKhoaLuan/")
-    @ResponseStatus(HttpStatus.OK)
-    public void addTieuChiThuocKhoaLuan(@ModelAttribute(value="tieuChiThuocKhoaLuan") @Valid TieuChiThuocKhoaLuan tc, BindingResult rs){
-        if(!rs.hasErrors())
-            this.tcService.addTieuChiThuocKhoaLuan(tc);
-    }
-    
-    @DeleteMapping("/tieuChiThuocKhoaLuans/delTieuChiThuocKhoaLuan/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delTieuChiThuocKhoaLuan(@PathVariable(value = "id") int id){
-        this.delTieuChiThuocKhoaLuan(id);
-    }
+//    @PostMapping("/tieuChiThuocKhoaLuans/addTieuChiThuocKhoaLuan/")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void addTieuChiThuocKhoaLuan(@ModelAttribute(value="tieuChiThuocKhoaLuan") @Valid TieuChiThuocKhoaLuan tc, BindingResult rs){
+//        if(!rs.hasErrors())
+//            this.tcService.addTieuChiThuocKhoaLuan(tc);
+//    }
+//    
+//    @DeleteMapping("/tieuChiThuocKhoaLuans/delTieuChiThuocKhoaLuan/{id}/")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delTieuChiThuocKhoaLuan(@PathVariable(value = "id") int id){
+//        this.delTieuChiThuocKhoaLuan(id);
+//    }
 }

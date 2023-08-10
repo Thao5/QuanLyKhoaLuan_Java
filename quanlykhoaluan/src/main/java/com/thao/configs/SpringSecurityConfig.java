@@ -6,6 +6,11 @@ package com.thao.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+//import com.thao.validator.GiangVienHuongDanWebAppValidator;
+import com.thao.validator.SoLuongKhoaLuanValidator;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +24,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
 
 /**
  *
@@ -30,7 +36,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({
     "com.thao.controllers",
     "com.thao.repository",
-    "com.thao.service"
+    "com.thao.service",
+    "com.thao.validator"
 })
 @PropertySource("classpath:configs.properties")
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -52,6 +59,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+    
+    @Bean
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     @Override
     protected void configure(HttpSecurity http)
@@ -65,11 +77,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .accessDeniedPage("/login?accessDenied");
 
-//        http.authorizeRequests().antMatchers("/").permitAll()
-//                .antMatchers("/**/add")
-//                .access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/").permitAll()
+                .antMatchers("/api/**/")
+                .access("hasRole('ROLE_ADMIN')");
 //        .antMatchers("/**/pay")
-//                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+//                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
         http.csrf().disable();
     }
 
@@ -83,4 +95,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         "secure", true));
         return cloudinary;
     }
+//    @Bean
+//    public GiangVienHuongDanWebAppValidator giangVienHuongDanValidator() {
+//        Set<Validator> springValidators = new HashSet<>();
+//        springValidators.add(new SoLuongKhoaLuanValidator());
+//        GiangVienHuongDanWebAppValidator validator = new GiangVienHuongDanWebAppValidator();
+//        validator.setSpringValidators(springValidators);
+//        return validator;
+//    }
 }

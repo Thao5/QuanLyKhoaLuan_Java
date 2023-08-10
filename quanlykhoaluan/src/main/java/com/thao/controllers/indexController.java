@@ -4,6 +4,7 @@
  */
 package com.thao.controllers;
 
+import com.thao.service.GiangVienChamDiemService;
 import com.thao.service.KhoaLuanTotNghiepService;
 import com.thao.service.NguoiDungService;
 import java.util.Map;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexController {
     @Autowired
     private KhoaLuanTotNghiepService khoaLuanService;
+    @Autowired
+    private GiangVienChamDiemService gvcdSer;
     
     @Autowired
     private NguoiDungService nguoiDungService;

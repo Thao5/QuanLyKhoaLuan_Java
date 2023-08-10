@@ -33,21 +33,21 @@ public class ApiKhoaLuanTotNghiepController {
     @Autowired
     private KhoaLuanTotNghiepService klSer;
     
-    @GetMapping("/khoaLuans/")
-    public ResponseEntity<List<KhoaLuanTotNghiep>> list(@RequestParam Map<String,String> params){
-        return new ResponseEntity<>(this.klSer.getKhoaLuans(params), HttpStatus.OK);
+    @GetMapping("/khoaLuans/{id}")
+    public ResponseEntity<KhoaLuanTotNghiep> list(@PathVariable("id") int id){
+        return new ResponseEntity<>(this.klSer.getKhoaLuanById(id), HttpStatus.OK);
     }
     
-    @PostMapping("/khoaLuans/addKhoaLuan/")
-    @ResponseStatus(HttpStatus.OK)
-    public void addKhoaLuan(@ModelAttribute(value = "khoaLuan") @Valid KhoaLuanTotNghiep kl, BindingResult rs){
-        if(!rs.hasErrors())
-            this.klSer.addKhoaLuan(kl);
-    }
-    
-    @DeleteMapping("/khoaLuans/delKhoaLuan/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delKhoaLuan(@PathVariable(value = "id") int id){
-        this.klSer.deleteKhoaLuan(id);
-    }
+//    @PostMapping("/khoaLuans/addKhoaLuan/")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void addKhoaLuan(@ModelAttribute(value = "khoaLuan") @Valid KhoaLuanTotNghiep kl, BindingResult rs){
+//        if(!rs.hasErrors())
+//            this.klSer.addKhoaLuan(kl);
+//    }
+//    
+//    @DeleteMapping("/khoaLuans/delKhoaLuan/{id}/")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delKhoaLuan(@PathVariable(value = "id") int id){
+//        this.klSer.deleteKhoaLuan(id);
+//    }
 }

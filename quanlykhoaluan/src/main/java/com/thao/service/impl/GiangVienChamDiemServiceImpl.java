@@ -56,6 +56,21 @@ public class GiangVienChamDiemServiceImpl implements GiangVienChamDiemService{
     public boolean addGiangVienChamDiem(GiangVienChamDiem gv) {
         return this.giangVienChamDiemRepository.addGiangVienChamDiem(gv);
     }
+
+    @Override
+    public Double tongDiem(int klId) {
+        return this.giangVienChamDiemRepository.tongDiem(klId);
+    }
+
+    @Override
+    public Double diemTrungBinh(int klId) {
+        return this.giangVienChamDiemRepository.diemTrungBinh(klId);
+    }
+
+//    @Override
+//    public Long demHoiDongChamKhoaLuan(int hd) {
+//        return this.giangVienChamDiemRepository.demHoiDongChamKhoaLuan(hd);
+//    }
     
     
 }

@@ -38,17 +38,17 @@ public class ApiGiangVienChamDiemController {
         return new ResponseEntity<>(this.gvcds.getDiemKhoaLuan(params), HttpStatus.OK);
     }
     
-    @PostMapping("/giangVienChamDiems/addGiangVienChamDiem/")
-    @ResponseStatus(HttpStatus.OK)
-    public void addGiangVienChamDiem(@ModelAttribute(value="giangVienChamDiem") @Valid GiangVienChamDiem gv, BindingResult rs){
-        if(!rs.hasErrors()){
-            this.gvcds.addGiangVienChamDiem(gv);
-        }
-    }
-    
-    @DeleteMapping("/giangVienChamDiems/delGiangVienChamDiem/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delGiangVienChamDiem(@PathVariable(value = "id") int id){
-        this.gvcds.deleteGiangVienChamDiem(id);
-    }
+//    @PostMapping("/giangVienChamDiems/addGiangVienChamDiem/")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void addGiangVienChamDiem(@ModelAttribute(value="giangVienChamDiem") @Valid GiangVienChamDiem gv, BindingResult rs){
+//        if(!rs.hasErrors()){
+//            this.gvcds.addGiangVienChamDiem(gv);
+//        }
+//    }
+//    
+//    @DeleteMapping("/giangVienChamDiems/delGiangVienChamDiem/{id}/")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delGiangVienChamDiem(@PathVariable(value = "id") int id){
+//        this.gvcds.deleteGiangVienChamDiem(id);
+//    }
 }

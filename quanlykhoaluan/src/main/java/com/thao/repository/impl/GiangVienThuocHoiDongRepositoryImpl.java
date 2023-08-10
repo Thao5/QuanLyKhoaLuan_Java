@@ -146,6 +146,14 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
         }
         return true;
     }
+
+    @Override
+    public Long demGiangVienThuocHoiDong(int hdId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("select count(*) from GiangVienThuocHoiDong where hoiDongId.id = :hdId group by hoiDongId");
+        q.setParameter("hdId", hdId);
+        return (Long) q.getSingleResult();
+    }
     
     
 }

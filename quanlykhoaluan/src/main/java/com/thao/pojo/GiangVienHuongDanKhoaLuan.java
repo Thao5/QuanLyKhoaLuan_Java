@@ -21,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  *
@@ -45,6 +47,7 @@ public class GiangVienHuongDanKhoaLuan implements Serializable {
     @NotNull(message = "{giangVienHuongDan.ngayBatDauHuongDan.nullErr}")
     @Column(name = "ngay_bat_dau_huong_dan")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso=ISO.DATE)
     private Date ngayBatDauHuongDan;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

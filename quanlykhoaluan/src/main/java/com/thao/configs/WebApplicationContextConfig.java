@@ -4,20 +4,25 @@
  */
 package com.thao.configs;
 
+import com.thao.validator.GiangVienHuongDanWebAppValidator;
+import com.thao.formatters.KhoaLuanFormatter;
+import com.thao.formatters.NguoiDungFormatter;
+import com.thao.validator.SoLuongKhoaLuanValidator;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 /**
  *
@@ -29,7 +34,8 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan({
     "com.thao.controllers",
     "com.thao.repository",
-    "com.thao.service"
+    "com.thao.service",
+    "com.thao.validator"
 })
 public class WebApplicationContextConfig implements WebMvcConfigurer {
 
@@ -51,6 +57,12 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new KhoaLuanFormatter());
+        registry.addFormatter(new NguoiDungFormatter());
+    }
+
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource m = new ResourceBundleMessageSource();
@@ -69,5 +81,14 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public Validator getValidator() {
         return validator();
+    }
+
+    @Bean
+    public GiangVienHuongDanWebAppValidator giangVienHuongDanValidator() {
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new SoLuongKhoaLuanValidator());
+        GiangVienHuongDanWebAppValidator validator = new GiangVienHuongDanWebAppValidator();
+        validator.setSpringValidators(springValidators);
+        return validator;
     }
 }

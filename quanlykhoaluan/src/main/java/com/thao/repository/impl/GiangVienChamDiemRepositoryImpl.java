@@ -157,6 +157,31 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         }
         return true;
     }
+
+    @Override
+    public Double tongDiem(int klId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("select sum(diem) from GiangVienChamDiem where khoaLuanId.id = :klId group by khoaLuanId");
+        q.setParameter("klId", klId);
+        return (Double) q.getSingleResult();
+    }
+
+    @Override
+    public Double diemTrungBinh(int klId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("select avg(diem) from GiangVienChamDiem where khoaLuanId.id = :klId group by khoaLuanId");
+        q.setParameter("klId", klId);
+        return (Double) q.getSingleResult();
+    }
+
+//    @Override
+//    public Long demHoiDongChamKhoaLuan(int hd) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        //Query q = s.createNativeQuery("select count(khoa_luan_id) OVER() from giang_vien_cham_diem a join giang_vien_thuoc_hoi_dong b on a.giang_vien_thuoc_hoi_dong_id = b.id join hoi_dong_bao_ve_khoa_luan c on b.hoi_dong_id = c.id where c.id = ? group by c.id, a.khoa_luan_id");
+//        Query q = s.createQuery("select count(distinct khoaLuanId) from GiangVienChamDiem where giangVienThuocHoiDongId.hoiDongId.id = :hd");
+//        q.setParameter("hd", hd);
+//        return (Long) q.getSingleResult();
+//    }
     
     
 }

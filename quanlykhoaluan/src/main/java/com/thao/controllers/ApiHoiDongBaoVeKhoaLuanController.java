@@ -38,16 +38,16 @@ public class ApiHoiDongBaoVeKhoaLuanController {
         return new ResponseEntity<>(this.hdSer.getHoiDongBaoVeKhoaLuans(params), HttpStatus.OK);
     }
     
-    @PostMapping("/hoiDongs/addHoiDong/")
-    @ResponseStatus(HttpStatus.OK)
-    public void addHoiDong(@ModelAttribute(value="hoiDong") @Valid HoiDongBaoVeKhoaLuan hd, BindingResult rs){
-        if(!rs.hasErrors())
-            this.hdSer.addHoiDongBaoVeKhoaLuan(hd);
-    }
-    
-    @DeleteMapping("/hoiDongs/delHoiDong/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delHoiDong(@PathVariable(value = "id") int id){
-        this.hdSer.deleteHoiDong(id);
-    }
+//    @PostMapping("/hoiDongs/addHoiDong/")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void addHoiDong(@ModelAttribute(value="hoiDong") @Valid HoiDongBaoVeKhoaLuan hd, BindingResult rs){
+//        if(!rs.hasErrors())
+//            this.hdSer.addHoiDongBaoVeKhoaLuan(hd);
+//    }
+//    
+//    @DeleteMapping("/hoiDongs/delHoiDong/{id}/")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delHoiDong(@PathVariable(value = "id") int id){
+//        this.hdSer.deleteHoiDong(id);
+//    }
 }

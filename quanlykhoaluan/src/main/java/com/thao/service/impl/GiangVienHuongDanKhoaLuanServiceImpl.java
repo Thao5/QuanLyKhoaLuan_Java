@@ -56,6 +56,11 @@ public class GiangVienHuongDanKhoaLuanServiceImpl implements GiangVienHuongDanKh
     public boolean addGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv) {
         return this.giangVienHuongDanKhoaLuanRepo.addGiangVienHuongDanKhoaLuan(gv);
     }
+
+    @Override
+    public Long demGiangVienHuongDanCuaKhoaLuan(int klId) {
+        return this.giangVienHuongDanKhoaLuanRepo.demGiangVienHuongDanCuaKhoaLuan(klId);
+    }
     
     
 }

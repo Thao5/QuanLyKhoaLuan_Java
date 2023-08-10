@@ -20,4 +20,5 @@ public interface GiangVienThuocHoiDongRepository {
     boolean updateGiangvienThuocHoiDong(GiangVienThuocHoiDong gv);
     GiangVienThuocHoiDong getGiangVienThuocHoiDongById(int id);
     boolean addGiangVienThuocHoiDong(GiangVienThuocHoiDong gv);
+    Long demGiangVienThuocHoiDong(int hdId);
 }

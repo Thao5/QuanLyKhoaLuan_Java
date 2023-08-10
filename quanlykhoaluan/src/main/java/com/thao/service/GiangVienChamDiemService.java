@@ -21,4 +21,7 @@ public interface GiangVienChamDiemService {
     GiangVienChamDiem getGiangVienChamDiemById(int id);
     boolean deleteGiangVienChamDiem(int id);
     boolean addGiangVienChamDiem(GiangVienChamDiem gv);
+    Double tongDiem(int klId);
+    Double diemTrungBinh(int klId);
+//    Long demHoiDongChamKhoaLuan(int hd);
 }

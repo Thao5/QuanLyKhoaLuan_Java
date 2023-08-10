@@ -45,7 +45,7 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
         Query q = s.createQuery("from TieuChiThuocKhoaLuan");
         if(params != null){
             if(params.get("klId")!= null && !params.get("klId").isEmpty()){
-                q = s.createQuery("from TieuChiThuocKhoaLuan where khoaLuanId = :khoaLuanId");
+                q = s.createQuery("from TieuChiThuocKhoaLuan where khoaLuanId.id = :khoaLuanId");
                 q.setParameter("khoaLuanId", params.get("klId")); 
             }
         }
