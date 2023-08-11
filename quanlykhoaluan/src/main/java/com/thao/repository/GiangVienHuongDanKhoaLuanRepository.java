@@ -8,11 +8,13 @@ import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Chung Vu
  */
+//@Repository
 public interface GiangVienHuongDanKhoaLuanRepository {
     List<GiangVienHuongDanKhoaLuan> getGiangVienHuongDans(Map<String, String> params);
     boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDate ngayHuongDan);

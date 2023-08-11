@@ -5,10 +5,13 @@
 package com.thao.validator;
 
 import com.thao.pojo.GiangVienHuongDanKhoaLuan;
+import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -19,7 +22,11 @@ import org.springframework.validation.Validator;
  * @author Chung Vu
  */
 @Component
+//@Order(Ordered.LOWEST_PRECEDENCE)
 public class GiangVienHuongDanWebAppValidator implements Validator {
+    @Autowired
+    private GiangVienHuongDanKhoaLuanRepository gvRepo;
+    
     @Autowired
     private javax.validation.Validator beanValidator;
 

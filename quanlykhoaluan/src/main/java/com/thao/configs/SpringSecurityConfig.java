@@ -6,6 +6,8 @@ package com.thao.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
+import com.thao.repository.impl.GiangVienHuongDanKhoaLuanRepositoryImpl;
 import com.thao.validator.GiangVienHuongDanWebAppValidator;
 //import com.thao.validator.GiangVienHuongDanWebAppValidator;
 import com.thao.validator.SoLuongKhoaLuanValidator;
@@ -19,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

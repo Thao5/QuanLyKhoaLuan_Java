@@ -11,11 +11,14 @@ import com.thao.validator.SoLuongKhoaLuanValidator;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -39,7 +42,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.thao.validator"
 })
 public class WebApplicationContextConfig implements WebMvcConfigurer {
-
+    
+    @Autowired
+    private SoLuongKhoaLuanValidator soLuongKhoaLuanValidator;
+    
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -85,9 +91,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     }
 
     @Bean
+//    @DependsOn("giangVienHuongDanKhoaLuanRepository")
+//    @Order(Ordered.LOWEST_PRECEDENCE)
     public GiangVienHuongDanWebAppValidator giangVienHuongDanValidator() {
         Set<Validator> springValidators = new HashSet<>();
-        springValidators.add(new SoLuongKhoaLuanValidator());
+        springValidators.add(soLuongKhoaLuanValidator);
         GiangVienHuongDanWebAppValidator validator = new GiangVienHuongDanWebAppValidator();
         validator.setSpringValidators(springValidators);
         return validator;

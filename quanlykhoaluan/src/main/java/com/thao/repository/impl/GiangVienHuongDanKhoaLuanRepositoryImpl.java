@@ -25,6 +25,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -35,9 +36,10 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Chung Vu
  */
-@Repository
+@Repository//("giangVienHuongDanKhoaLuanRepository")
 @PropertySource("classpath:configs.properties")
 @Transactional
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDanKhoaLuanRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
