@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -177,9 +178,14 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
     @Override
     public Long demGiangVienHuongDanCuaKhoaLuan(int klId) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("select count(*) from GiangVienHuongDanKhoaLuan where khoaLuanId.id = :klId group by khoaLuanId");
-        q.setParameter("klId", klId);
-        return (Long)q.getSingleResult();
+        try{
+            Query q = s.createQuery("select count(*) from GiangVienHuongDanKhoaLuan where khoaLuanId.id = :klId group by khoaLuanId");
+            q.setParameter("klId", klId);
+            return (Long)q.getSingleResult();
+        }catch(NoResultException ex){
+            return 0L;
+        }
+        
     }
     
     

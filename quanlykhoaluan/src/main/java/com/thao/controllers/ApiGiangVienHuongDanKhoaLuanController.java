@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +34,7 @@ public class ApiGiangVienHuongDanKhoaLuanController {
     @Autowired
     private GiangVienHuongDanKhoaLuanService gvhdkls;
     
+    @CrossOrigin
     @GetMapping("/giangVienHuongDans/")
     public ResponseEntity<List<GiangVienHuongDanKhoaLuan>> list(@RequestBody Map<String,String> params){
         return new ResponseEntity<>(this.gvhdkls.getGiangVienHuongDans(params), HttpStatus.OK);

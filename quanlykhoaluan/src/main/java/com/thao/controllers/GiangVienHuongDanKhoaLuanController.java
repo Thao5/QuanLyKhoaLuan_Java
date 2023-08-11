@@ -50,17 +50,17 @@ public class GiangVienHuongDanKhoaLuanController {
     }
 
     @GetMapping("/giangvienhuongdankhoaluan")
-    public String list(Model model, @RequestParam Map<String, String> params) {
+    public String list(Model model) {
         Map<String, String> tmp = new HashMap<>();
         tmp.put("vaiTro", "GIANG_VIEN");
         model.addAttribute("giangVienHuongDan", new GiangVienHuongDanKhoaLuan());
         model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
-        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(params));
+        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
         return "giangvienhuongdan";
     }
 
     @PostMapping("/giangvienhuongdankhoaluan")
-    public String add(@ModelAttribute(value = "giangVienHuongDan") @Valid GiangVienHuongDanKhoaLuan gv, BindingResult rs, Model model, @RequestParam Map<String, String> params) {
+    public String add(@ModelAttribute(value = "giangVienHuongDan") @Valid GiangVienHuongDanKhoaLuan gv, BindingResult rs, Model model) {
 
         if (!rs.hasErrors()) {
             if (this.giangVienHuongDanKhoaLuanService.addGiangVienHuongDanKhoaLuan(gv)) {
@@ -70,7 +70,7 @@ public class GiangVienHuongDanKhoaLuanController {
             Map<String, String> tmp = new HashMap<>();
             tmp.put("vaiTro", "GIANG_VIEN");
             model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
-            model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(params));
+            model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
         }
         return "giangvienhuongdan";
     }

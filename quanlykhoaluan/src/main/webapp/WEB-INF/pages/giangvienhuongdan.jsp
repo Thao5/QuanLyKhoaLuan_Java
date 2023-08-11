@@ -11,7 +11,7 @@
 <c:url value="/giangvienhuongdankhoaluan" var="action" />
 <form:form modelAttribute="giangVienHuongDan" method="post" action="${action}">
     <div class="form-floating mb-3 mt-3">
-        <form:input type="text" class="form-control" path="ngayBatDauHuongDan" id="ngayBatDauHuongDan" name="ngayBatDauHuongDan"/>
+        <form:input type="date" class="form-control" path="ngayBatDauHuongDan" id="ngayBatDauHuongDan" name="ngayBatDauHuongDan"/>
         <label for="ngayBatDauHuongDan">Ngày bắt đầu hướng dẫn</label>
         <form:errors path="ngayBatDauHuongDan" element="div" cssClass="text-danger"/>
     </div>
