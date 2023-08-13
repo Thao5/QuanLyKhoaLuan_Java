@@ -6,23 +6,13 @@ package com.thao.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
-import com.thao.repository.impl.GiangVienHuongDanKhoaLuanRepositoryImpl;
-import com.thao.validator.GiangVienHuongDanWebAppValidator;
-//import com.thao.validator.GiangVienHuongDanWebAppValidator;
-import com.thao.validator.SoLuongKhoaLuanValidator;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Set;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,7 +21,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
@@ -45,15 +34,16 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
     "com.thao.repository",
     "com.thao.service",
     "com.thao.controllers",
-    "com.thao.validator"
+    "com.thao.validator",
+    "com.thao.utils"
 })
 @PropertySource("classpath:configs.properties")
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private UserDetailsService userDetailsService;
     
-    @Autowired
+    @Resource
     private Environment env;
 
     @Bean

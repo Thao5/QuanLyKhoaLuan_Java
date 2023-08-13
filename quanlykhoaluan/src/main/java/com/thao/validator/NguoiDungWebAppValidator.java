@@ -4,15 +4,11 @@
  */
 package com.thao.validator;
 
-import com.thao.pojo.GiangVienHuongDanKhoaLuan;
-import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
+import com.thao.pojo.NguoiDung;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -22,19 +18,18 @@ import org.springframework.validation.Validator;
  * @author Chung Vu
  */
 @Component
-//@Order(Ordered.LOWEST_PRECEDENCE)
-public class GiangVienHuongDanWebAppValidator implements Validator {
+public class NguoiDungWebAppValidator implements Validator{
     
     @Autowired
     private javax.validation.Validator beanValidator;
 
     private Set<Validator> springValidators = new HashSet<>();
-
+    
     @Override
     public boolean supports(Class<?> clazz) {
-        return GiangVienHuongDanKhoaLuan.class.isAssignableFrom(clazz);
+        return NguoiDung.class.isAssignableFrom(clazz);
     }
-
+    
     @Override
     public void validate(Object target, Errors errors) {
         Set<ConstraintViolation<Object>> constraintViolations = beanValidator.validate(target);
@@ -45,7 +40,7 @@ public class GiangVienHuongDanWebAppValidator implements Validator {
             obj.validate(target, errors);
         }
     }
-
+    
     public void setSpringValidators(
             Set<Validator> springValidators) {
         this.springValidators = springValidators;

@@ -33,7 +33,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
  * @author Chung Vu
  */
 @Controller
-public class GiangVienHuongDanKhoaLuanController {
+@RequestMapping("/admin")
+public class AdminGiangVienHuongDanKhoaLuanController {
 
     @Autowired
     private GiangVienHuongDanKhoaLuanService giangVienHuongDanKhoaLuanService;

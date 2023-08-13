@@ -18,6 +18,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +35,8 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     private NguoiDungRepository nguoiDungRepo;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public List<NguoiDung> getNguoiDungs(Map<String, String> params) {
@@ -39,6 +46,17 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     @Override
     public Boolean addNguoiDung(NguoiDung user) {
         user.setMatKhau(this.passwordEncoder.encode(user.getMatKhau()));
+        if (!user.getImg().isEmpty()) {
+                Map res;
+            try {
+                res = this.cloudinary.uploader().upload(user.getImg().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                user.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(NguoiDungServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            
+        }
         return this.nguoiDungRepo.addNguoiDung(user);
     }
 
@@ -60,6 +78,18 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     @Override
     public boolean updateNguoiDung(NguoiDung nd) {
+        nd.setMatKhau(this.passwordEncoder.encode(nd.getMatKhau()));
+        if (!nd.getImg().isEmpty()) {
+                Map res;
+            try {
+                res = this.cloudinary.uploader().upload(nd.getImg().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                nd.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(NguoiDungServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            
+        }
         return this.nguoiDungRepo.updateNguoiDung(nd);
     }
 

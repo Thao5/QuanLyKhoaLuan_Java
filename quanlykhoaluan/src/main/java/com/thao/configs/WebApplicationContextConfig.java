@@ -7,6 +7,8 @@ package com.thao.configs;
 import com.thao.validator.GiangVienHuongDanWebAppValidator;
 import com.thao.formatters.KhoaLuanFormatter;
 import com.thao.formatters.NguoiDungFormatter;
+import com.thao.validator.NguoiDungValidator;
+import com.thao.validator.NguoiDungWebAppValidator;
 import com.thao.validator.SoLuongKhoaLuanValidator;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
@@ -24,6 +26,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -39,13 +42,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.thao.repository",
     "com.thao.service",
     "com.thao.controllers",
-    "com.thao.validator"
+    "com.thao.validator",
+    "com.thao.utils"
 })
 public class WebApplicationContextConfig implements WebMvcConfigurer {
-    
+
     @Autowired
     private SoLuongKhoaLuanValidator soLuongKhoaLuanValidator;
     
+    @Autowired
+    private NguoiDungValidator nguoiDungValidator;
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -99,5 +106,21 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         GiangVienHuongDanWebAppValidator validator = new GiangVienHuongDanWebAppValidator();
         validator.setSpringValidators(springValidators);
         return validator;
+    }
+    
+    @Bean
+    public NguoiDungWebAppValidator nguoiDungValids(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(nguoiDungValidator);
+        NguoiDungWebAppValidator validator = new NguoiDungWebAppValidator();
+        validator.setSpringValidators(springValidators);
+        return validator;
+    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver= new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
     }
 }

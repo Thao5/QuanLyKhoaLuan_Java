@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:url value="/giangvienhuongdankhoaluan" var="action" />
+<c:url value="/admin/giangvienhuongdankhoaluan" var="action" />
 <form:form modelAttribute="giangVienHuongDan" method="post" action="${action}">
     <div class="form-floating mb-3 mt-3">
         <form:input type="date" class="form-control" path="ngayBatDauHuongDan" id="ngayBatDauHuongDan" name="ngayBatDauHuongDan"/>

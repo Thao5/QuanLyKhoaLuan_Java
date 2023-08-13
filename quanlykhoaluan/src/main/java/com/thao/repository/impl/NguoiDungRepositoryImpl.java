@@ -87,7 +87,6 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
     @Override
     public Boolean addNguoiDung(NguoiDung user) {
         Session s = this.factory.getObject().getCurrentSession();
-        System.out.println(user.getHo());
         Query q = s.createQuery("from NguoiDung where taiKhoan = :taiKhoan OR email = :email or sdt = :sdt");
         q.setParameter("taiKhoan", user.getTaiKhoan());
         q.setParameter("email", user.getEmail());

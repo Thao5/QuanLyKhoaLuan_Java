@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:url value="/tieuchi" var="action" />
+<c:url value="/admin/tieuchi" var="action" />
 <form:form modelAttribute="tieuChi" method="post" action="${action}">
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="noiDungTieuChi" id="noiDungTieuChi" placeholder="Nội dung tiêu chí" name="noiDungTieuChi" />

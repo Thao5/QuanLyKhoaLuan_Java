@@ -14,21 +14,23 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Chung Vu
  */
+@Component
 public class MailUtil {
 
     private static final String chart = "abcdefghijklmnopqrstuvwxyz0123456789";
     public static final String ACCOUNT_SID = "AC0e1b830f7c1a7020bf1c9158586f5669";
     public static final String AUTH_TOKEN = "4f430a5a72fb16b0b44713f3c3899b5e";
 
-    public static void sendMail(String to, String subject, String text) {
-        final String from = "2051050459thao@ou.edu.vn";
+    public void sendMail(String to, String subject, String text) {
+        final String from = "kolotest54@gmail.com";
         String host = "smtp.gmail.com";
-        final String password = "kolonam0706847756";
+        final String password = "wxbqsbbbypcebgxy";
 
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host);

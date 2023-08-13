@@ -8,8 +8,11 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <% request.setCharacterEncoding("UTF-8");%>
 
-<c:url value="/nguoidung" var="action" />
-<form:form modelAttribute="nguoiDung" method="post" action="${action}">
+<c:url value="/admin/addorupdatenguoidung" var="action" />
+<form:form modelAttribute="nguoiDung" method="post" action="${action}" enctype="multipart/form-data">
+    <form:hidden path="id" />
+    <form:hidden path="createdDate" />
+    <form:hidden path="khoaLuanId" />
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="ho" id="ho" placeholder="họ" name="ho" />
         <label for="ho">Họ</label>
@@ -50,8 +53,24 @@
         <form:errors path="vaiTro" element="div" cssClass="text-danger"/>
     </div>
     <div class="form-floating mb-3 mt-3">
-        <form:input type="text" class="form-control" path="avatar" placeholder="Avatar" id="avatar"/>
+        <form:input type="file" class="form-control" path="img" placeholder="Avatar" id="avatar"/>
         <label for="avatar">Avatar</label>
+        <form:errors path="img" element="div" cssClass="text-danger"/>
+    </div>
+<!--    <div class="form-floating mb-3 mt-3">
+        <form:select id="khoaLuanId" name="khoaLuanId" path="khoaLuanId" class="form-select">
+            <c:forEach items="${khoaLuans}" var="kl">
+                <option value="${kl.id}">${kl.tenKhoaLuan}</option>
+            </c:forEach>
+        </form:select>
+        <label for="khoaLuanId" class="form-label">Khóa luận</label>
+        <form:errors path="khoaLuanId" element="div" cssClass="text-danger"/>
+    </div>-->
+    <div class="form-floating mb-3 mt-3">
+        <form:select path="isActive" id="isActive" name="isActive" class="form-select">
+            <form:option value="true"/>
+            <form:option value="false"/>
+        </form:select>
     </div>
     <div class="form-floating mb-3 mt-3">
         <input type="submit" value="Thêm người dùng" class="btn btn-info" />
