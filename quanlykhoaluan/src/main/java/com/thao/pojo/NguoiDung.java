@@ -93,7 +93,6 @@ public class NguoiDung implements Serializable {
     @Column(name = "sdt", unique = true)
     private String sdt;
     @Basic(optional = false)
-    @Size(min = 1, max = 200)
     @Column(name = "avatar")
     private String avatar;
     @Basic(optional = false)

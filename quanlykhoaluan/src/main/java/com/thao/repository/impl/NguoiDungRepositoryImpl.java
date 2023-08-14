@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -217,6 +218,45 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
         Query q = s.createQuery("From NguoiDung where taiKhoan = :tk");
         q.setParameter("tk", username);
         return (NguoiDung) q.getSingleResult();
+    }
+
+    @Override
+    public boolean isAlreadyHaveEmail(String email) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            Query q = s.createQuery("from NguoiDung where email = :email");
+            q.setParameter("email", email);
+            NguoiDung tmp = (NguoiDung) q.getSingleResult();
+            return true;
+        }catch(NoResultException ex){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isAlreadyHaveSDT(String sdt) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            Query q = s.createQuery("from NguoiDung where sdt = :sdt");
+            q.setParameter("sdt", sdt);
+            NguoiDung tmp = (NguoiDung) q.getSingleResult();
+            return true;
+        }catch(NoResultException ex){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isAlreadyHaveTaiKhoan(String tk) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            Query q = s.createQuery("from NguoiDung where taiKhoan = :tk");
+            q.setParameter("tk", tk);
+            NguoiDung tmp = (NguoiDung) q.getSingleResult();
+            return true;
+        }catch(NoResultException ex){
+            return false;
+        }
     }
     
     

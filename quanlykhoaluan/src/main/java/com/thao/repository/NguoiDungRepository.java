@@ -22,4 +22,7 @@ public interface NguoiDungRepository {
     NguoiDung getNguoiDungById(int id);
     boolean deleteNguoiDung(int id);
     NguoiDung getNguoiDungByUsername(String username);
+    boolean isAlreadyHaveEmail(String email);
+    boolean isAlreadyHaveSDT(String sdt);
+    boolean isAlreadyHaveTaiKhoan(String tk);
 }

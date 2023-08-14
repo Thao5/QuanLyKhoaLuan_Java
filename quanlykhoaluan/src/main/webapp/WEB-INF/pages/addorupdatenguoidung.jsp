@@ -10,9 +10,11 @@
 
 <c:url value="/admin/addorupdatenguoidung" var="action" />
 <form:form modelAttribute="nguoiDung" method="post" action="${action}" enctype="multipart/form-data">
+     <form:errors path="*" element="div" cssClass="text-danger"/>
     <form:hidden path="id" />
     <form:hidden path="createdDate" />
     <form:hidden path="khoaLuanId" />
+    <form:hidden path="avatar"/>
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="ho" id="ho" placeholder="họ" name="ho" />
         <label for="ho">Họ</label>
@@ -53,9 +55,18 @@
         <form:errors path="vaiTro" element="div" cssClass="text-danger"/>
     </div>
     <div class="form-floating mb-3 mt-3">
+        <form:select path="isActive" id="isActive" name="isActive" class="form-select">
+            <form:option value="true"/>
+            <form:option value="false"/>
+        </form:select>
+    </div>
+    <div class="form-floating mb-3 mt-3">
         <form:input type="file" class="form-control" path="img" placeholder="Avatar" id="avatar"/>
         <label for="avatar">Avatar</label>
         <form:errors path="img" element="div" cssClass="text-danger"/>
+        <c:if test="${nguoiDung.avatar != null}">
+            <img src="${nguoiDung.avatar}" width="120" />
+        </c:if>
     </div>
 <!--    <div class="form-floating mb-3 mt-3">
         <form:select id="khoaLuanId" name="khoaLuanId" path="khoaLuanId" class="form-select">
@@ -67,12 +78,11 @@
         <form:errors path="khoaLuanId" element="div" cssClass="text-danger"/>
     </div>-->
     <div class="form-floating mb-3 mt-3">
-        <form:select path="isActive" id="isActive" name="isActive" class="form-select">
-            <form:option value="true"/>
-            <form:option value="false"/>
-        </form:select>
-    </div>
-    <div class="form-floating mb-3 mt-3">
-        <input type="submit" value="Thêm người dùng" class="btn btn-info" />
+        <button type="submit" class="btn btn-info">
+            <c:choose>
+                <c:when test="${nguoiDung.id != null}">Cập nhật người dùng</c:when>
+                <c:otherwise>Thêm người dùng</c:otherwise>
+            </c:choose>
+        </button>
     </div>
 </form:form>

@@ -78,7 +78,10 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     @Override
     public boolean updateNguoiDung(NguoiDung nd) {
-        nd.setMatKhau(this.passwordEncoder.encode(nd.getMatKhau()));
+        if(!nd.getMatKhau().equals(this.getNguoiDungById(nd.getId()).getMatKhau())){
+            nd.setMatKhau(this.passwordEncoder.encode(nd.getMatKhau()));
+        }
+        
         if (!nd.getImg().isEmpty()) {
                 Map res;
             try {

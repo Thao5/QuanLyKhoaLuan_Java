@@ -5,6 +5,8 @@
 package com.thao.validator;
 
 import com.thao.pojo.NguoiDung;
+import com.thao.repository.NguoiDungRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -15,6 +17,8 @@ import org.springframework.validation.Validator;
  */
 @Component
 public class NguoiDungValidator implements Validator{
+    @Autowired
+    private NguoiDungRepository ndRepo;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -25,7 +29,33 @@ public class NguoiDungValidator implements Validator{
     public void validate(Object target, Errors errors) {
         NguoiDung nd = (NguoiDung) target;
         if(nd.getImg().isEmpty()){
-            errors.rejectValue("img", "nguoiDung.img.nullErr");
+            if (nd.getAvatar() == null || nd.getAvatar().trim().isEmpty()){
+                    errors.rejectValue("img", "nguoiDung.img.nullErr");
+                }
+        }
+        if(this.ndRepo.isAlreadyHaveEmail(nd.getEmail())){
+            if(nd.getId() == null)
+                errors.rejectValue("email", "nguoiDung.email.alreadyHaveErr");
+            else{
+                if(!this.ndRepo.getNguoiDungById(nd.getId()).getEmail().equals(nd.getEmail()))
+                    errors.rejectValue("email", "nguoiDung.email.alreadyHaveErr");
+            }
+        }
+        if(this.ndRepo.isAlreadyHaveSDT(nd.getSdt())){
+            if(nd.getId() == null)
+                errors.rejectValue("sdt", "nguoiDung.sdt.alreadyHaveErr");
+            else{
+                if(!this.ndRepo.getNguoiDungById(nd.getId()).getSdt().equals(nd.getSdt()))
+                    errors.rejectValue("sdt", "nguoiDung.sdt.alreadyHaveErr");
+            }
+        }
+        if(this.ndRepo.isAlreadyHaveTaiKhoan(nd.getTaiKhoan())){
+            if(nd.getId() == null)
+                errors.rejectValue("taiKhoan", "nguoiDung.taiKhoan.alreadyHaveErr");
+            else{
+                if(!this.ndRepo.getNguoiDungById(nd.getId()).getTaiKhoan().equals(nd.getTaiKhoan()))
+                    errors.rejectValue("taiKhoan", "nguoiDung.taiKhoan.alreadyHaveErr");
+            }
         }
     }
     

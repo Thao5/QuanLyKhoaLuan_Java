@@ -91,7 +91,7 @@ public class AdminNguoiDungController {
                 }
             } else {
                 if (this.nguoiDungService.updateNguoiDung(nd) == true) {
-                    mailUtil.sendMail(nd.getEmail(), "Thông tin của bản đã thay đổi", "Thông tin của bản đã thay đổi");
+                    mailUtil.sendMail(nd.getEmail(), "Your information has been changed!", "Your information has been changed!");
                     return "redirect:/";
                 }
             }
