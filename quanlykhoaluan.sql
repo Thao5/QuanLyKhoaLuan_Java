@@ -11,6 +11,7 @@ create table nguoi_dung(
     avatar nvarchar(200) not null,
     vai_tro nvarchar(10) not null,
     created_date datetime not null,
+    nganh nvarchar(45),
     khoa_luan_id int,
     is_active tinyint not null,
     primary key(id)
@@ -23,6 +24,7 @@ create table khoa_luan_tot_nghiep(
     ngay_ket_thuc datetime,
     giao_vu_id int not null,
     hoi_dong_id int,
+    nganh nvarchar(45) not null,
     primary key(id),
     foreign key(giao_vu_id) references nguoi_dung(id)
 );

@@ -33,7 +33,7 @@ CREATE TABLE `giang_vien_cham_diem` (
   KEY `khoa_luan_id` (`khoa_luan_id`),
   CONSTRAINT `giang_vien_cham_diem_ibfk_1` FOREIGN KEY (`giang_vien_thuoc_hoi_dong_id`) REFERENCES `giang_vien_thuoc_hoi_dong` (`id`),
   CONSTRAINT `giang_vien_cham_diem_ibfk_2` FOREIGN KEY (`khoa_luan_id`) REFERENCES `khoa_luan_tot_nghiep` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `giang_vien_cham_diem` (
 
 LOCK TABLES `giang_vien_cham_diem` WRITE;
 /*!40000 ALTER TABLE `giang_vien_cham_diem` DISABLE KEYS */;
-INSERT INTO `giang_vien_cham_diem` VALUES (3,8,'2023-07-18 00:00:00',1,1);
+INSERT INTO `giang_vien_cham_diem` VALUES (3,8,'2023-07-18 00:00:00',1,1),(4,7,'2023-07-18 00:00:00',2,1);
 /*!40000 ALTER TABLE `giang_vien_cham_diem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `giang_vien_huong_dan_khoa_luan` (
   KEY `khoa_luan_id` (`khoa_luan_id`),
   CONSTRAINT `giang_vien_huong_dan_khoa_luan_ibfk_1` FOREIGN KEY (`nguoi_dung_id`) REFERENCES `nguoi_dung` (`id`),
   CONSTRAINT `giang_vien_huong_dan_khoa_luan_ibfk_2` FOREIGN KEY (`khoa_luan_id`) REFERENCES `khoa_luan_tot_nghiep` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `giang_vien_huong_dan_khoa_luan` (
 
 LOCK TABLES `giang_vien_huong_dan_khoa_luan` WRITE;
 /*!40000 ALTER TABLE `giang_vien_huong_dan_khoa_luan` DISABLE KEYS */;
-INSERT INTO `giang_vien_huong_dan_khoa_luan` VALUES (1,'2023-07-25 00:00:00',1,1);
+INSERT INTO `giang_vien_huong_dan_khoa_luan` VALUES (1,'2023-07-25 00:00:00',1,1),(2,'2023-08-02 00:00:00',17,1),(5,'2023-08-11 00:00:00',17,2);
 /*!40000 ALTER TABLE `giang_vien_huong_dan_khoa_luan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `giang_vien_thuoc_hoi_dong` (
   KEY `hoi_dong_id` (`hoi_dong_id`),
   CONSTRAINT `giang_vien_thuoc_hoi_dong_ibfk_1` FOREIGN KEY (`nguoi_dung_id`) REFERENCES `nguoi_dung` (`id`),
   CONSTRAINT `giang_vien_thuoc_hoi_dong_ibfk_2` FOREIGN KEY (`hoi_dong_id`) REFERENCES `hoi_dong_bao_ve_khoa_luan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `giang_vien_thuoc_hoi_dong` (
 
 LOCK TABLES `giang_vien_thuoc_hoi_dong` WRITE;
 /*!40000 ALTER TABLE `giang_vien_thuoc_hoi_dong` DISABLE KEYS */;
-INSERT INTO `giang_vien_thuoc_hoi_dong` VALUES (1,'test','2023-07-18 00:00:00',1,1);
+INSERT INTO `giang_vien_thuoc_hoi_dong` VALUES (1,'test','2023-07-18 00:00:00',1,1),(2,'THU_KY','2023-07-18 00:00:00',3,1);
 /*!40000 ALTER TABLE `giang_vien_thuoc_hoi_dong` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +121,7 @@ CREATE TABLE `hoi_dong_bao_ve_khoa_luan` (
   `ten_hoi_dong` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_vi_0900_ai_ci NOT NULL,
   `is_active` tinyint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vi_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `hoi_dong_bao_ve_khoa_luan` (
 
 LOCK TABLES `hoi_dong_bao_ve_khoa_luan` WRITE;
 /*!40000 ALTER TABLE `hoi_dong_bao_ve_khoa_luan` DISABLE KEYS */;
-INSERT INTO `hoi_dong_bao_ve_khoa_luan` VALUES (1,'2023-07-18 00:00:00','2023-07-18 00:00:00','test',0);
+INSERT INTO `hoi_dong_bao_ve_khoa_luan` VALUES (1,'2023-07-18 00:00:00','2023-07-18 00:00:00','test',1),(2,'2023-07-18 00:00:00','2023-07-18 00:00:00','test1',1);
 /*!40000 ALTER TABLE `hoi_dong_bao_ve_khoa_luan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,6 +148,7 @@ CREATE TABLE `khoa_luan_tot_nghiep` (
   `ngay_ket_thuc` datetime DEFAULT NULL,
   `giao_vu_id` int NOT NULL,
   `hoi_dong_id` int DEFAULT NULL,
+  `nganh` varchar(45) COLLATE utf8mb4_vi_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `giao_vu_id` (`giao_vu_id`),
   KEY `hoi_dong_id` (`hoi_dong_id`),
@@ -162,7 +163,7 @@ CREATE TABLE `khoa_luan_tot_nghiep` (
 
 LOCK TABLES `khoa_luan_tot_nghiep` WRITE;
 /*!40000 ALTER TABLE `khoa_luan_tot_nghiep` DISABLE KEYS */;
-INSERT INTO `khoa_luan_tot_nghiep` VALUES (1,'kltest','2023-07-18 00:00:00',NULL,1,1),(2,'sada','2023-07-18 00:00:00',NULL,3,1);
+INSERT INTO `khoa_luan_tot_nghiep` VALUES (1,'kltest','2023-07-18 00:00:00',NULL,1,1,'CNTT'),(2,'sada','2023-07-18 00:00:00',NULL,3,1,'KHMT');
 /*!40000 ALTER TABLE `khoa_luan_tot_nghiep` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,13 +187,14 @@ CREATE TABLE `nguoi_dung` (
   `created_date` datetime NOT NULL,
   `khoa_luan_id` int DEFAULT NULL,
   `is_active` tinyint NOT NULL,
+  `nganh` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tai_khoan_UNIQUE` (`tai_khoan`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `sdt_UNIQUE` (`sdt`),
   KEY `khoa_luan_id` (`khoa_luan_id`),
   CONSTRAINT `nguoi_dung_ibfk_1` FOREIGN KEY (`khoa_luan_id`) REFERENCES `khoa_luan_tot_nghiep` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,7 +203,7 @@ CREATE TABLE `nguoi_dung` (
 
 LOCK TABLES `nguoi_dung` WRITE;
 /*!40000 ALTER TABLE `nguoi_dung` DISABLE KEYS */;
-INSERT INTO `nguoi_dung` VALUES (1,'adm','in','admin','admin','123','test','test','test','2023-07-18 00:00:00',2,1),(3,'test5','test5','test5','test5','test5','test5','test5','test5','2023-07-22 00:00:00',NULL,1),(16,'asdsad','asdasd','sadasd','asdasdasd','asdsadas','1234567891','asdasdas','asdsadas','2023-08-02 00:00:00',NULL,1),(17,'thao','thao','thao','already@gmail.com','$2a$10$nB7wfbdw0DHdMXCk.7fJGeZcyo6bDVBGEBFcRP2sHISp4apQuld/2','1234567892','asdasda','admin','2023-08-03 00:00:00',NULL,1);
+INSERT INTO `nguoi_dung` VALUES (1,'adm','in','admin','Hoangbrato@gmail.com','$2a$10$/JiD7FFmOOScNGG5VwyeE.IFAKg0srPq8TGEID6cna8FpEZDNbB5m','1234567897','https://res.cloudinary.com/dtlqyvkvu/image/upload/v1691990852/uyaxwbdtxbrrefc3qt7j.png','GIAO_VU','2023-07-18 00:00:00',2,1,''),(3,'test5','test5','test5','test5','test5','test5','test5','test5','2023-07-22 00:00:00',NULL,1,''),(16,'asdsad','asdasd','sadasd','asdasdasd','$2a$10$nB7wfbdw0DHdMXCk.7fJGeZcyo6bDVBGEBFcRP2sHISp4apQuld/2','1234567891','asdasdas','asdsadas','2023-08-02 00:00:00',NULL,1,''),(17,'thao','thao','thao','already@gmail.com','$2a$10$nB7wfbdw0DHdMXCk.7fJGeZcyo6bDVBGEBFcRP2sHISp4apQuld/2','1234567892','asdasda','GIAO_VU','2023-08-03 00:00:00',NULL,1,''),(18,'asdasd','asdasd','asdada','test5@gmail.com','$2a$10$AoqfZSMSVSPdHhYCBtWxYuFvb66cctUGWcLWTFfoOhF76KDKAeHme','1234567893','sadada','GIAO_VU','2023-08-08 00:00:00',NULL,1,''),(19,'sadsa','dasdasda','asdasda','sadasdsada@gmail.com','$2a$10$44PGTWSDcjW9va4V4cREA.4w4in7wpCnkkzlQj10pN3ZK5CN419vq','1234567894','sdadada','GIANG_VIEN','2023-08-08 00:00:00',NULL,1,''),(20,'ssss','ssss','ssss','ssss@gmail.com','$2a$10$OeEzBX5/nyFib4z/lVRnruUt91tYAU6xbtTaXhTb5RprVMHsvJN9i','1234567895','https://res.cloudinary.com/dtlqyvkvu/image/upload/v1691939502/qb25pwa3szyt5bo4avhe.png','SINH_VIEN','2023-08-13 00:00:00',NULL,1,''),(22,'sadas','asdsad','admin1','test51@gmail.com','$2a$10$24OAPWkII//wmFDniBotKOXeF2BW7YuDnPNgBxfMYfuqb7LVERek2','1234567898','https://res.cloudinary.com/dtlqyvkvu/image/upload/v1691994364/mu9iflbrpl7yu30fbdps.jpg','GIAO_VU','2023-08-14 00:00:00',NULL,1,''),(23,'asdas','asdsa','admin2','test52@gmail.com','$2a$10$Ivg2N8pkbexVH64KE.HRo.ybcsD9r8amvPjwfgpSZJNGO7T0g4l.a','1234567899','https://res.cloudinary.com/dtlqyvkvu/image/upload/v1691995108/nljis7ksqq5aixsiksox.jpg','GIAO_VU','2023-08-14 00:00:00',NULL,1,'');
 /*!40000 ALTER TABLE `nguoi_dung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,4 +270,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-07 12:47:06
+-- Dump completed on 2023-08-15 10:55:32
