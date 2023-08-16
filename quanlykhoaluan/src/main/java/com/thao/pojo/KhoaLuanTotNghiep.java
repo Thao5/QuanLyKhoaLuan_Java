@@ -64,6 +64,7 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKetThuc;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "nganh")
     private String nganh;
