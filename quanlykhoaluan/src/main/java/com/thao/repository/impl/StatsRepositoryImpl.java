@@ -41,11 +41,11 @@ public class StatsRepositoryImpl implements StatsRepository{
     @Override
     public List<Object[]> statTuanSuatTheoNganh(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("select nganh, count(*) from NguoiDung group by nganh");
+        Query q = s.createQuery("select nganh, count(*) from NguoiDung where khoaLuanId is not null group by nganh");
         if(params != null){
             String nganh = params.get("nganh");
             if(nganh != null && !nganh.isEmpty()){
-                q = s.createQuery("select nganh, count(*) from NguoiDung where nganh = :nganh group by nganh");
+                q = s.createQuery("select nganh, count(*) from NguoiDung where nganh = :nganh and khoaLuanId is not null group by nganh");
                 q.setParameter("nganh", nganh);
             }
         }
