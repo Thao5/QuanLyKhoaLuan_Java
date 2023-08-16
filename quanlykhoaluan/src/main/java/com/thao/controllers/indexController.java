@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Chung Vu
  */
 @Controller
-public class IndexController {
+public class indexController {
     @Autowired
     private KhoaLuanTotNghiepService khoaLuanService;
     @Autowired
@@ -33,4 +33,10 @@ public class IndexController {
         model.addAttribute("nguoiDung", nguoiDungService.getNguoiDungs(params));
         return "index";
     }
+    
+    @RequestMapping(value = "/charts")
+    public String chart(Model model){
+        return "charts";
+    }
+   
 }
