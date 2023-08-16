@@ -167,6 +167,10 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository{
                 if(tmp != null && !tmp.isEmpty()){
                     user.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
+                tmp = params.get("nganh");
+                if(tmp != null && !tmp.isEmpty()){
+                    user.setNganh(tmp);
+                }
                 s.update(user);
             }
         }catch(HibernateException ex){

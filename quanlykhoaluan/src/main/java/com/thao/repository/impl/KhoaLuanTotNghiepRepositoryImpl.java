@@ -158,6 +158,10 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
                 if(tmp != null && !tmp.isEmpty()){
                     kl.setHoiDongId(this.hoiDongRepo.getHoiDongById(Integer.parseInt(tmp)));
                 }
+                tmp = params.get("nganh");
+                if(tmp != null && !tmp.isEmpty()){
+                    kl.setNganh(tmp);
+                }
                 s.update(kl);
             }
         }catch(HibernateException ex){

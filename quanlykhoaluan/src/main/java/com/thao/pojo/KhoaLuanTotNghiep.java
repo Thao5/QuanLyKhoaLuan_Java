@@ -63,6 +63,11 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Column(name = "ngay_ket_thuc")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ngayKetThuc;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nganh")
+    private String nganh;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
     @JsonIgnore
     private Set<TieuChiThuocKhoaLuan> tieuChiThuocKhoaLuanSet;
@@ -202,6 +207,20 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Override
     public String toString() {
         return "com.thao.pojo.KhoaLuanTotNghiep[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the nganh
+     */
+    public String getNganh() {
+        return nganh;
+    }
+
+    /**
+     * @param nganh the nganh to set
+     */
+    public void setNganh(String nganh) {
+        this.nganh = nganh;
     }
     
 }

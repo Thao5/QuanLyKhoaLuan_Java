@@ -110,6 +110,10 @@ public class NguoiDung implements Serializable {
     @NotNull
     @Column(name = "is_active")
     private boolean isActive;
+    @Basic(optional = false)
+    @Size(min = 1, max = 45)
+    @Column(name = "nganh")
+    private String nganh;
     @Transient
     private MultipartFile img;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
@@ -326,6 +330,20 @@ public class NguoiDung implements Serializable {
      */
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    /**
+     * @return the nganh
+     */
+    public String getNganh() {
+        return nganh;
+    }
+
+    /**
+     * @param nganh the nganh to set
+     */
+    public void setNganh(String nganh) {
+        this.nganh = nganh;
     }
     
 }
