@@ -67,8 +67,8 @@ public class AdminGiangVienChamDiemController {
         return "addorupdategiangvienchamdiem";
     }
     
-    @GetMapping("/statDTB/{klId}")
-    public ModelAndView statDTB(@PathVariable("klId") int id,@RequestParam Map<String,String> params){
-        return new ModelAndView(new PDFUtil(), "statDTB" , this.statSer.statDTB(id));
+    @GetMapping("/statDTB")
+    public ModelAndView statDTB(@RequestParam Map<String,String> params){
+        return new ModelAndView(new PDFUtil(), "statDTB" , this.statSer.statDTB(Integer.parseInt(params.get("klId"))));
     }
 }

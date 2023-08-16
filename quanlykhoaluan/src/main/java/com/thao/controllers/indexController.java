@@ -39,10 +39,14 @@ public class indexController {
     
     @RequestMapping(value="/")
     public String index(Model model, @RequestParam Map<String,String> params){
+        params.put("nganh", "KHMT");
         List<Object[]> list = this.statSer.statTuanSuatTheoNganh(params);
-        for(Object[] l : list){
-            System.out.printf("%s %d\n", l[0], l[1]);
-        }
+        if(!list.isEmpty())
+            for(Object[] l : list){
+                System.out.printf("%s %d\n", l[0], l[1]);
+            }
+        else
+            System.out.println("không có giá trị");
         return "index";
     }
     
