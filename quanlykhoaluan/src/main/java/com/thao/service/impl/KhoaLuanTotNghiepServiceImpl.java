@@ -5,6 +5,7 @@
 package com.thao.service.impl;
 
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
 import com.thao.service.KhoaLuanTotNghiepService;
 import java.util.List;
@@ -59,6 +60,11 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     @Override
     public boolean deleteKhoaLuan(int id) {
         return this.khoaLuanRepo.deleteKhoaLuan(id);
+    }
+
+    @Override
+    public boolean addKhoaLuanTheoThongTinDangKy(Map<String, ThongTinDangKyKhoaLuan> kls) {
+        return this.khoaLuanRepo.addKhoaLuanTheoThongTinDangKy(kls);
     }
     
     

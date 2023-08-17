@@ -36,5 +36,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/giangvienhuongdan.jsp" />
     </definition>
+    <definition name="thongtindangkykhoaluans" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách khóa luận chờ duyệt" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/thongtindangkykhoaluans.jsp" />
+    </definition>
 </tiles-definitions>
 

@@ -5,6 +5,7 @@
 package com.thao.service;
 
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import java.util.List;
 import java.util.Map;
 
@@ -21,4 +22,5 @@ public interface KhoaLuanTotNghiepService {
     boolean updateKhoaLuan(KhoaLuanTotNghiep kl);
     KhoaLuanTotNghiep getKhoaLuanById(int id);
     boolean deleteKhoaLuan(int id);
+    boolean addKhoaLuanTheoThongTinDangKy(Map<String, ThongTinDangKyKhoaLuan> kls);
 }

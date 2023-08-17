@@ -5,9 +5,11 @@
 package com.thao.repository.impl;
 
 import com.thao.pojo.GiangVienChamDiem;
+import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.NguoiDung;
+import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
 import com.thao.repository.NguoiDungRepository;
@@ -28,7 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -211,5 +216,34 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         return true;
     }
     
-    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean addKhoaLuanTheoThongTinDangKy(Map<String, ThongTinDangKyKhoaLuan> kls) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        
+        try{
+            NguoiDung nd = this.nguoiDungRepo.getNguoiDungByUsername(auth.getName());
+            for(ThongTinDangKyKhoaLuan t: kls.values()){
+                KhoaLuanTotNghiep kl = new KhoaLuanTotNghiep();
+                kl.setTenKhoaLuan(t.getTitle());
+                kl.setGiaoVuId(nd);
+                kl.setNganh(t.getCategories().get("1"));
+                kl.setNgayGhiNhan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                s.save(kl);
+                
+                for(Integer i : t.getMentor().keySet()){
+                    GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
+                    gv.setKhoaLuanId(kl);
+                    gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(i));
+                    gv.setNgayBatDauHuongDan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    s.save(gv);
+                }
+            }
+        }catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

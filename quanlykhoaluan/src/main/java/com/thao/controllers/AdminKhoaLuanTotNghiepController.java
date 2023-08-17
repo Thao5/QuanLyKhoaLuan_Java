@@ -5,8 +5,10 @@
 package com.thao.controllers;
 
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.service.KhoaLuanTotNghiepService;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,5 +51,15 @@ public class AdminKhoaLuanTotNghiepController {
             }
         }
         return "khoaluantotnghieps";
+    }
+    
+    @RequestMapping("/thongtindangkykhoaluans")
+    public String listThongTinDangKy(Model model, HttpSession session){
+        Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) session.getAttribute("kls");
+        if(kls != null)
+            model.addAttribute("thongTinDangKys", kls.values());
+        else
+            model.addAttribute("thongTinDangKys", null);
+        return "thongtindangkykhoaluans";
     }
 }
