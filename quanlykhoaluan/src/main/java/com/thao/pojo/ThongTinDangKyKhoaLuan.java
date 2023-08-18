@@ -16,8 +16,8 @@ import lombok.Data;
 public class ThongTinDangKyKhoaLuan {
     private String studentCode;
     private String title;
-    private Map<Integer,String> categories;
+    private List<Integer> categories;
     private String description;
     private String author;
-    private Map<Integer, String> mentor;
+    private List<Integer> mentor;
 }

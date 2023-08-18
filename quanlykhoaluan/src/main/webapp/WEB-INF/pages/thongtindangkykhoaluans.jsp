@@ -19,12 +19,12 @@
         <tr>
             <td>${kl.studentCode}</td>
             <td>${kl.title}</td>
-            <c:forEach var="n" items="${kl.categories.values()}">
+            <c:forEach var="n" items="${kl.categories}">
                 <td>${n}</td>
             </c:forEach>
             <td>${kl.description}</td>
             <td>${kl.author}</td>
-            <c:forEach var="gv" items="${kl.mentor.values()}">
+            <c:forEach var="gv" items="${kl.mentor}">
                 <td>${gv}</td>
             </c:forEach>
         </tr>

@@ -31,7 +31,7 @@ public class ApiKhoaLuanTotNghiepController {
     private KhoaLuanTotNghiepService klSer;
     
     @CrossOrigin
-    @GetMapping("/khoaLuans/{id}")
+    @GetMapping("/khoaLuans/{id}/")
     public ResponseEntity<KhoaLuanTotNghiep> list(@PathVariable("id") int id){
         return new ResponseEntity<>(this.klSer.getKhoaLuanById(id), HttpStatus.OK);
     }

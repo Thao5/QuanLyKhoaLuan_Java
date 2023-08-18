@@ -228,11 +228,11 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
                 KhoaLuanTotNghiep kl = new KhoaLuanTotNghiep();
                 kl.setTenKhoaLuan(t.getTitle());
                 kl.setGiaoVuId(nd);
-                kl.setNganh(t.getCategories().get("1"));
+                kl.setNganh(Integer.toString(t.getCategories().get(0)));
                 kl.setNgayGhiNhan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
                 s.save(kl);
                 
-                for(Integer i : t.getMentor().keySet()){
+                for(Integer i : t.getMentor()){
                     GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
                     gv.setKhoaLuanId(kl);
                     gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(i));
