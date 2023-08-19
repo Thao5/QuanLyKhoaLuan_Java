@@ -4,6 +4,7 @@
  */
 package com.thao.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import lombok.Data;
@@ -13,7 +14,7 @@ import lombok.Data;
  * @author Chung Vu
  */
 @Data
-public class ThongTinDangKyKhoaLuan {
+public class ThongTinDangKyKhoaLuan implements Serializable{
     private String studentCode;
     private String title;
     private List<Integer> categories;

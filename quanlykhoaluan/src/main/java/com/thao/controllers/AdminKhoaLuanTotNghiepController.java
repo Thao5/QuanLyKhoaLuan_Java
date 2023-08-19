@@ -55,6 +55,9 @@ public class AdminKhoaLuanTotNghiepController {
     
     @RequestMapping("/thongtindangkykhoaluans")
     public String listThongTinDangKy(Model model, HttpSession session){
+        session = ApiThongTinDangKyKhoaLuanController.sessionTmp;
+        if(session.getAttribute("kls") != null) System.out.println("session khong null");
+        else  System.out.println("session null");
         Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) session.getAttribute("kls");
         if(kls != null)
             model.addAttribute("thongTinDangKys", kls.values());

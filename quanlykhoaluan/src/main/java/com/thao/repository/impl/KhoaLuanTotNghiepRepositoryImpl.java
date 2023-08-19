@@ -222,28 +222,28 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         Session s = this.factory.getObject().getCurrentSession();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
-        try{
-            NguoiDung nd = this.nguoiDungRepo.getNguoiDungByUsername(auth.getName());
-            for(ThongTinDangKyKhoaLuan t: kls.values()){
-                KhoaLuanTotNghiep kl = new KhoaLuanTotNghiep();
-                kl.setTenKhoaLuan(t.getTitle());
-                kl.setGiaoVuId(nd);
-                kl.setNganh(Integer.toString(t.getCategories().get(0)));
-                kl.setNgayGhiNhan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                s.save(kl);
-                
-                for(Integer i : t.getMentor()){
-                    GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
-                    gv.setKhoaLuanId(kl);
-                    gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(i));
-                    gv.setNgayBatDauHuongDan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                    s.save(gv);
-                }
-            }
-        }catch (HibernateException ex) {
-            ex.printStackTrace();
-            return false;
-        }
+//        try{
+//            NguoiDung nd = this.nguoiDungRepo.getNguoiDungByUsername(auth.getName());
+//            for(ThongTinDangKyKhoaLuan t: kls.values()){
+//                KhoaLuanTotNghiep kl = new KhoaLuanTotNghiep();
+//                kl.setTenKhoaLuan(t.getTitle());
+//                kl.setGiaoVuId(nd);
+//                kl.setNganh(Integer.toString(t.getCategories().get(0)));
+//                kl.setNgayGhiNhan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+//                s.save(kl);
+//                
+//                for(Integer i : t.getMentor()){
+//                    GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
+//                    gv.setKhoaLuanId(kl);
+//                    gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(i));
+//                    gv.setNgayBatDauHuongDan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+//                    s.save(gv);
+//                }
+//            }
+//        }catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            return false;
+//        }
         return true;
     }
 }
