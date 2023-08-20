@@ -23,6 +23,7 @@ import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -66,9 +67,22 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     }
 
     @Override
-    public boolean updateNguoiDung(int id, Map<String, String> params) {
-        params.put("matKhau",this.passwordEncoder.encode(params.get("matKhau")));
-        return this.nguoiDungRepo.updateNguoiDung(id, params);
+    public NguoiDung updateNguoiDung(int id, Map<String, String> params, MultipartFile avatar) {
+        NguoiDung nd = this.nguoiDungRepo.getNguoiDungById(id);
+        nd.setMatKhau(this.passwordEncoder.encode(params.get("matKhau")));
+        if (!avatar.isEmpty()) {
+           
+            try { 
+                Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                nd.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(NguoiDungServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+        }
+        this.nguoiDungRepo.updateNguoiDung(nd);
+        return nd;
     }
 
     @Override
@@ -114,4 +128,15 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     }
 
+    @Override
+    public NguoiDung getNguoiDungByUsername(String username) {
+        return this.nguoiDungRepo.getNguoiDungByUsername(username);
+    }
+
+    @Override
+    public boolean authNguoiDung(String taiKhoan, String matKhau) {
+        return this.nguoiDungRepo.authNguoiDung(taiKhoan, matKhau);
+    }
+    
+    
 }

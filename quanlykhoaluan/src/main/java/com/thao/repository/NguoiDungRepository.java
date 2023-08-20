@@ -25,4 +25,5 @@ public interface NguoiDungRepository {
     boolean isAlreadyHaveEmail(String email);
     boolean isAlreadyHaveSDT(String sdt);
     boolean isAlreadyHaveTaiKhoan(String tk);
+    boolean authNguoiDung(String taiKhoan, String matKhau);
 }
