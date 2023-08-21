@@ -36,7 +36,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
     "com.thao.service",
     "com.thao.controllers",
     "com.thao.validator",
-    "com.thao.utils"
+    "com.thao.utils",
+    "com.thao.components"
 })
 @PropertySource("classpath:configs.properties")
 @Order(2)
