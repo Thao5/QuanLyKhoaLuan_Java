@@ -74,6 +74,7 @@ public class ApiNguoiDungController {
     @CrossOrigin
     public ResponseEntity<NguoiDung> details(Principal user) {
         NguoiDung u = this.ndSer.getNguoiDungByUsername(user.getName());
+        System.out.println(u.getVaiTro());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
     

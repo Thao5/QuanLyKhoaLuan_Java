@@ -10,6 +10,7 @@ import com.thao.filters.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -82,15 +83,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter{
         // Disable crsf cho đường dẫn /rest/**
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
-        http.authorizeRequests().antMatchers("/api/products/").permitAll();
-        http.authorizeRequests().antMatchers("/api/categories/").permitAll();
-        http.authorizeRequests().antMatchers("/api/users/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
+                .antMatchers(HttpMethod.GET, "/api/**").access("hasAuthority('GIAO_VU') or hasAuthority('GIANG_VIEN') or hasAuthority('SINH_VIEN')")
+                .antMatchers(HttpMethod.POST, "/api/**").access("hasAuthority('GIAO_VU') or hasAuthority('GIANG_VIEN') or hasAuthority('SINH_VIEN')")
+                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasAuthority('GIAO_VU') or hasAuthority('GIANG_VIEN') or hasAuthority('SINH_VIEN')").and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     }
+    //hasAuthority khac voi hasRole do hasRole se tu dong them ROLE_ vao dang truoc truong` role con hasAuthority thi khong
 }

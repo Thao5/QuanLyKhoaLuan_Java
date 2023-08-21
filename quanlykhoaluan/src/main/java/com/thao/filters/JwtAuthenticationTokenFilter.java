@@ -29,7 +29,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
  * @author Chung Vu
  */
 public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
-    private final static String TOKEN_HEADER = "authorization";
+    private final static String TOKEN_HEADER = "Authorization";
     @Autowired
     private JwtService jwtService;
     @Autowired
