@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <section class="container">
+    <a href="<c:url value="/admin/addorupdatenguoidung"/>" title="Thêm người dùng" class="btn btn-outline-success">+</a>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -21,6 +22,8 @@
                 <th>Ngày tạo</th>
                 <th>Còn hoạt động</th>
                 <th>Ngành</th>
+                <th></th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -102,6 +105,14 @@
                             </div>
                         </td>
                     </c:if>
+                    <td>
+                        <a href="<c:url value="/admin/addorupdatenguoidung/${nd.id}"/>" title="Cập nhật người dùng" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-wrench"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;" title="Cập nhật người dùng" class="btn btn-outline-danger">-</a>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
