@@ -27,6 +27,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -47,7 +48,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     @Autowired
     private SoLuongKhoaLuanValidator soLuongKhoaLuanValidator;
-    
+
     @Autowired
     private NguoiDungValidator nguoiDungValidator;
 
@@ -62,9 +63,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 //            .allowedOrigins("http://localhost:3000")
 //            .allowedMethods("GET", "POST", "OPTIONS", "PUT");
 //    }
-    
-    
-
 //    @Bean
 //    public InternalResourceViewResolver getInternalResourceViewResolver(){
 //        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -76,6 +74,16 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Bean
     public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("/css/");
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("/assets/img/");
+        registry.addResourceHandler("/demo/**")
+                .addResourceLocations("/assets/demo/");
     }
 
     @Override
@@ -114,9 +122,9 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         validator.setSpringValidators(springValidators);
         return validator;
     }
-    
+
     @Bean
-    public NguoiDungWebAppValidator nguoiDungValids(){
+    public NguoiDungWebAppValidator nguoiDungValids() {
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(nguoiDungValidator);
         NguoiDungWebAppValidator validator = new NguoiDungWebAppValidator();
@@ -126,7 +134,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver= new CommonsMultipartResolver();
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("UTF-8");
         return resolver;
     }
