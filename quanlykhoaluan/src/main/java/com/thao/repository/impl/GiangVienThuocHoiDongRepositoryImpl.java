@@ -11,6 +11,7 @@ import com.thao.repository.GiangVienThuocHoiDongRepository;
 import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
 import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,12 +67,12 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
     }
 
     @Override
-    public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDate ngayVaoHoiDong, int giangVienId, int hoiDongId) {
+    public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDateTime ngayVaoHoiDong, int giangVienId, int hoiDongId) {
         Session s = this.factory.getObject().getCurrentSession();
         try{
             GiangVienThuocHoiDong gv = new GiangVienThuocHoiDong();
             gv.setVaiTro(vaiTro);
-            gv.setNgayVaoHoiDong(Date.from(ngayVaoHoiDong.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            gv.setNgayVaoHoiDong(Date.from(ngayVaoHoiDong.atZone(ZoneId.systemDefault()).toInstant()));
             Query q1 = s.createQuery("from NguoiDung where id = :giangVienId");
             q1.setParameter("giangVienId", giangVienId);
             Query q2 = s.createQuery("from HoiDongBaoVeKhoaLuan where id = :hoiDongId");

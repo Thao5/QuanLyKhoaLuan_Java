@@ -48,13 +48,13 @@ public class AdminNguoiDungController {
 
     @Autowired
     private NguoiDungService nguoiDungService;
-    
+
     @Autowired
     private MailUtil mailUtil;
-    
+
     @Autowired
     private NguoiDungWebAppValidator nguoiDungValids;
-    
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(nguoiDungValids);
@@ -78,6 +78,11 @@ public class AdminNguoiDungController {
         listNganh.add("Môi trường");
         listNganh.add("Tâm lý học");
         model.addAttribute("listNganh", listNganh);
+        List<String> listVaiTro = new ArrayList<>();
+        listVaiTro.add("GIAO_VU");
+        listVaiTro.add("GIANG_VIEN");
+        listVaiTro.add("SINH_VIEN");
+        model.addAttribute("listVaiTro", listVaiTro);
         return "addorupdatenguoidung";
     }
 
@@ -119,7 +124,11 @@ public class AdminNguoiDungController {
         listNganh.add("Môi trường");
         listNganh.add("Tâm lý học");
         model.addAttribute("listNganh", listNganh);
-
+        List<String> listVaiTro = new ArrayList<>();
+        listVaiTro.add("GIAO_VU");
+        listVaiTro.add("GIANG_VIEN");
+        listVaiTro.add("SINH_VIEN");
+        model.addAttribute("listVaiTro", listVaiTro);
         return "addorupdatenguoidung";
     }
 
@@ -135,12 +144,17 @@ public class AdminNguoiDungController {
         listNganh.add("Môi trường");
         listNganh.add("Tâm lý học");
         model.addAttribute("listNganh", listNganh);
+        List<String> listVaiTro = new ArrayList<>();
+        listVaiTro.add("GIAO_VU");
+        listVaiTro.add("GIANG_VIEN");
+        listVaiTro.add("SINH_VIEN");
+        model.addAttribute("listVaiTro", listVaiTro);
         return "addorupdatenguoidung";
     }
-    
+
     @DeleteMapping("/deletenguoidung/{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteNguoiDung(@PathVariable("id") int id){
+    public void deleteNguoiDung(@PathVariable("id") int id) {
         this.nguoiDungService.deleteNguoiDung(id);
     }
 

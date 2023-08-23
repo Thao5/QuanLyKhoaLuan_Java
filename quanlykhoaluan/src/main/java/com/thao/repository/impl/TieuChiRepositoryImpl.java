@@ -50,10 +50,6 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
             if(kw != null && !kw.isEmpty()){
                 predicates.add(b.like(root.get("noiDungTieuChi"), String.format("%%%s%%", kw)));
             }
-            String klId = params.get("klId");
-            if(klId != null && !klId.isEmpty()){
-                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(klId)));
-            }
             String tieuChiId = params.get("tieuChiId");
             if(tieuChiId != null && !tieuChiId.isEmpty()){
                 predicates.add(b.equal(root.get("id"), Integer.parseInt(tieuChiId)));

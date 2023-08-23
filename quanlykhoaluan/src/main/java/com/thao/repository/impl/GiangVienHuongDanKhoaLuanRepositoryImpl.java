@@ -11,6 +11,7 @@ import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
 import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,7 +87,7 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
     }
 
     @Override
-    public boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId,LocalDate ngayHuongDan) {
+    public boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId,LocalDateTime ngayHuongDan) {
         Session s = this.factory.getObject().getCurrentSession();
         try{
             GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
@@ -96,7 +97,7 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
             q2.setParameter("khoaLuanId", khoaLuanId);
             gv.setNguoiDungId((NguoiDung)q1.getSingleResult());
             gv.setKhoaLuanId((KhoaLuanTotNghiep)q2.getSingleResult());
-            gv.setNgayBatDauHuongDan(Date.from(ngayHuongDan.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            gv.setNgayBatDauHuongDan(Date.from(ngayHuongDan.atZone(ZoneId.systemDefault()).toInstant()));
             s.save(gv);
             
         }catch(HibernateException ex){

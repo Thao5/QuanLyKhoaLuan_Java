@@ -6,6 +6,7 @@ package com.thao.repository;
 
 import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Repository;
 //@Repository
 public interface GiangVienHuongDanKhoaLuanRepository {
     List<GiangVienHuongDanKhoaLuan> getGiangVienHuongDans(Map<String, String> params);
-    boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDate ngayHuongDan);
+    boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDateTime ngayHuongDan);
     boolean updateGiangVienHuongDanKhoaLuan(int id, Map<String, String> params);
     boolean updateGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv);
     GiangVienHuongDanKhoaLuan getGiangVienHuongDanKhoaLuanById(int id);

@@ -8,6 +8,7 @@ import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.repository.GiangVienThuocHoiDongRepository;
 import com.thao.service.GiangVienThuocHoiDongService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class GiangVienThuocHoiDongServiceImpl implements GiangVienThuocHoiDongSe
     }
 
     @Override
-    public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDate ngayVaoHoiDong, int giangVienId, int hoiDongId) {
+    public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDateTime ngayVaoHoiDong, int giangVienId, int hoiDongId) {
         return this.giangVienThuocHoiDongRepository.addGiangVienThuocHoiDong(vaiTro, ngayVaoHoiDong, giangVienId, hoiDongId);
     }
 

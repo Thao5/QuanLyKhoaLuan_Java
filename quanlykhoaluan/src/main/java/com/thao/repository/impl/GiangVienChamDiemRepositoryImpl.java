@@ -11,6 +11,7 @@ import com.thao.repository.GiangVienChamDiemRepository;
 import com.thao.repository.GiangVienThuocHoiDongRepository;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,12 +70,12 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
     }
 
     @Override
-    public boolean addGiangVienChamDiem(float diem, LocalDate ngayCham, int giangVienThuocHoiDongId, int khoaLuanId) {
+    public boolean addGiangVienChamDiem(float diem, LocalDateTime ngayCham, int giangVienThuocHoiDongId, int khoaLuanId) {
         Session s = this.factory.getObject().getCurrentSession();
         try{
             GiangVienChamDiem gv = new GiangVienChamDiem();
             gv.setDiem(diem);
-            gv.setNgayCham(Date.from(ngayCham.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            gv.setNgayCham(Date.from(ngayCham.atZone(ZoneId.systemDefault()).toInstant()));
             Query q1 = s.createQuery("from GiangVienThuocHoiDong where id = :giangVienThuocHoiDongId");
             q1.setParameter("giangVienThuocHoiDongId", giangVienThuocHoiDongId);
             Query q2 = s.createQuery("from KhoaLuanTotNghiep where id = :khoaLuanId");
@@ -101,7 +102,7 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
                 }
                 tmp = params.get("ngayCham");
                 if(tmp != null && !tmp.isEmpty()){
-                    gv.setNgayCham(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    gv.setNgayCham(Date.from(LocalDateTime.parse(tmp).atZone(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("giangVienThuocHoiDongId");
                 if(tmp != null && !tmp.isEmpty()){

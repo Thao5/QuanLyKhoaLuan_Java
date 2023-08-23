@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -52,11 +53,13 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
     @NotNull(message = "{hoiDong.ngayThanhLap.nullErr}")
     @Column(name = "ngay_thanh_lap")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private Date ngayThanhLap;
     @Basic(optional = false)
     @NotNull(message = "{hoiDong.ngayKhoa.nullErr}")
     @Column(name = "ngay_khoa")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private Date ngayKhoa;
     @Basic(optional = false)
     @NotNull(message = "{hoiDong.tenHoiDong.nullErr}")

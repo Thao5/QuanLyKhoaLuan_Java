@@ -34,20 +34,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 @RequestMapping("/admin")
 public class AdminKhoaLuanTotNghiepController {
+
     @Autowired
     private KhoaLuanTotNghiepService klSer;
-    
+
     @Autowired
     private HoiDongBaoVeKhoaLuanService hdSer;
-    
+
     @RequestMapping("/khoaluantotnghieps")
-    public String list(@RequestParam Map<String, String> params, Model model){
+    public String list(@RequestParam Map<String, String> params, Model model) {
         model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(params));
         return "khoaluantotnghieps";
     }
-    
+
     @GetMapping("/addorupdatekhoaluan/{id}")
-    public String kl(Model model, @PathVariable("id") int id){
+    public String kl(Model model, @PathVariable("id") int id) {
         model.addAttribute("khoaLuan", this.klSer.getKhoaLuanById(id));
         model.addAttribute("hoiDongs", this.hdSer.getHoiDongBaoVeKhoaLuans(null));
         List<String> listNganh = new ArrayList<>();
@@ -61,17 +62,17 @@ public class AdminKhoaLuanTotNghiepController {
         model.addAttribute("listNganh", listNganh);
         return "addorupdatekhoaluan";
     }
-    
+
     @GetMapping("/addorupdatekhoaluan")
-    public String addKl(Model model){
+    public String addKl(Model model) {
         model.addAttribute("khoaLuan", new KhoaLuanTotNghiep());
         return "addorupdatekhoaluan";
     }
-    
+
     @PostMapping("/addorupdatekhoaluan")
-    public String addorupdate(@ModelAttribute(value = "khoaLuan") @Valid KhoaLuanTotNghiep kl, BindingResult rs, Model model){
-        if(!rs.hasErrors()){
-            if(this.klSer.updateKhoaLuan(kl)){
+    public String addOrUpdate(@ModelAttribute(value = "khoaLuan") @Valid KhoaLuanTotNghiep kl, BindingResult rs, Model model) {
+        if (!rs.hasErrors()) {
+            if (this.klSer.updateKhoaLuan(kl)) {
                 return "redirect:/";
             }
         }
@@ -87,23 +88,25 @@ public class AdminKhoaLuanTotNghiepController {
         model.addAttribute("hoiDongs", this.hdSer.getHoiDongBaoVeKhoaLuans(null));
         return "addorupdatekhoaluan";
     }
-    
+
     @RequestMapping("/thongtindangkykhoaluans")
-    public String listThongTinDangKy(Model model, HttpSession session){
+    public String listThongTinDangKy(Model model, HttpSession session) {
         session = ApiThongTinDangKyKhoaLuanController.sessionTmp;
-        if(session.getAttribute("kls") != null) System.out.println("session khong null");
-        else  System.out.println("session null");
-        Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) session.getAttribute("kls");
-        if(kls != null)
-            model.addAttribute("thongTinDangKys", kls.values());
-        else
-            model.addAttribute("thongTinDangKys", null);
+        if (session != null) {
+            if (session.getAttribute("kls") != null) {
+                Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) session.getAttribute("kls");
+                if (kls != null) {
+                    model.addAttribute("thongTinDangKys", kls.values());
+                }
+            }
+        }
+        model.addAttribute("thongTinDangKys", null);
         return "thongtindangkykhoaluans";
     }
-    
+
     @DeleteMapping("/deletekhoaluan/{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteKhoaLuan(@PathVariable("id") int id){
+    public void deleteKhoaLuan(@PathVariable("id") int id) {
         this.klSer.deleteKhoaLuan(id);
     }
 }

@@ -8,6 +8,7 @@ import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
 import com.thao.service.GiangVienHuongDanKhoaLuanService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class GiangVienHuongDanKhoaLuanServiceImpl implements GiangVienHuongDanKh
     }
 
     @Override
-    public boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDate ngayHuongDan) {
+    public boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDateTime ngayHuongDan) {
         return this.giangVienHuongDanKhoaLuanRepo.addGiangVienHuongDanKhoaLuan(giangVienId, khoaLuanId, ngayHuongDan);
     }
 

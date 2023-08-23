@@ -14,6 +14,7 @@ import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
 import com.thao.repository.KhoaLuanTotNghiepRepository;
 import com.thao.repository.NguoiDungRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,11 +150,11 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
                 }
                 tmp = params.get("ngayGhiNhan");
                 if(tmp != null && !tmp.isEmpty()){
-                    kl.setNgayGhiNhan(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    kl.setNgayGhiNhan(Date.from(LocalDateTime.parse(tmp).atZone(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("ngayKetThuc");
                 if(tmp != null && !tmp.isEmpty()){
-                    kl.setNgayGhiNhan(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    kl.setNgayGhiNhan(Date.from(LocalDateTime.parse(tmp).atZone(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("giaoVuId");
                 if(tmp != null && !tmp.isEmpty()){

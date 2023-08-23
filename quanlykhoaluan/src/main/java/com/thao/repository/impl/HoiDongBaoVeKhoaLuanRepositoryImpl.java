@@ -8,6 +8,7 @@ import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.repository.HoiDongBaoVeKhoaLuanRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,9 +48,10 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
         CriteriaQuery<HoiDongBaoVeKhoaLuan> q = b.createQuery(HoiDongBaoVeKhoaLuan.class);
         Root root = q.from(HoiDongBaoVeKhoaLuan.class);
         q.select(root);
-        
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.isTrue(root.<Boolean>get("isActive")));
         if(params != null){
-            List<Predicate> predicates = new ArrayList<>();
+            
             String kw = params.get("hoiDongId");
             if(kw != null && !kw.isEmpty()){
                 predicates.add(b.equal(root.get("id"), Integer.parseInt(kw)));
@@ -91,11 +93,11 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
                 HoiDongBaoVeKhoaLuan hd = getHoiDongById(id);
                 String tmp = params.get("ngayThanhLap");
                 if(tmp != null && !tmp.isEmpty()){
-                    hd.setNgayThanhLap(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    hd.setNgayThanhLap(Date.from(LocalDateTime.parse(tmp).atZone(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("ngayKhoa");
                 if(tmp != null && !tmp.isEmpty()){
-                    hd.setNgayKhoa(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    hd.setNgayKhoa(Date.from(LocalDateTime.parse(tmp).atZone(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("tenHoiDong");
                 if(tmp != null && !tmp.isEmpty()){

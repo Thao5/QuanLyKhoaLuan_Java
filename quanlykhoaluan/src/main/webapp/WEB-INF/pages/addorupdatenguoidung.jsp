@@ -47,9 +47,14 @@
         </div>
         <div class="form-floating mb-3 mt-3">
             <form:select id="vaiTro" name="vaiTro" path="vaiTro" class="form-select">
-                <option value="GIAO_VU" selected>Giáo vụ</option>
-                <option value="GIANG_VIEN">Giảng Viên</option>
-                <option value="SINH_VIEN">Sinh Viên</option>
+                <c:forEach items="${listVaiTro}" var="vaiTro">
+                    <c:choose>
+                        <c:when test="${nguoiDung.vaiTro == vaiTro}"><option value="${vaiTro}" selected>${vaiTro}</option></c:when>
+                        <c:otherwise>
+                            <option value="${vaiTro}">${vaiTro}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
             </form:select>
             <label for="vaiTro">Vai trò</label>
             <form:errors path="vaiTro" element="div" cssClass="text-danger"/>

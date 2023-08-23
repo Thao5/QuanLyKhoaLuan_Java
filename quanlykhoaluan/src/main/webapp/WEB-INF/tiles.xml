@@ -26,10 +26,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addorupdatenguoidung.jsp" />
     </definition>
-    <definition name="tieuchi" extends="baseLayout">
+    <definition name="addorupdatetieuchi" extends="baseLayout">
         <put-attribute name="title" value="Tiêu chí" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/tieuchi.jsp" />
+                       value="/WEB-INF/pages/addorupdatetieuchi.jsp" />
     </definition>
     <definition name="giangvienhuongdan" extends="baseLayout">
         <put-attribute name="title" value="Giảng viên hướng dẫn khóa luận" />
@@ -55,6 +55,21 @@
         <put-attribute name="title" value="Danh sách khóa luận" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/addorupdatekhoaluan.jsp" />
+    </definition>
+    <definition name="tieuchi" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách tiêu chí" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/tieuchi.jsp" />
+    </definition>
+    <definition name="hoidongbaove" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách hội đồng" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/hoidongbaovekhoaluan.jsp" />
+    </definition>
+    <definition name="addorupdatehoidong" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách hội đồng" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/addorupdatehoidong.jsp" />
     </definition>
 </tiles-definitions>
 

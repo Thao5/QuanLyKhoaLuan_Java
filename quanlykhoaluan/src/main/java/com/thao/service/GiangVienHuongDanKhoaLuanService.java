@@ -6,6 +6,7 @@ package com.thao.service;
 
 import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public interface GiangVienHuongDanKhoaLuanService {
     List<GiangVienHuongDanKhoaLuan> getGiangVienHuongDans(Map<String, String> params);
-    boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDate ngayHuongDan);
+    boolean addGiangVienHuongDanKhoaLuan(int giangVienId, int khoaLuanId, LocalDateTime ngayHuongDan);
     boolean updateGiangVienHuongDanKhoaLuan(int id, Map<String, String> params);
     boolean updateGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv);
     GiangVienHuongDanKhoaLuan getGiangVienHuongDanKhoaLuanById(int id);

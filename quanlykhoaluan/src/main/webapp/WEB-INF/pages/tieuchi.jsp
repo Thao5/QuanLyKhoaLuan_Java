@@ -1,24 +1,41 @@
 <%-- 
     Document   : tieuchi
-    Created on : Jul 23, 2023, 8:21:39 PM
+    Created on : Aug 23, 2023, 10:42:44 PM
     Author     : Chung Vu
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:url value="/admin/tieuchi" var="action" />
-<form:form modelAttribute="tieuChi" method="post" action="${action}">
-    <div class="form-floating mb-3 mt-3">
-        <form:input type="text" class="form-control" path="noiDungTieuChi" id="noiDungTieuChi" placeholder="Nội dung tiêu chí" name="noiDungTieuChi" />
-        <label for="noiDungTieuChi">Nội dung tiêu chí</label>
-    </div>
-    <div class="form-floating mb-3 mt-3">
-        <form:input type="number" step="0.01" class="form-control" path="diem" id="diem" placeholder="Điểm" name="diem" />
-        <label for="diem">Điểm</label>
-    </div>
-    <div class="form-floating mb-3 mt-3">
-        <input type="submit" value="Thêm tiêu chí" class="btn btn-info" />
-    </div>
-</form:form>
+<section class="container">
+    <a href="<c:url value="/admin/addorupdatetieuchi"/>" title="Thêm tiêu chí" class="btn btn-outline-success">+</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nội dung tiêu chí</th>
+                <th>Điểm</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${tieuChis}" var="tc">
+                <tr>
+                    <td>${tc.id}</td>
+                    <td>${tc.noiDungTieuChi}</td>
+                    <td>${tc.diem}</td>
+                    <td>
+                        <a href="<c:url value="/admin/addorupdatetieuchi/${tc.id}"/>" title="Cập nhật tiêu chí" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-wrench"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <button onclick="del('<c:url value="/admin/deletetieuchi/${tc.id}/"/>')" title="Xóa tiêu chí" class="btn btn-outline-danger">-</button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</section>
+<script src="<c:url value="/js/del.js" />"></script>

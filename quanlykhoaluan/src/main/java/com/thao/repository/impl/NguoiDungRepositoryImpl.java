@@ -100,7 +100,7 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository {
             NguoiDung tmp = (NguoiDung) q.getSingleResult();
 
         } catch (Exception ex) {
-            user.setCreatedDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            user.setCreatedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
             user.setIsActive(true);
             s.save(user);
             return true;
