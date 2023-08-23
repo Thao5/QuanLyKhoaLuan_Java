@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -110,6 +112,12 @@ public class AdminNguoiDungController {
     public String updateNguoiDung(@PathVariable("id") int id, Model model) {
         model.addAttribute("nguoiDung", this.nguoiDungService.getNguoiDungById(id));
         return "addorupdatenguoidung";
+    }
+    
+    @DeleteMapping("/deletenguoidung/{id}/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteNguoiDung(@PathVariable("id") int id){
+        this.nguoiDungService.deleteNguoiDung(id);
     }
 
 //    @RequestMapping("/deleteNguoiDung/{id}")

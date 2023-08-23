@@ -111,10 +111,11 @@
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:;" title="Cập nhật người dùng" class="btn btn-outline-danger">-</a>
+                        <button onclick="delNguoiDung('<c:url value="/admin/deletenguoidung/${nd.id}/"/>')" title="Xóa người dùng" class="btn btn-outline-danger">-</button>
                     </td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
 </section>
+    <script src="<c:url value="/js/delNguoiDung.js" />"></script>

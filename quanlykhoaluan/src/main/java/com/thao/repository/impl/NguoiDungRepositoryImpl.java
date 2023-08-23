@@ -56,9 +56,11 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository {
         CriteriaQuery<NguoiDung> q = b.createQuery(NguoiDung.class);
         Root root = q.from(NguoiDung.class);
         q.select(root);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(b.isTrue(root.<Boolean>get("isActive")));
 
         if (params != null) {
-            List<Predicate> predicates = new ArrayList<>();
+            
             String kw = params.get("kw");
             if (kw != null && !kw.isEmpty()) {
                 predicates.add(b.like(root.get("ten"), String.format("%%%s%%", kw)));
