@@ -199,6 +199,12 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         Session s = this.factory.getObject().getCurrentSession();
         try{
             KhoaLuanTotNghiep kl = this.getKhoaLuanById(id);
+            if(!kl.getNguoiDungSet().isEmpty()){
+                for(NguoiDung nd: kl.getNguoiDungSet()){
+                    nd.setKhoaLuanId(null);
+                    s.update(nd);
+                }
+            }
             if(!kl.getGiangVienChamDiemSet().isEmpty()){
                 kl.getGiangVienChamDiemSet().forEach((gv) -> s.delete(gv));
             }

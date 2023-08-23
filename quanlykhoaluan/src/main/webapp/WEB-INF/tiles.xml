@@ -46,5 +46,15 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/nguoidung.jsp" />
     </definition>
+    <definition name="khoaluantotnghieps" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách khóa luận" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/khoaluantotnghiep.jsp" />
+    </definition>
+    <definition name="addorupdatekhoaluan" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách khóa luận" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/addorupdatekhoaluan.jsp" />
+    </definition>
 </tiles-definitions>
 

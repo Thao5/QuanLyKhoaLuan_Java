@@ -12,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +27,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -66,11 +69,20 @@ public class AdminNguoiDungController {
     @GetMapping("/addorupdatenguoidung")
     public String nd(Model model) {
         model.addAttribute("nguoiDung", new NguoiDung());
+        List<String> listNganh = new ArrayList<>();
+        listNganh.add("CNTT");
+        listNganh.add("KHMT");
+        listNganh.add("HTQLTT");
+        listNganh.add("Anh ngữ");
+        listNganh.add("Nhật ngữ");
+        listNganh.add("Môi trường");
+        listNganh.add("Tâm lý học");
+        model.addAttribute("listNganh", listNganh);
         return "addorupdatenguoidung";
     }
 
     @PostMapping("/addorupdatenguoidung")
-    public String add(@ModelAttribute(value = "nguoiDung") @Valid NguoiDung nd, BindingResult rs) {
+    public String add(@ModelAttribute(value = "nguoiDung") @Valid NguoiDung nd, BindingResult rs, Model model) {
 //        System.out.println(nd.getId());
 //        for (Object object : rs.getAllErrors()) {
 //            if (object instanceof FieldError) {
@@ -98,19 +110,31 @@ public class AdminNguoiDungController {
                 }
             }
         }
+        List<String> listNganh = new ArrayList<>();
+        listNganh.add("CNTT");
+        listNganh.add("KHMT");
+        listNganh.add("HTQLTT");
+        listNganh.add("Anh ngữ");
+        listNganh.add("Nhật ngữ");
+        listNganh.add("Môi trường");
+        listNganh.add("Tâm lý học");
+        model.addAttribute("listNganh", listNganh);
 
         return "addorupdatenguoidung";
-    }
-
-    @RequestMapping("/ganKhoaLuanChoSinhVien")
-    public String ganKhoaLuanChoSinhVien(@RequestParam Map<String, String> params) {
-        this.nguoiDungService.ganKhoaLuanChoSinhVien(Integer.parseInt(params.get("userId")), Integer.parseInt(params.get("khoaLuanId")));
-        return "index";
     }
 
     @GetMapping("/addorupdatenguoidung/{id}")
     public String updateNguoiDung(@PathVariable("id") int id, Model model) {
         model.addAttribute("nguoiDung", this.nguoiDungService.getNguoiDungById(id));
+        List<String> listNganh = new ArrayList<>();
+        listNganh.add("CNTT");
+        listNganh.add("KHMT");
+        listNganh.add("HTQLTT");
+        listNganh.add("Anh ngữ");
+        listNganh.add("Nhật ngữ");
+        listNganh.add("Môi trường");
+        listNganh.add("Tâm lý học");
+        model.addAttribute("listNganh", listNganh);
         return "addorupdatenguoidung";
     }
     

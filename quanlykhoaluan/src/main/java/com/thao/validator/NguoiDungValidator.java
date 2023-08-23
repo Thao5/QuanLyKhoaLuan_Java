@@ -57,6 +57,9 @@ public class NguoiDungValidator implements Validator{
                     errors.rejectValue("taiKhoan", "nguoiDung.taiKhoan.alreadyHaveErr");
             }
         }
+        if(nd.getVaiTro().equals("SINH_VIEN") && nd.getNganh()==null){
+            errors.rejectValue("nganh", "nguoiDung.nganh.nullErr");
+        }
     }
     
 }

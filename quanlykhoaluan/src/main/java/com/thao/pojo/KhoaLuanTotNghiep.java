@@ -28,6 +28,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -59,12 +60,14 @@ public class KhoaLuanTotNghiep implements Serializable {
     @NotNull(message = "{khoaLuan.ngayGhiNhan.nullErr}")
     @Column(name = "ngay_ghi_nhan")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private Date ngayGhiNhan;
     @Column(name = "ngay_ket_thuc")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private Date ngayKetThuc;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{khoaLuan.nganh.nullErr}")
     @Size(min = 1, max = 45)
     @Column(name = "nganh")
     private String nganh;
