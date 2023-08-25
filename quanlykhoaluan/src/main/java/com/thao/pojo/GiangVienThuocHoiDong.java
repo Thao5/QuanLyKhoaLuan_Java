@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -57,6 +58,7 @@ public class GiangVienThuocHoiDong implements Serializable {
     @NotNull(message = "{giangVienThuocHoiDong.ngayVaoHoiDong.nullErr}")
     @Column(name = "ngay_vao_hoi_dong")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private Date ngayVaoHoiDong;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "giangVienThuocHoiDongId")
     @JsonIgnore

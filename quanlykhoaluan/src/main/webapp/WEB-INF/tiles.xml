@@ -71,5 +71,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addorupdatehoidong.jsp" />
     </definition>
+    <definition name="addorupdatetieuchithuockhoaluan" extends="baseLayout">
+        <put-attribute name="title" value="Thêm sửa tiêu chí thuộc khóa luận" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/addorupdatetieuchithuockhoaluan.jsp" />
+    </definition>
 </tiles-definitions>
 

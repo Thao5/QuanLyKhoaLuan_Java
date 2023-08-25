@@ -71,7 +71,7 @@ public class HoiDongBaoVeKhoaLuan implements Serializable {
     @NotNull
     @Column(name = "is_active")
     private boolean isActive;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoiDongId",fetch=FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoiDongId",fetch=FetchType.EAGER)
     @JsonIgnore
     private Set<GiangVienThuocHoiDong> giangVienThuocHoiDongSet;
     @OneToMany(mappedBy = "hoiDongId",fetch=FetchType.LAZY)

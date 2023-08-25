@@ -20,6 +20,7 @@
                 <th>Ngành</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,58 @@
                     <td>${kl.giaoVuId.ho} ${kl.giaoVuId.ten}</td>
                     <td>${kl.hoiDongId.tenHoiDong}</td>
                     <td>${kl.nganh}</td>
+                    <td>
+                        <!-- Button to Open the Modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal-${kl.id}">
+                            Xem thông tin tiêu chí
+                        </button>
+
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModal-${kl.id}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <a href="<c:url value="/admin/addtieuchithuockhoaluan/${kl.id}"/>" title="Thêm tiêu chí thuộc khóa luận" class="btn btn-outline-success">+</a>
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thông tin tiêu chí thuộc khóa luận ${kl.tenKhoaLuan}</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <td>nội dung tiêu chí</td>
+                                                <td>Điểm</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <c:forEach items="${kl.tieuChiThuocKhoaLuanSet}" var="tctkl">
+                                                <tr>
+                                                    <td>${tctkl.tieuChiId.noiDungTieuChi}</td>
+                                                    <td>${tctkl.tieuChiId.diem}</td>
+                                                    <td>
+                                                        <a href="<c:url value="/admin/updatetieuchithuockhoaluan/${tctkl.id}"/>" title="Cập nhật tiêu chí" class="btn btn-outline-primary">
+                                                            <i class="fa-solid fa-wrench"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <button onclick="del('<c:url value="/admin/deletetieuchithuockhoaluan/${kl.id}/${tctkl.id}/"/>')" title="Xóa tiêu chí" class="btn btn-outline-danger">-</button>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                     <td>
                         <a href="<c:url value="/admin/addorupdatekhoaluan/${kl.id}"/>" title="Cập nhật khóa luận" class="btn btn-outline-primary">
                             <i class="fa-solid fa-wrench"></i>

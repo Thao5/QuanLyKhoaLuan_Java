@@ -19,6 +19,7 @@
                 <th>Đang hoạt động</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,56 @@
                     <td>${hd.ngayThanhLap}</td>
                     <td>${hd.ngayKhoa}</td>
                     <td>${hd.isActive}</td>
+                    <td>
+                        <!-- Button to Open the Modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal-${hd.id}">
+                            Xem thông tin giảng viên thuộc hội đồng
+                        </button>
+
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModal-${hd.id}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <a href="<c:url value="/admin/addgiangvienthuochoidong/${hd.id}"/>" title="Thêm tiêu chí thuộc khóa luận" class="btn btn-outline-success">+</a>
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thông tin giảng viên thuộc hội đồng ${hd.tenHoiDong}</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <td>Họ tên</td>
+                                                <td>Vai Trò</td>
+                                                <td>Ngày vào hội đồng</td>
+                                                <td></td>
+                                            </tr>
+                                            <c:forEach items="${hd.giangVienThuocHoiDongSet}" var="gvthd">
+                                                <tr>
+                                                    <td>${gvthd.nguoiDungId.ho} ${gvthd.nguoiDungId.ten}</td>
+                                                    <td>${gvthd.vaiTro}</td>
+                                                    <td>${gvthd.ngayVaoHoiDong}</td>
+                                                    <td>
+                                                        <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
+                                                            <i class="fa-solid fa-wrench"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                     <td>
                         <a href="<c:url value="/admin/addorupdatehoidong/${hd.id}"/>" title="Cập nhật hội đồng" class="btn btn-outline-primary">
                             <i class="fa-solid fa-wrench"></i>

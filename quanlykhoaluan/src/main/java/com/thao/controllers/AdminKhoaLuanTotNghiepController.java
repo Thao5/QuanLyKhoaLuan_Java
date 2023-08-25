@@ -8,6 +8,7 @@ import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
 import com.thao.service.KhoaLuanTotNghiepService;
+import com.thao.service.TieuChiThuocKhoaLuanService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,9 @@ public class AdminKhoaLuanTotNghiepController {
 
     @Autowired
     private HoiDongBaoVeKhoaLuanService hdSer;
+    
+    @Autowired
+    private TieuChiThuocKhoaLuanService tctklSer;
 
     @RequestMapping("/khoaluantotnghieps")
     public String list(@RequestParam Map<String, String> params, Model model) {

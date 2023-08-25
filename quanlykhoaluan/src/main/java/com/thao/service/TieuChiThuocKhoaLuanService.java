@@ -18,6 +18,7 @@ public interface TieuChiThuocKhoaLuanService {
     boolean updateTieuChiThuocKhoaLuan(int id, Map<String,String> params);
     boolean updateTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc);
     TieuChiThuocKhoaLuan getTieuChiThuocKhoaLuanById(int id);
-    boolean deleteTieuChiThuocKhoaLuan(int id);
+    boolean deleteTieuChiThuocKhoaLuan(int id, int klId);
     boolean addTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc);
+    List<TieuChiThuocKhoaLuan> getTieuChiTheoKhoaLuan(int klId);
 }

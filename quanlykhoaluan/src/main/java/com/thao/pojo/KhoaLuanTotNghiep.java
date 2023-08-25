@@ -71,7 +71,7 @@ public class KhoaLuanTotNghiep implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nganh")
     private String nganh;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private Set<TieuChiThuocKhoaLuan> tieuChiThuocKhoaLuanSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "khoaLuanId", fetch=FetchType.LAZY)

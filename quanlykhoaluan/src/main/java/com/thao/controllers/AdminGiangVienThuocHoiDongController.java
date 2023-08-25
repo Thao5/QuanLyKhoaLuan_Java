@@ -35,13 +35,13 @@ public class AdminGiangVienThuocHoiDongController {
         return "giangvienthuochoidongs";
     }
     
-    @GetMapping("/addorupdategiangvienthuochoidong")
+    @GetMapping("/addgiangvienthuochoidong")
     public String gvthd(Model model){
         model.addAttribute("giangVienThuocHoiDong", new GiangVienThuocHoiDong());
         return "addorupdategiangvienthuochoidong";
     }
     
-    @GetMapping("/addorupdategiangvienthuochoidong/{id}")
+    @GetMapping("/updategiangvienthuochoidong/{id}")
     public String update(Model model, @PathVariable("id") int id){
         model.addAttribute("giangVienThuocHoiDong", this.gvthdSer.getGiangVienThuocHoiDongById(id));
         return "addorupdategiangvienthuochoidong";

@@ -12,6 +12,7 @@ import com.thao.repository.TieuChiRepository;
 import com.thao.repository.TieuChiThuocKhoaLuanRepository;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -29,7 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @PropertySource("classpath:configs.properties")
 @Transactional
-public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanRepository{
+public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
@@ -43,10 +45,10 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     public List<TieuChiThuocKhoaLuan> getTieuChiThuocKhoaLuans(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("from TieuChiThuocKhoaLuan");
-        if(params != null){
-            if(params.get("klId")!= null && !params.get("klId").isEmpty()){
+        if (params != null) {
+            if (params.get("klId") != null && !params.get("klId").isEmpty()) {
                 q = s.createQuery("from TieuChiThuocKhoaLuan where khoaLuanId.id = :khoaLuanId");
-                q.setParameter("khoaLuanId", params.get("klId")); 
+                q.setParameter("khoaLuanId", params.get("klId"));
             }
         }
         return q.getResultList();
@@ -55,16 +57,16 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     @Override
     public boolean addTieuChiThuocKhoaLuan(int tieuChiId, int khoaLuanId) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             Query q1 = s.createQuery("from TieuChi where id = :tieuChiId");
             q1.setParameter("tieuChiId", tieuChiId);
             Query q2 = s.createQuery("from KhoaLuanTotNghiep where id = :khoaLuanId");
             q2.setParameter("khoaLuanId", khoaLuanId);
             TieuChiThuocKhoaLuan tc = new TieuChiThuocKhoaLuan();
-            tc.setTieuChiId((TieuChi)q1.getSingleResult());
-            tc.setKhoaLuanId((KhoaLuanTotNghiep)q2.getSingleResult());
+            tc.setTieuChiId((TieuChi) q1.getSingleResult());
+            tc.setKhoaLuanId((KhoaLuanTotNghiep) q2.getSingleResult());
             s.save(tc);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -74,20 +76,20 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     @Override
     public boolean updateTieuChiThuocKhoaLuan(int id, Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
-            if(params != null){
+        try {
+            if (params != null) {
                 TieuChiThuocKhoaLuan tc = getTieuChiThuocKhoaLuanById(id);
                 String tmp = params.get("khoaLuanId");
-                if(tmp != null && !tmp.isEmpty()){
+                if (tmp != null && !tmp.isEmpty()) {
                     tc.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("tieuChiId");
-                if(tmp != null && !tmp.isEmpty()){
+                if (tmp != null && !tmp.isEmpty()) {
                     tc.setTieuChiId(this.tieuChiRepo.getTieuChiById(Integer.parseInt(tmp)));
                 }
                 s.update(tc);
             }
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -103,9 +105,9 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     @Override
     public boolean updateTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.update(tc);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -113,11 +115,14 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     }
 
     @Override
-    public boolean deleteTieuChiThuocKhoaLuan(int id) {
+    public boolean deleteTieuChiThuocKhoaLuan(int id, int klId) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
+            KhoaLuanTotNghiep kl = this.khoaLuanRepo.getKhoaLuanById(klId);
+            kl.getTieuChiThuocKhoaLuanSet().remove(this.getTieuChiThuocKhoaLuanById(id));
+            s.update(kl);
             s.delete(this.getTieuChiThuocKhoaLuanById(id));
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -127,15 +132,25 @@ public class TieuChiThuocKhoaLuanRepositoryImpl implements TieuChiThuocKhoaLuanR
     @Override
     public boolean addTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.save(tc);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
         return true;
     }
-    
-    
-    
+
+    @Override
+    public List<TieuChiThuocKhoaLuan> getTieuChiTheoKhoaLuan(int klId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = s.createQuery("from TieuChiThuocKhoaLuan where khoaLuanId.id = :klId");
+            q.setParameter("klId", klId);
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
 }

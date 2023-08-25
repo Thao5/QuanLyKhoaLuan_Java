@@ -47,13 +47,18 @@ public class TieuChiThuocKhoaLuanServiceImpl implements TieuChiThuocKhoaLuanServ
     }
 
     @Override
-    public boolean deleteTieuChiThuocKhoaLuan(int id) {
-        return this.tieuChiThuocKhoaLuanRepository.deleteTieuChiThuocKhoaLuan(id);
+    public boolean deleteTieuChiThuocKhoaLuan(int id, int klId) {
+        return this.tieuChiThuocKhoaLuanRepository.deleteTieuChiThuocKhoaLuan(id, klId);
     }
 
     @Override
     public boolean addTieuChiThuocKhoaLuan(TieuChiThuocKhoaLuan tc) {
         return this.tieuChiThuocKhoaLuanRepository.addTieuChiThuocKhoaLuan(tc);
+    }
+
+    @Override
+    public List<TieuChiThuocKhoaLuan> getTieuChiTheoKhoaLuan(int klId) {
+        return this.tieuChiThuocKhoaLuanRepository.getTieuChiTheoKhoaLuan(klId);
     }
     
     

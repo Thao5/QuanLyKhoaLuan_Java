@@ -5,6 +5,7 @@
 package com.thao.repository.impl;
 
 import com.thao.pojo.TieuChi;
+import com.thao.pojo.TieuChiThuocKhoaLuan;
 import com.thao.repository.TieuChiRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +134,11 @@ public class TieuChiRepositoryImpl  implements TieuChiRepository{
         try{
             TieuChi tc = this.getTieuChiById(id);
             if(!tc.getTieuChiThuocKhoaLuanSet().isEmpty()){
-                tc.getTieuChiThuocKhoaLuanSet().forEach((t) -> s.delete(t));
+                for(TieuChiThuocKhoaLuan tctkl:tc.getTieuChiThuocKhoaLuanSet()){
+                    tctkl.getKhoaLuanId().getTieuChiThuocKhoaLuanSet().remove(tctkl);
+                    s.update(tctkl.getKhoaLuanId());
+                    s.delete(tctkl);
+                }
             }
             s.delete(tc);
         }catch(HibernateException ex){
