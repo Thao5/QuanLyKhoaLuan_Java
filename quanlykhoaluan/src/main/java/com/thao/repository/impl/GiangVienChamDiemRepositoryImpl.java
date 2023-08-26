@@ -196,16 +196,16 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         try {
             Query q = s.createQuery("select khoaLuanId.id, khoaLuanId.tenKhoaLuan, avg(diem) from GiangVienChamDiem group by khoaLuanId order by khoaLuanId");
             List<Object[]> tmp = q.getResultList();
-            Object[] test = new Object[4];
-            for(Object[] o:tmp){
+            for(int i = 0; i < tmp.size(); i++){
+                Object[] test = new Object[4];
                 q=s.createQuery("select id, giangVienThuocHoiDongId.nguoiDungId.ho, giangVienThuocHoiDongId.nguoiDungId.ten, diem, ngayCham from GiangVienChamDiem where khoaLuanId.id = :klID");
-                q.setParameter("klID", o[0]);
-                test[0] = o[0];
-                test[1] = o[1];
-                test[2] = o[2];
+                q.setParameter("klID", tmp.get(0)[0]);
+                test[0] = tmp.get(0)[0];
+                test[1] = tmp.get(0)[1];
+                test[2] = tmp.get(0)[2];
                 test[3] = q.getResultList();
                 tmp.add(test);
-                tmp.remove(o);
+                tmp.remove(tmp.get(0));
             }
             return tmp;
         }catch(NoResultException ex){

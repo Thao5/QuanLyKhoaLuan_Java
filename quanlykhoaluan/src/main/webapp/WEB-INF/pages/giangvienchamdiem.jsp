@@ -47,6 +47,7 @@
                                                 <td>Họ tên giảng viên chấm điểm</td>
                                                 <td>Điểm</td>
                                                 <td>Ngày chấm</td>
+                                                <td></td>
                                             </tr>
                                             <c:forEach items="${gvcd[3]}" var="gv">
                                                 <tr>
@@ -54,11 +55,14 @@
                                                     <td>${gv[1]} ${gv[2]}</td>
                                                     <td>${gv[3]}</td>
                                                     <td>${gv[4]}</td>
-<!--                                                    <td>
-                                                        <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
-                                                            <i class="fa-solid fa-wrench"></i>
-                                                        </a>
-                                                    </td>-->
+                                                    <td>
+                                                        <button onclick="del('<c:url value="/admin/deletediem/${gv[0]}/"/>')" title="Xóa điểm" class="btn btn-outline-danger">-</button>
+                                                    </td>
+                                                    <!--                                                    <td>
+                                                                                                            <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
+                                                                                                                <i class="fa-solid fa-wrench"></i>
+                                                                                                            </a>
+                                                                                                        </td>-->
                                                 </tr>
                                             </c:forEach>
                                         </table>
@@ -78,3 +82,4 @@
         </tbody>
     </table>
 </section>
+<script src="<c:url value="/js/del.js" />"></script>

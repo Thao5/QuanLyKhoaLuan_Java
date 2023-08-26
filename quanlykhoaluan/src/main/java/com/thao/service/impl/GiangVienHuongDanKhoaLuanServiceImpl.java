@@ -63,6 +63,11 @@ public class GiangVienHuongDanKhoaLuanServiceImpl implements GiangVienHuongDanKh
     public Long demGiangVienHuongDanCuaKhoaLuan(int klId) {
         return this.giangVienHuongDanKhoaLuanRepo.demGiangVienHuongDanCuaKhoaLuan(klId);
     }
+
+    @Override
+    public List<Object[]> getGiangVienHuongDanByKhoaLuanId(Map<String, String> params) {
+        return this.giangVienHuongDanKhoaLuanRepo.getGiangVienHuongDanByKhoaLuanId(params);
+    }
     
     
 }

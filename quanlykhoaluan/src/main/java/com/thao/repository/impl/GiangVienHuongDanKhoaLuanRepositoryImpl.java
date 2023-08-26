@@ -188,6 +188,29 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
         }
         
     }
+
+    @Override
+    public List<Object[]> getGiangVienHuongDanByKhoaLuanId(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            Query q = s.createQuery("select khoaLuanId.id, khoaLuanId.tenKhoaLuan, count(*) from GiangVienHuongDanKhoaLuan group by khoaLuanId");
+            List<Object[]> tmp = q.getResultList();
+            for(int i = 0; i < tmp.size(); i++){
+                Object[] test = new Object[4];
+                q=s.createQuery("from GiangVienHuongDanKhoaLuan where khoaLuanId.id = :klID");
+                q.setParameter("klID", tmp.get(0)[0]);
+                test[0] = tmp.get(0)[0];
+                test[1] = tmp.get(0)[1];
+                test[2] = tmp.get(0)[2];
+                test[3] = q.getResultList();
+                tmp.add(test);
+                tmp.remove(tmp.get(0));
+            }
+            return tmp;
+        }catch(NoResultException ex){
+            return null;
+        }
+    }
     
     
 }

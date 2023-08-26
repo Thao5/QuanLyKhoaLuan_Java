@@ -25,4 +25,5 @@ public interface GiangVienHuongDanKhoaLuanRepository {
     boolean deleteGiangVienHuongDanKhoaLuan(int id);
     boolean addGiangVienHuongDanKhoaLuan(GiangVienHuongDanKhoaLuan gv);
     Long demGiangVienHuongDanCuaKhoaLuan(int klId);
+    List<Object[]> getGiangVienHuongDanByKhoaLuanId(Map<String, String> params);
 }

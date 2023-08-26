@@ -31,10 +31,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addorupdatetieuchi.jsp" />
     </definition>
-    <definition name="giangvienhuongdan" extends="baseLayout">
+    <definition name="addorupdategiangvienhuongdan" extends="baseLayout">
         <put-attribute name="title" value="Giảng viên hướng dẫn khóa luận" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/giangvienhuongdan.jsp" />
+                       value="/WEB-INF/pages/addorupdategiangvienhuongdan.jsp" />
     </definition>
     <definition name="thongtindangkykhoaluans" extends="baseLayout">
         <put-attribute name="title" value="Danh sách khóa luận chờ duyệt" />
@@ -80,6 +80,11 @@
         <put-attribute name="title" value="Điểm khóa luận" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/giangvienchamdiem.jsp" />
+    </definition>
+    <definition name="giangvienhuongdan" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách giảng viên hướng dẫn khóa luận" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/giangvienhuongdan.jsp" />
     </definition>
 </tiles-definitions>
 

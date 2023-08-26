@@ -1,38 +1,84 @@
 <%-- 
-    Document   : giangVienHuongDanKhoaLuan
-    Created on : Aug 9, 2023, 11:12:06 AM
+    Document   : giangvienthuochoidong
+    Created on : Aug 26, 2023, 1:14:32 PM
     Author     : Chung Vu
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:url value="/admin/giangvienhuongdankhoaluan" var="action" />
-<form:form modelAttribute="giangVienHuongDan" method="post" action="${action}">
-    <div class="form-floating mb-3 mt-3">
-        <form:input type="date" class="form-control" path="ngayBatDauHuongDan" id="ngayBatDauHuongDan" name="ngayBatDauHuongDan"/>
-        <label for="ngayBatDauHuongDan">Ngày bắt đầu hướng dẫn</label>
-        <form:errors path="ngayBatDauHuongDan" element="div" cssClass="text-danger"/>
-    </div>
-    <div class="form-floating mb-3 mt-3">
-        <form:select id="nguoiDungId" name="nguoiDungId" path="nguoiDungId" class="form-select">
-            <c:forEach items="${giangViens}" var="gvhd">
-                <option value="${gvhd.id}">${String.format("%s %s", gvhd.ho, gvhd.ten)}</option>
+<section class="container">
+    <a href="<c:url value="/admin/addorupdategiangvienhuongdan"/>" title="Thêm hội đồng" class="btn btn-outline-success">+</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Tên khóa luận</th>
+                <th>Số giảng viên hướng dẫn khóa luận</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${giangVienHuongDans}" var="gv">
+                <tr>
+                    <td>${gv[1]}</td>
+                    <td>${gv[2]}</td>
+                    <td>
+                        <!-- Button to Open the Modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal-${gv[0]}">
+                            Xem chi tiết
+                        </button>
+
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModal-${gv[0]}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+<!--                                    <a href="<c:url value="/admin/addgiangvienthuochoidong/${hd.id}"/>" title="Thêm tiêu chí thuộc khóa luận" class="btn btn-outline-success">+</a>-->
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thông chi tiết của khóa luận ${gv[1]}</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <td>ID</td>
+                                                <td>Họ tên giảng viên</td>
+                                                <td>Ngày bắt đầu hướng dẫn</td>
+                                                <td></td>
+                                            </tr>
+                                            <c:forEach items="${gv[3]}" var="gvhd">
+                                                <tr>
+                                                    <td>${gvhd.id}</td>
+                                                    <td>${gvhd.nguoiDungId.ho} ${gvhd.nguoiDungId.ten}</td>
+                                                    <td>${gvhd.ngayBatDauHuongDan}</td>
+                                                    <td>
+                                                        <button onclick="del('<c:url value="/admin/deletegiangvienhuongdan/${gvhd.id}/"/>')" title="Xóa điểm" class="btn btn-outline-danger">-</button>
+                                                    </td>
+                                                    <!--                                                    <td>
+                                                                                                            <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
+                                                                                                                <i class="fa-solid fa-wrench"></i>
+                                                                                                            </a>
+                                                                                                        </td>-->
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
             </c:forEach>
-        </form:select>
-        <label for="nguoiDungId" class="form-label">Giảng viên hướng dẫn</label>
-    </div>
-    <div class="form-floating mb-3 mt-3">
-        <form:select id="khoaLuanId" name="khoaLuanId" path="khoaLuanId" class="form-select">
-            <c:forEach items="${khoaLuans}" var="kl">
-                <option value="${kl.id}">${kl.tenKhoaLuan}</option>
-            </c:forEach>
-        </form:select>
-        <label for="khoaLuanId" class="form-label">Khóa luận</label>
-        <form:errors path="khoaLuanId" element="div" cssClass="text-danger"/>
-    </div>
-    <div class="form-floating mb-3 mt-3">
-        <input type="submit" value="Thêm giảng viên hướng dẫn" class="btn btn-info" />
-    </div>
-</form:form>
+        </tbody>
+    </table>
+</section>
+<script src="<c:url value="/js/del.js" />"></script>
