@@ -72,6 +72,11 @@ public class GiangVienChamDiemServiceImpl implements GiangVienChamDiemService{
 //    public Long demHoiDongChamKhoaLuan(int hd) {
 //        return this.giangVienChamDiemRepository.demHoiDongChamKhoaLuan(hd);
 //    }
+
+    @Override
+    public List<Object[]> getDiemKhoaLuanOrderByKhoaLuanId(Map<String, String> params) {
+        return this.giangVienChamDiemRepository.getDiemKhoaLuanOrderByKhoaLuanId(params);
+    }
     
     
 }

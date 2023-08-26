@@ -24,5 +24,6 @@ public interface GiangVienChamDiemRepository {
     boolean addGiangVienChamDiem(GiangVienChamDiem gv);
     Double tongDiem(int klId);
     Double diemTrungBinh(int klId);
+    List<Object[]> getDiemKhoaLuanOrderByKhoaLuanId(Map<String,String> params);
 //    Long demHoiDongChamKhoaLuan(int hd);
 }

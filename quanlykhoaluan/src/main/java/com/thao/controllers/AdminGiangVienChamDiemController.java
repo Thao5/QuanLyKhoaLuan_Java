@@ -36,7 +36,7 @@ public class AdminGiangVienChamDiemController {
     
     @RequestMapping("/giangvienchamdiems")
     public String list(Model model, @RequestParam Map<String,String> params){
-        model.addAttribute("giangVienChamDiems",  this.gvcdSer.getDiemKhoaLuan(params));
+        model.addAttribute("giangVienChamDiems",  this.gvcdSer.getDiemKhoaLuanOrderByKhoaLuanId(params));
         return "giangvienchamdiems";
     }
     

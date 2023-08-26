@@ -76,5 +76,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addorupdatetieuchithuockhoaluan.jsp" />
     </definition>
+    <definition name="giangvienchamdiems" extends="baseLayout">
+        <put-attribute name="title" value="Điểm khóa luận" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/giangvienchamdiem.jsp" />
+    </definition>
 </tiles-definitions>
 

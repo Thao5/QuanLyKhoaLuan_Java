@@ -14,9 +14,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,14 +39,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemRepository{
+public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
     private KhoaLuanTotNghiepRepository khoaLuanRepo;
     @Autowired
     private GiangVienThuocHoiDongRepository giangVienThuocHoiDongRepo;
-    
+
     @Override
     public List<GiangVienChamDiem> getDiemKhoaLuan(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -52,15 +55,15 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         CriteriaQuery<GiangVienChamDiem> q = b.createQuery(GiangVienChamDiem.class);
         Root root = q.from(GiangVienChamDiem.class);
         q.select(root);
-        
-        if(params != null){
+
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             String khoaLuanId = params.get("khoaLuanId");
-            if(khoaLuanId != null && !khoaLuanId.isEmpty()){
+            if (khoaLuanId != null && !khoaLuanId.isEmpty()) {
                 predicates.add(b.equal(root.get("khoaLuanId.id"), Integer.parseInt(khoaLuanId)));
             }
             String giangVienId = params.get("giangVienId");
-            if(giangVienId != null && !giangVienId.isEmpty()){
+            if (giangVienId != null && !giangVienId.isEmpty()) {
                 predicates.add(b.equal(root.get("giangVienThuocHoiDongId.id"), Integer.parseInt(giangVienId)));
             }
             q.where(predicates.toArray(Predicate[]::new));
@@ -72,7 +75,7 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
     @Override
     public boolean addGiangVienChamDiem(float diem, LocalDateTime ngayCham, int giangVienThuocHoiDongId, int khoaLuanId) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             GiangVienChamDiem gv = new GiangVienChamDiem();
             gv.setDiem(diem);
             gv.setNgayCham(Date.from(ngayCham.atZone(ZoneId.systemDefault()).toInstant()));
@@ -80,10 +83,10 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
             q1.setParameter("giangVienThuocHoiDongId", giangVienThuocHoiDongId);
             Query q2 = s.createQuery("from KhoaLuanTotNghiep where id = :khoaLuanId");
             q2.setParameter("khoaLuanId", khoaLuanId);
-            gv.setGiangVienThuocHoiDongId((GiangVienThuocHoiDong)q1.getSingleResult());
-            gv.setKhoaLuanId((KhoaLuanTotNghiep)q2.getSingleResult());
+            gv.setGiangVienThuocHoiDongId((GiangVienThuocHoiDong) q1.getSingleResult());
+            gv.setKhoaLuanId((KhoaLuanTotNghiep) q2.getSingleResult());
             s.save(gv);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -93,28 +96,28 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
     @Override
     public boolean updateGiangVienChamDiem(int id, Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
-            if(params != null){
+        try {
+            if (params != null) {
                 GiangVienChamDiem gv = getGiangVienChamDiemById(id);
                 String tmp = params.get("diem");
-                if(tmp != null && !tmp.isEmpty()){
+                if (tmp != null && !tmp.isEmpty()) {
                     gv.setDiem(Float.parseFloat(tmp));
                 }
                 tmp = params.get("ngayCham");
-                if(tmp != null && !tmp.isEmpty()){
+                if (tmp != null && !tmp.isEmpty()) {
                     gv.setNgayCham(Date.from(LocalDateTime.parse(tmp).atZone(ZoneId.systemDefault()).toInstant()));
                 }
                 tmp = params.get("giangVienThuocHoiDongId");
-                if(tmp != null && !tmp.isEmpty()){
+                if (tmp != null && !tmp.isEmpty()) {
                     gv.setGiangVienThuocHoiDongId(this.giangVienThuocHoiDongRepo.getGiangVienThuocHoiDongById(Integer.parseInt(tmp)));
                 }
                 tmp = params.get("khoaLuanId");
-                if(tmp != null && !tmp.isEmpty()){
+                if (tmp != null && !tmp.isEmpty()) {
                     gv.setKhoaLuanId(this.khoaLuanRepo.getKhoaLuanById(Integer.parseInt(tmp)));
                 }
                 s.update(gv);
             }
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -130,9 +133,9 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
     @Override
     public boolean updateGiangVienChamDiem(GiangVienChamDiem gv) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.update(gv);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -142,9 +145,9 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
     @Override
     public boolean deleteGiangVienChamDiem(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.delete(this.getGiangVienChamDiemById(id));
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -154,9 +157,9 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
     @Override
     public boolean addGiangVienChamDiem(GiangVienChamDiem gv) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.save(gv);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -187,6 +190,27 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
 //        q.setParameter("hd", hd);
 //        return (Long) q.getSingleResult();
 //    }
-    
-    
+    @Override
+    public List<Object[]> getDiemKhoaLuanOrderByKhoaLuanId(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = s.createQuery("select khoaLuanId.id, khoaLuanId.tenKhoaLuan, avg(diem) from GiangVienChamDiem group by khoaLuanId order by khoaLuanId");
+            List<Object[]> tmp = q.getResultList();
+            Object[] test = new Object[4];
+            for(Object[] o:tmp){
+                q=s.createQuery("select id, giangVienThuocHoiDongId.nguoiDungId.ho, giangVienThuocHoiDongId.nguoiDungId.ten, diem, ngayCham from GiangVienChamDiem where khoaLuanId.id = :klID");
+                q.setParameter("klID", o[0]);
+                test[0] = o[0];
+                test[1] = o[1];
+                test[2] = o[2];
+                test[3] = q.getResultList();
+                tmp.add(test);
+                tmp.remove(o);
+            }
+            return tmp;
+        }catch(NoResultException ex){
+            return null;
+        }
+    }
+
 }

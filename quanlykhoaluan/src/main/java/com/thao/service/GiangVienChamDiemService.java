@@ -25,4 +25,5 @@ public interface GiangVienChamDiemService {
     Double tongDiem(int klId);
     Double diemTrungBinh(int klId);
 //    Long demHoiDongChamKhoaLuan(int hd);
+    List<Object[]> getDiemKhoaLuanOrderByKhoaLuanId(Map<String,String> params);
 }
