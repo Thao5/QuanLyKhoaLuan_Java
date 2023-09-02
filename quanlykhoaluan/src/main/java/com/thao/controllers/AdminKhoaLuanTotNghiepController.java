@@ -4,6 +4,7 @@
  */
 package com.thao.controllers;
 
+import static com.thao.controllers.ApiThongTinDangKyKhoaLuanController.sessionTmp;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
@@ -95,16 +96,36 @@ public class AdminKhoaLuanTotNghiepController {
 
     @RequestMapping("/thongtindangkykhoaluans")
     public String listThongTinDangKy(Model model, HttpSession session) {
-        session = ApiThongTinDangKyKhoaLuanController.sessionTmp;
+        session = sessionTmp;
+        System.out.println("thong tin khoa luan");
         if (session != null) {
             if (session.getAttribute("kls") != null) {
                 Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) session.getAttribute("kls");
                 if (kls != null) {
                     model.addAttribute("thongTinDangKys", kls.values());
+                    model.addAttribute("kltn", new KhoaLuanTotNghiep());
+                    return "thongtindangkykhoaluans";
                 }
             }
         }
         model.addAttribute("thongTinDangKys", null);
+        return "thongtindangkykhoaluans";
+    }
+    
+//    @GetMapping("/thongtindangkykhoaluans/{studentCode}")
+//    public String addThongTinDangKyKhoaLuan(Model model, @PathVariable("studentCode") String studentCode){
+//        
+//        model.addAttribute("kltn", new KhoaLuanTotNghiep());
+//        return "thongtindangkykhoaluans";
+//    }
+    
+    @PostMapping("/thongtindangkykhoaluans/{studentCode}")
+    public String addThongTin(@PathVariable("studentCode") String studentCode, @ModelAttribute(value = "kltn") KhoaLuanTotNghiep kltn){
+        Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) sessionTmp.getAttribute("kls");
+        ThongTinDangKyKhoaLuan kl = kls.get(studentCode);
+        if(this.klSer.addKhoaLuanTheoThongTinDangKy(kl, kltn)){
+            return "thongtindangkykhoaluans";
+        }
         return "thongtindangkykhoaluans";
     }
 

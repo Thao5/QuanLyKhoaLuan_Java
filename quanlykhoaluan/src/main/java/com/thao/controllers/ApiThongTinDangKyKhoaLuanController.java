@@ -42,8 +42,6 @@ public class ApiThongTinDangKyKhoaLuanController {
             kls = (Map<String, ThongTinDangKyKhoaLuan>) session.getAttribute("kls");
         else
             kls = (Map<String, ThongTinDangKyKhoaLuan>) sessionTmp.getAttribute("kls");
-        System.out.println("im in");
-        System.out.println(kl.getStudentCode());
         if (kls == null) {
             kls = new HashMap<>();
         }
@@ -62,11 +60,9 @@ public class ApiThongTinDangKyKhoaLuanController {
 
         session.setAttribute("kls", kls);
         if(sessionTmp == null){
-            System.out.println("sessiontmp null");
             sessionTmp = session;
         }
         sessionTmp.setAttribute("kls", kls);
-        if(session.getAttribute("kls") != null) System.out.println("session khong null");
         return new ResponseEntity(kl,HttpStatus.OK);
     }
     

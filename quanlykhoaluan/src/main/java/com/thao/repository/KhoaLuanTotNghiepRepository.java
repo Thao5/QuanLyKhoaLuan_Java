@@ -22,5 +22,5 @@ public interface KhoaLuanTotNghiepRepository {
     boolean updateKhoaLuan(KhoaLuanTotNghiep kl);
     KhoaLuanTotNghiep getKhoaLuanById(int id);
     boolean deleteKhoaLuan(int id);
-    boolean addKhoaLuanTheoThongTinDangKy(Map<String, ThongTinDangKyKhoaLuan> kls);
+    boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn);
 }

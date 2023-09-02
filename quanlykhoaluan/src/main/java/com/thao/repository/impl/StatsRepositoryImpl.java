@@ -27,11 +27,11 @@ public class StatsRepositoryImpl implements StatsRepository{
     @Override
     public List<Object[]> statDiem(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("select diem, ngayCham, giangVienThuocHoiDongId.nguoiDungId.ho, giangVienThuocHoiDongId.nguoiDungId.ten, khoaLuanId.tenKhoaLuan from GiangVienChamDiem");
+        Query q = s.createQuery("select avg(diem), khoaLuanId.tenKhoaLuan from GiangVienChamDiem group by khoaLuanId");
         if(params != null){
             String y = params.get("y");
             if(y != null && !y.isEmpty()){
-                q = s.createQuery("select diem, ngayCham, giangVienThuocHoiDongId.nguoiDungId.ho, giangVienThuocHoiDongId.nguoiDungId.ten, khoaLuanId.tenKhoaLuan from GiangVienChamDiem where year(ngayCham) = :y");
+                q = s.createQuery("select avg(diem), khoaLuanId.tenKhoaLuan from GiangVienChamDiem where year(khoaLuanId.ngayGhiNhan) = :y group by khoaLuanId");
                 q.setParameter("y", Integer.parseInt(y));
             }
         }

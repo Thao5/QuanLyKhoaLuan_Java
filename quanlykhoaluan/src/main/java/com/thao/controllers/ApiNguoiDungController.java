@@ -55,9 +55,11 @@ public class ApiNguoiDungController {
     }
     
     @CrossOrigin
-    @GetMapping("/nguoiDungs/{id}/")
-    public ResponseEntity<NguoiDung> list(@PathVariable("id") int id){
-        return new ResponseEntity<>(this.ndSer.getNguoiDungById(id), HttpStatus.OK);
+    @GetMapping("/giangviens/")
+    public ResponseEntity<List<NguoiDung>> list(){
+        Map<String,String> tmp = new HashMap<>();
+        tmp.put("vaiTro", "GIANG_VIEN");
+        return new ResponseEntity<>(this.ndSer.getNguoiDungs(tmp), HttpStatus.OK);
     }
     
     @CrossOrigin
@@ -74,7 +76,6 @@ public class ApiNguoiDungController {
     @CrossOrigin
     public ResponseEntity<NguoiDung> details(Principal user) {
         NguoiDung u = this.ndSer.getNguoiDungByUsername(user.getName());
-        System.out.println(u.getVaiTro());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
     

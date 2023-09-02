@@ -6,6 +6,7 @@ package com.thao.pdf;
 
 import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ public class PDFUtil extends AbstractPdfView{
         @SuppressWarnings("unchecked")
         List<Object[]> list = (List<Object[]>) model.get("statDTB");
         
+        document.add(new Paragraph(String.format("Điểm trung bình của khóa luận %s", (String)list.get(0)[4])));
         Table table = new Table(5);
         table.addCell("Họ giảng viên");
         table.addCell("Tên giảng viên");
@@ -45,6 +47,7 @@ public class PDFUtil extends AbstractPdfView{
             table.addCell(Float.toString((float) o[0]));
         }
         document.add(table);
+        document.add(new Paragraph("Lãnh đạo ký tên"));
     }
     
 }

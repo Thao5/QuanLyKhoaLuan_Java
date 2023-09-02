@@ -63,8 +63,8 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     }
 
     @Override
-    public boolean addKhoaLuanTheoThongTinDangKy(Map<String, ThongTinDangKyKhoaLuan> kls) {
-        return this.khoaLuanRepo.addKhoaLuanTheoThongTinDangKy(kls);
+    public boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn) {
+        return this.khoaLuanRepo.addKhoaLuanTheoThongTinDangKy(kl, kltn);
     }
     
     

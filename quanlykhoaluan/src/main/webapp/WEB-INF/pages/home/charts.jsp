@@ -148,23 +148,75 @@
                 </div>
             </div>
         </main>
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="<c:url value ="/js/scripts.js"/>"></script>
-<script src="<c:url value ="/demo/chart-area-demo.js"/>"></script>
+<script type="text/javascript">// Set new default font family and font color to mimic Bootstrap's default styling
+    /*<![CDATA[*/
+    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#292b2c';
+
+// Area Chart Example
+
+    
+    let map1 = new Map();
+    <c:forEach items="${data}" var="d">
+            map1.set('${d.key}', ${d.value});
+    </c:forEach>
+    var k = Array.from(map1.keys());
+    var v = Array.from(map1.values());
+    var ctx = document.getElementById("myAreaChart");
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: k,
+            datasets: [{
+                    label: "Sessions",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(2,117,216,0.2)",
+                    borderColor: "rgba(2,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(2,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: v
+                }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        }
+                    }],
+                yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 10,
+                            maxTicksLimit: 5
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, .125)",
+                        }
+                    }],
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+    /*]]>*/
+</script>
 <script src="<c:url value ="/demo/chart-bar-demo.js"/>"></script>
 <script src="<c:url value ="/demo/chart-pie-demo.js"/>"></script>
 

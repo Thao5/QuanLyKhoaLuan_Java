@@ -225,32 +225,41 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
     
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public boolean addKhoaLuanTheoThongTinDangKy(Map<String, ThongTinDangKyKhoaLuan> kls) {
+    public boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn) {
         Session s = this.factory.getObject().getCurrentSession();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
-//        try{
-//            NguoiDung nd = this.nguoiDungRepo.getNguoiDungByUsername(auth.getName());
-//            for(ThongTinDangKyKhoaLuan t: kls.values()){
-//                KhoaLuanTotNghiep kl = new KhoaLuanTotNghiep();
-//                kl.setTenKhoaLuan(t.getTitle());
-//                kl.setGiaoVuId(nd);
-//                kl.setNganh(Integer.toString(t.getCategories().get(0)));
-//                kl.setNgayGhiNhan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-//                s.save(kl);
-//                
-//                for(Integer i : t.getMentor()){
-//                    GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
-//                    gv.setKhoaLuanId(kl);
-//                    gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(i));
-//                    gv.setNgayBatDauHuongDan(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-//                    s.save(gv);
-//                }
-//            }
-//        }catch (HibernateException ex) {
-//            ex.printStackTrace();
-//            return false;
-//        }
+        try{
+            NguoiDung nd = this.nguoiDungRepo.getNguoiDungByUsername(auth.getName());
+            kltn.setTenKhoaLuan(kl.getTitle());
+            kltn.setGiaoVuId(nd);
+            kltn.setNgayGhiNhan(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+            s.save(kltn);
+            NguoiDung sv = this.nguoiDungRepo.getNguoiDungByUsername(kl.getStudentCode());
+            sv.setKhoaLuanId(kltn);
+            s.update(sv);
+            if(kl.getMentor().size() < 2){
+                GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
+                gv.setKhoaLuanId(kltn);
+                gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(kl.getMentor().get(0)));
+                gv.setNgayBatDauHuongDan(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                s.save(gv);
+            } else if(kl.getMentor().size() == 2){
+                GiangVienHuongDanKhoaLuan gv = new GiangVienHuongDanKhoaLuan();
+                gv.setKhoaLuanId(kltn);
+                gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(kl.getMentor().get(0)));
+                gv.setNgayBatDauHuongDan(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                s.save(gv);
+                GiangVienHuongDanKhoaLuan gv2 = new GiangVienHuongDanKhoaLuan();
+                gv2.setKhoaLuanId(kltn);
+                gv2.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(kl.getMentor().get(1)));
+                gv2.setNgayBatDauHuongDan(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                s.save(gv2);
+            }
+        }catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
         return true;
     }
 }
