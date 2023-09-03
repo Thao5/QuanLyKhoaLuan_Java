@@ -116,21 +116,6 @@ public class AdminHoiDongBaoVeKhoaLuanController {
                 return "redirect:/";
             }
         }
-        System.out.println(hd.getGiangVienTV1().getId());
-        System.out.println(hd.getGiangVienTV2().getId());
-        for (Object object : rs.getAllErrors()) {
-            if (object instanceof FieldError) {
-                FieldError fieldError = (FieldError) object;
-
-                System.out.println(fieldError.getCode());
-            }
-
-            if (object instanceof ObjectError) {
-                ObjectError objectError = (ObjectError) object;
-
-                System.out.println(objectError.getCode());
-            }
-        }
         Map<String, String> tmp = new HashMap<>();
         tmp.put("vaiTro", "GIANG_VIEN");
         model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
