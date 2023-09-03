@@ -41,7 +41,7 @@ public class ThongTinThanhLapHoiDongRepositoryImpl implements ThongTinThanhLapHo
     @Override
     public boolean addThongTinThanhLapHoiDong(ThongTinThanhLapHoiDong hd) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             HoiDongBaoVeKhoaLuan hdbv = new HoiDongBaoVeKhoaLuan();
             hdbv.setTenHoiDong(hd.getTenHoiDong());
             hdbv.setIsActive(true);
@@ -69,11 +69,27 @@ public class ThongTinThanhLapHoiDongRepositoryImpl implements ThongTinThanhLapHo
             gv2.setNguoiDungId(this.ndSer.getNguoiDungById(hd.getGiangVienPB().getId()));
             gv2.setHoiDongId(hdbv);
             s.save(gv2);
-        }catch(HibernateException ex){
+            if (hd.getGiangVienTV1() != null) {
+                GiangVienThuocHoiDong gv3 = new GiangVienThuocHoiDong();
+                gv3.setVaiTro("THANH_VIEN");
+                gv3.setNgayVaoHoiDong(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                gv3.setNguoiDungId(this.ndSer.getNguoiDungById(hd.getGiangVienTV1().getId()));
+                gv3.setHoiDongId(hdbv);
+                s.save(gv3);
+            }
+            if(hd.getGiangVienTV2() != null){
+                GiangVienThuocHoiDong gv4 = new GiangVienThuocHoiDong();
+                gv4.setVaiTro("THANH_VIEN");
+                gv4.setNgayVaoHoiDong(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                gv4.setNguoiDungId(this.ndSer.getNguoiDungById(hd.getGiangVienTV2().getId()));
+                gv4.setHoiDongId(hdbv);
+                s.save(gv4);
+            }
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
-        
+
         return true;
     }
 

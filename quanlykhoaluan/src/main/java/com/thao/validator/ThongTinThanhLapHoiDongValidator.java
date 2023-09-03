@@ -32,6 +32,8 @@ public class ThongTinThanhLapHoiDongValidator implements Validator{
             errors.rejectValue("giangVienCT", "thongTinThanhLapHoiDong.giangVienCT.distinctError");
             errors.rejectValue("giangVienTK", "thongTinThanhLapHoiDong.giangVienCT.distinctError");
             errors.rejectValue("giangVienPB", "thongTinThanhLapHoiDong.giangVienCT.distinctError");
+            errors.rejectValue("giangVienTV1", "thongTinThanhLapHoiDong.giangVienCT.distinctError");
+            errors.rejectValue("giangVienTV2", "thongTinThanhLapHoiDong.giangVienCT.distinctError");
         }
     }
     

@@ -26,5 +26,7 @@ public class ThongTinThanhLapHoiDong {
     private NguoiDung giangVienCT;
     private NguoiDung giangVienTK;
     private NguoiDung giangVienPB;
+    private NguoiDung giangVienTV1;
+    private NguoiDung giangVienTV2;
     private KhoaLuanTotNghiep kl;
 }

@@ -23,6 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,10 +110,26 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     }
 
     @PostMapping("/thanhlaphoidong")
-    public String addThongTinThanhLapHoiDong(Model model,@ModelAttribute(value = "thongTinThanhLapHoiDong") @Valid ThongTinThanhLapHoiDong hd, BindingResult rs) {
+    public String addThongTinThanhLapHoiDong(Model model, @ModelAttribute(value = "thongTinThanhLapHoiDong") @Valid ThongTinThanhLapHoiDong hd, BindingResult rs) {
         if (!rs.hasErrors()) {
-            if(this.tttlhdSer.addThongTinThanhLapHoiDong(hd))
+            if (this.tttlhdSer.addThongTinThanhLapHoiDong(hd)) {
                 return "redirect:/";
+            }
+        }
+        System.out.println(hd.getGiangVienTV1().getId());
+        System.out.println(hd.getGiangVienTV2().getId());
+        for (Object object : rs.getAllErrors()) {
+            if (object instanceof FieldError) {
+                FieldError fieldError = (FieldError) object;
+
+                System.out.println(fieldError.getCode());
+            }
+
+            if (object instanceof ObjectError) {
+                ObjectError objectError = (ObjectError) object;
+
+                System.out.println(objectError.getCode());
+            }
         }
         Map<String, String> tmp = new HashMap<>();
         tmp.put("vaiTro", "GIANG_VIEN");
