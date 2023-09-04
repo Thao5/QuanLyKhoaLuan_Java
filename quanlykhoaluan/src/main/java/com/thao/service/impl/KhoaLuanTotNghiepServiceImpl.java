@@ -66,6 +66,11 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     public boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn) {
         return this.khoaLuanRepo.addKhoaLuanTheoThongTinDangKy(kl, kltn);
     }
+
+    @Override
+    public List<KhoaLuanTotNghiep> listKhoaLuanChuaCoHoiDong() {
+        return this.khoaLuanRepo.listKhoaLuanChuaCoHoiDong();
+    }
     
     
 }

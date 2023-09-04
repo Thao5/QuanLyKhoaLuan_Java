@@ -91,5 +91,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/thanhlaphoidong.jsp" />
     </definition>
+    <definition name="gankhoaluanchohoidong" extends="baseLayout">
+        <put-attribute name="title" value="Gán khóa luận cho hội đồng" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/gankhoaluanchohoidong.jsp" />
+    </definition>
 </tiles-definitions>
 

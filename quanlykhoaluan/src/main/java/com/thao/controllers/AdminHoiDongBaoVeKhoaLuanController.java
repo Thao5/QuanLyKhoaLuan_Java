@@ -6,11 +6,14 @@ package com.thao.controllers;
 
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.ThongTinGanKhoaLuanChoHoiDong;
 import com.thao.pojo.ThongTinThanhLapHoiDong;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
 import com.thao.service.KhoaLuanTotNghiepService;
 import com.thao.service.NguoiDungService;
 import com.thao.service.ThongTinThanhLapHoiDongService;
+import com.thao.utils.MailUtil;
+import com.thao.validator.ThongTinGanKhoaLuanChoHoiDongWebAppValidator;
 import com.thao.validator.ThongTinThanhLapHoiDongWebAppValidator;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -53,7 +56,10 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     @Autowired
     private ThongTinThanhLapHoiDongService tttlhdSer;
     @Autowired
+    private MailUtil mailUtil;
+    @Autowired
     private ThongTinThanhLapHoiDongWebAppValidator thongTinThanhLapHoiDongWebAppValidator;
+    
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -113,6 +119,15 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     public String addThongTinThanhLapHoiDong(Model model, @ModelAttribute(value = "thongTinThanhLapHoiDong") @Valid ThongTinThanhLapHoiDong hd, BindingResult rs) {
         if (!rs.hasErrors()) {
             if (this.tttlhdSer.addThongTinThanhLapHoiDong(hd)) {
+                this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienCT().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Chu Tich hoi dong");
+                this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienTK().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Thu Ky hoi dong");
+                this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienPB().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Phan Bien hoi dong");
+                if(hd.getGiangVienTV1() != null){
+                    this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienTV1().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Thanh Vien hoi dong");
+                }
+                if(hd.getGiangVienTV2() != null){
+                    this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienTV2().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Thanh Vien hoi dong");
+                }
                 return "redirect:/";
             }
         }
@@ -122,4 +137,6 @@ public class AdminHoiDongBaoVeKhoaLuanController {
         model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
         return "thanhlaphoidong";
     }
+    
+    
 }

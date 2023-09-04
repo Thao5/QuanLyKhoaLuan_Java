@@ -23,4 +23,6 @@ public interface KhoaLuanTotNghiepRepository {
     KhoaLuanTotNghiep getKhoaLuanById(int id);
     boolean deleteKhoaLuan(int id);
     boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn);
+    List<KhoaLuanTotNghiep> listKhoaLuanChuaCoHoiDong();
+    Long soLuongKhoaLuanHoiDongCham(int hDID);
 }

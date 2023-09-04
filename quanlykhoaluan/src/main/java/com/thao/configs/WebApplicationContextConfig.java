@@ -12,6 +12,8 @@ import com.thao.formatters.TieuChiFormatter;
 import com.thao.validator.NguoiDungValidator;
 import com.thao.validator.NguoiDungWebAppValidator;
 import com.thao.validator.SoLuongKhoaLuanValidator;
+import com.thao.validator.ThongTinGanKhoaLuanChoHoiDongValidator;
+import com.thao.validator.ThongTinGanKhoaLuanChoHoiDongWebAppValidator;
 import com.thao.validator.ThongTinThanhLapHoiDongValidator;
 import com.thao.validator.ThongTinThanhLapHoiDongWebAppValidator;
 import java.text.SimpleDateFormat;
@@ -58,6 +60,9 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     
     @Autowired
     private ThongTinThanhLapHoiDongValidator thongTinThanhLapHoiDongValidator;
+    
+    @Autowired
+    private ThongTinGanKhoaLuanChoHoiDongValidator thongTinGanKhoaLuanChoHoiDongValidator;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -148,6 +153,15 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(thongTinThanhLapHoiDongValidator);
         ThongTinThanhLapHoiDongWebAppValidator validator = new ThongTinThanhLapHoiDongWebAppValidator();
+        validator.setSpringValidators(springValidators);
+        return validator;
+    }
+    
+    @Bean
+    public ThongTinGanKhoaLuanChoHoiDongWebAppValidator thongTinGanKhoaLuanChoHoiDongWebAppValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(thongTinGanKhoaLuanChoHoiDongValidator);
+        ThongTinGanKhoaLuanChoHoiDongWebAppValidator validator = new ThongTinGanKhoaLuanChoHoiDongWebAppValidator();
         validator.setSpringValidators(springValidators);
         return validator;
     }
