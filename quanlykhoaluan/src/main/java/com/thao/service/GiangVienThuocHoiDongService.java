@@ -22,4 +22,5 @@ public interface GiangVienThuocHoiDongService {
     GiangVienThuocHoiDong getGiangVienThuocHoiDongById(int id);
     boolean addGiangVienThuocHoiDong(GiangVienThuocHoiDong gv);
     Long demGiangVienThuocHoiDong(int hdId);
+    GiangVienThuocHoiDong getGiangVienThuocHoiDongByNguoiDungAndHoiDong(int ndID, int hdID);
 }

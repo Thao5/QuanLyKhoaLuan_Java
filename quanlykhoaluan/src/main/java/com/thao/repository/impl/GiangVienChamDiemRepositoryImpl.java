@@ -213,4 +213,18 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         }
     }
 
+    @Override
+    public GiangVienChamDiem getGiangVienChamDiemTheoNDAndKL(int ndID, int klID) {
+        Session s = this.factory.getObject().getCurrentSession();
+        GiangVienThuocHoiDong gv = this.giangVienThuocHoiDongRepo.getGiangVienThuocHoiDongByNguoiDungAndHoiDong(ndID, this.khoaLuanRepo.getKhoaLuanById(klID).getHoiDongId().getId());
+        try{
+            Query q = s.createQuery("from GiangVienChamDiem where giangVienThuocHoiDongId.id = :gv and khoaLuanId.id = :klID");
+            q.setParameter("gv", gv.getId());
+            q.setParameter("klID", klID);
+            return (GiangVienChamDiem) q.getSingleResult();
+        }catch(NoResultException ex){
+            return null;
+        }
+    }
+
 }

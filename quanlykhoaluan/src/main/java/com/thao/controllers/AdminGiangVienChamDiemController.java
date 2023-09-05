@@ -80,4 +80,6 @@ public class AdminGiangVienChamDiemController {
     public void delete(@PathVariable("id") int id) {
         this.gvcdSer.deleteGiangVienChamDiem(id);
     }
+    
+    
 }

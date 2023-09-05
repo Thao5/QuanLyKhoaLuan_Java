@@ -61,10 +61,7 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     private ThongTinThanhLapHoiDongWebAppValidator thongTinThanhLapHoiDongWebAppValidator;
     
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.setValidator(thongTinThanhLapHoiDongWebAppValidator);
-    }
+    
 
     @RequestMapping("/hoidongbaove")
     public String list(Model model, @RequestParam Map<String, String> params) {
@@ -105,38 +102,7 @@ public class AdminHoiDongBaoVeKhoaLuanController {
         this.hoiDongBaoVeKhoaLuanService.deleteHoiDong(id);
     }
 
-    @GetMapping("/thanhlaphoidong")
-    public String thanhLapHoiDong(Model model) {
-        model.addAttribute("thongTinThanhLapHoiDong", new ThongTinThanhLapHoiDong());
-        Map<String, String> tmp = new HashMap<>();
-        tmp.put("vaiTro", "GIANG_VIEN");
-        model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
-        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
-        return "thanhlaphoidong";
-    }
-
-    @PostMapping("/thanhlaphoidong")
-    public String addThongTinThanhLapHoiDong(Model model, @ModelAttribute(value = "thongTinThanhLapHoiDong") @Valid ThongTinThanhLapHoiDong hd, BindingResult rs) {
-        if (!rs.hasErrors()) {
-            if (this.tttlhdSer.addThongTinThanhLapHoiDong(hd)) {
-                this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienCT().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Chu Tich hoi dong");
-                this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienTK().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Thu Ky hoi dong");
-                this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienPB().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Phan Bien hoi dong");
-                if(hd.getGiangVienTV1() != null){
-                    this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienTV1().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Thanh Vien hoi dong");
-                }
-                if(hd.getGiangVienTV2() != null){
-                    this.mailUtil.sendMail(this.ndSer.getNguoiDungById(hd.getGiangVienTV2().getId()).getEmail(), String.format("Thong bao duoc chon vao %s", hd.getTenHoiDong()), "Vai Tro Thanh Vien hoi dong");
-                }
-                return "redirect:/";
-            }
-        }
-        Map<String, String> tmp = new HashMap<>();
-        tmp.put("vaiTro", "GIANG_VIEN");
-        model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
-        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
-        return "thanhlaphoidong";
-    }
+    
     
     
 }

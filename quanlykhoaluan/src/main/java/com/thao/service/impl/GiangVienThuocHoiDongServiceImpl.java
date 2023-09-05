@@ -57,6 +57,11 @@ public class GiangVienThuocHoiDongServiceImpl implements GiangVienThuocHoiDongSe
     public Long demGiangVienThuocHoiDong(int hdId) {
         return this.giangVienThuocHoiDongRepository.demGiangVienThuocHoiDong(hdId);
     }
+
+    @Override
+    public GiangVienThuocHoiDong getGiangVienThuocHoiDongByNguoiDungAndHoiDong(int ndID, int hdID) {
+        return this.giangVienThuocHoiDongRepository.getGiangVienThuocHoiDongByNguoiDungAndHoiDong(ndID, hdID);
+    }
     
     
 }

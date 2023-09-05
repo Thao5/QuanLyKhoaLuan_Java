@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -55,6 +56,11 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
             String kw = params.get("hoiDongId");
             if(kw != null && !kw.isEmpty()){
                 predicates.add(b.equal(root.get("hoiDongId.id"), Integer.parseInt(kw)));
+            }
+            String ndID = params.get("ndID");
+            if(ndID != null && !ndID.isEmpty()){
+                System.out.println(ndID);
+                predicates.add(b.equal(root.get("nguoiDungId"), Integer.parseInt(ndID)));
             }
             String role = params.get("vaiTro");
             if(role != null && !role.isEmpty()){
@@ -154,6 +160,19 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
         Query q = s.createQuery("select count(*) from GiangVienThuocHoiDong where hoiDongId.id = :hdId group by hoiDongId");
         q.setParameter("hdId", hdId);
         return (Long) q.getSingleResult();
+    }
+
+    @Override
+    public GiangVienThuocHoiDong getGiangVienThuocHoiDongByNguoiDungAndHoiDong(int ndID, int hdID) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q= s.createQuery("from GiangVienThuocHoiDong where hoiDongId.id = :hdID and nguoiDungId.id = :ndID");
+        q.setParameter("hdID", hdID);
+        q.setParameter("ndID", ndID);
+        try{
+            return (GiangVienThuocHoiDong) q.getSingleResult();
+        }catch(NoResultException ex){
+            return null;
+        }
     }
     
     

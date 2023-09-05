@@ -74,6 +74,10 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
             if (khoaLuanId != null && !khoaLuanId.isEmpty()) {
                 predicates.add(b.equal(root.get("id"), Integer.parseInt(khoaLuanId)));
             }
+            String hoiDongId = params.get("hoiDongId");
+            if(hoiDongId != null && !hoiDongId.isEmpty()){
+                predicates.add(b.equal(root.get("hoiDongId"), Integer.parseInt(hoiDongId)));
+            }
             q.where(predicates.toArray(Predicate[]::new));
         }
         Query query = s.createQuery(q);

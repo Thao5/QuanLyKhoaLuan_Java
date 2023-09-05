@@ -96,5 +96,15 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/gankhoaluanchohoidong.jsp" />
     </definition>
+    <definition name="chamdiem" extends="baseLayout">
+        <put-attribute name="title" value="Giảng viên chấm điểm" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/chamdiemkhoaluan.jsp" />
+    </definition>
+    <definition name="danhsachkhoaluanchamdiem" extends="baseLayout">
+        <put-attribute name="title" value="Giảng viên chấm điểm" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/danhsachkhoaluanchamdiem.jsp" />
+    </definition>
 </tiles-definitions>
 

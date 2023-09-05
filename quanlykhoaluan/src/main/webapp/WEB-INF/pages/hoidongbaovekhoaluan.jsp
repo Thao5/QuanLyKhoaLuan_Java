@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <section class="container">
-    <a href="<c:url value="/admin/addorupdatehoidong"/>" title="Thêm hội đồng" class="btn btn-outline-success">+</a>
+    <a href="<c:url value="/admin/thanhlaphoidong"/>" title="Thêm hội đồng" class="btn btn-outline-success">+</a>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -17,6 +17,7 @@
                 <th>Ngày thành lập</th>
                 <th>Ngày khóa</th>
                 <th>Đang hoạt động</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -30,6 +31,9 @@
                     <td>${hd.ngayThanhLap}</td>
                     <td>${hd.ngayKhoa}</td>
                     <td>${hd.isActive}</td>
+                    <td>
+                        <a href="<c:url value="/admin/gankhoaluanchohoidong/${hd.id}"/>" class="btn btn-outline-primary">Gán khóa luận cho hội đồng</a>
+                    </td>
                     <td>
                         <!-- Button to Open the Modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal-${hd.id}">

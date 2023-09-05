@@ -46,7 +46,7 @@ public class GiangVienChamDiem implements Serializable {
     @Basic(optional = false)
     @NotNull(message = "{giangVienChamDiem.diem.nullErr}")
     @Column(name = "diem")
-    @Range(min=0, max=4, message = "{giangVienChamDiem.diem.limErr}")
+    @Range(min=0, max=10, message = "{giangVienChamDiem.diem.limErr}")
     private float diem;
     @Basic(optional = false)
     @NotNull(message = "{giangVienChamDiem.ngayCham.nullErr}")
