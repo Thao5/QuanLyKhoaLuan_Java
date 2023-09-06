@@ -31,7 +31,12 @@ public class AdminStatsController {
         for(Object[] o: this.statsSer.statDiem(params)){
             tmp.put(o[1].toString(), Double.parseDouble(o[0].toString()));
         }
+        Map<String, Long> tmp2 = new LinkedHashMap<String, Long>();
+        for(Object[] o: this.statsSer.statTuanSuatTheoNganh(params)){
+            tmp2.put(o[0].toString(), Long.parseLong(o[1].toString()));
+        }
         model.addAttribute("data", tmp);
+        model.addAttribute("data2", tmp2);
         return "charts";
     }
 }

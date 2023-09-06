@@ -101,54 +101,67 @@
             </div>
         </nav>
     </div>-->
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Charts</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Charts</li>
-                </ol>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        Chart.js is a third party plugin that is used to generate the charts in this template. The charts below have been customized - for further customization options, please visit the official
-                        <a target="_blank" href="https://www.chartjs.org/docs/latest/">Chart.js documentation</a>
-                        .
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Charts</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active">Charts</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    Chart.js is a third party plugin that is used to generate the charts in this template. The charts below have been customized - for further customization options, please visit the official
+                    <a target="_blank" href="https://www.chartjs.org/docs/latest/">Chart.js documentation</a>
+                    .
+                </div>
+            </div>
+            <div class="form-floating mb-3 mt-3">
+                <form method="get" action="<c:url value="/admin/thongke" />">
+                    <select id="year" name="y" class="form-select">
+                        <option value="">Tất cả</option>
+                        <% for (int i = 2000; i <= 2036; i += 1) {%>
+                        <option value="<%=i%>"><%=i%></option>
+                        <%}%>
+                    </select>
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="submit" value="Thống kê" class="btn btn-info" />
+                    </div>
+                </form>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Điểm qua từng năm
+                </div>
+                <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Điểm qua từng năm
+                        </div>
+                        <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
+                        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                     </div>
                 </div>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area me-1"></i>
-                        Area Chart Example
-                    </div>
-                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart Example
-                            </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-pie me-1"></i>
+                            Tần suất tham gia khóa luận theo ngành
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-pie me-1"></i>
-                                Pie Chart Example
-                            </div>
-                            <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                        </div>
+                        <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
+                        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="<c:url value ="/js/scripts.js"/>"></script>
@@ -159,10 +172,10 @@
 
 // Area Chart Example
 
-    
+
     let map1 = new Map();
     <c:forEach items="${data}" var="d">
-            map1.set('${d.key}', ${d.value});
+    map1.set('${d.key}', ${d.value});
     </c:forEach>
     var k = Array.from(map1.keys());
     var v = Array.from(map1.values());
@@ -216,7 +229,67 @@
         }
     });
     /*]]>*/
+
+    var ctx1 = document.getElementById("myBarChart");
+    var myLineChart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: k,
+            datasets: [{
+                    label: "Revenue",
+                    backgroundColor: "rgba(2,117,216,1)",
+                    borderColor: "rgba(2,117,216,1)",
+                    data: v,
+                }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        time: {
+                            unit: 'month'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 6
+                        }
+                    }],
+                yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 10,
+                            maxTicksLimit: 5
+                        },
+                        gridLines: {
+                            display: true
+                        }
+                    }],
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    let map2 = new Map();
+    <c:forEach items="${data2}" var="d">
+    map2.set('${d.key}', ${d.value});
+    </c:forEach>
+    var k2 = Array.from(map2.keys());
+    var v2 = Array.from(map2.values());
+    var ctx2 = document.getElementById("myPieChart");
+    var myPieChart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: k2,
+            datasets: [{
+                    data: v2,
+                    backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                }],
+        },
+    });
 </script>
-<script src="<c:url value ="/demo/chart-bar-demo.js"/>"></script>
-<script src="<c:url value ="/demo/chart-pie-demo.js"/>"></script>
+<!--<script src="<c:url value ="/demo/chart-bar-demo.js"/>"></script>-->
+<!--<script src="<c:url value ="/demo/chart-pie-demo.js"/>"></script>-->
 

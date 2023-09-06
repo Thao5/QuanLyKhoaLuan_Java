@@ -106,7 +106,7 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="<c:url value="/login"/>">Đăng nhập</a>
+                                            <a class="nav-link" href="<c:url value="/giangvien/danhsachchamdiem"/>">Danh sách chấm điểm</a>
 
                                         </nav>
                                     </div>
