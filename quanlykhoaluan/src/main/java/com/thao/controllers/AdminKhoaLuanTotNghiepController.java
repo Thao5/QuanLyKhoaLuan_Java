@@ -9,7 +9,9 @@ import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
 import com.thao.service.KhoaLuanTotNghiepService;
+import com.thao.service.NguoiDungService;
 import com.thao.service.TieuChiThuocKhoaLuanService;
+import com.thao.utils.MailUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +44,15 @@ public class AdminKhoaLuanTotNghiepController {
 
     @Autowired
     private HoiDongBaoVeKhoaLuanService hdSer;
-    
+
     @Autowired
     private TieuChiThuocKhoaLuanService tctklSer;
+    
+    @Autowired
+    private NguoiDungService ndSer;
+    
+    @Autowired
+    private MailUtil mailUtil;
 
     @RequestMapping("/khoaluantotnghieps")
     public String list(@RequestParam Map<String, String> params, Model model) {
@@ -111,19 +119,21 @@ public class AdminKhoaLuanTotNghiepController {
         model.addAttribute("thongTinDangKys", null);
         return "thongtindangkykhoaluans";
     }
-    
+
 //    @GetMapping("/thongtindangkykhoaluans/{studentCode}")
 //    public String addThongTinDangKyKhoaLuan(Model model, @PathVariable("studentCode") String studentCode){
 //        
 //        model.addAttribute("kltn", new KhoaLuanTotNghiep());
 //        return "thongtindangkykhoaluans";
 //    }
-    
     @PostMapping("/thongtindangkykhoaluans/{studentCode}")
-    public String addThongTin(@PathVariable("studentCode") String studentCode, @ModelAttribute(value = "kltn") KhoaLuanTotNghiep kltn){
+    public String addThongTin(@PathVariable("studentCode") String studentCode, @ModelAttribute(value = "kltn") KhoaLuanTotNghiep kltn) {
         Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) sessionTmp.getAttribute("kls");
         ThongTinDangKyKhoaLuan kl = kls.get(studentCode);
-        if(this.klSer.addKhoaLuanTheoThongTinDangKy(kl, kltn)){
+        if (this.klSer.addKhoaLuanTheoThongTinDangKy(kl, kltn)) {
+            kls.remove(studentCode);
+            sessionTmp.setAttribute("kls", kls);
+            mailUtil.sendMail(this.ndSer.getNguoiDungByUsername(studentCode).getEmail(), "Thong bao khoa luan da duoc chap nhan", "Khoa luan cua ban da duoc chap nhan");
             return "thongtindangkykhoaluans";
         }
         return "thongtindangkykhoaluans";
@@ -133,5 +143,14 @@ public class AdminKhoaLuanTotNghiepController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteKhoaLuan(@PathVariable("id") int id) {
         this.klSer.deleteKhoaLuan(id);
+    }
+
+    @DeleteMapping("/deletekhoaluanchoduyet/{id}/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteKhoaLuanChoDuyet(@PathVariable("id") String id) {
+        Map<String, ThongTinDangKyKhoaLuan> kls = (Map<String, ThongTinDangKyKhoaLuan>) sessionTmp.getAttribute("kls");
+        kls.remove(id);
+        sessionTmp.setAttribute("kls", kls);
+        mailUtil.sendMail(this.ndSer.getNguoiDungByUsername(id).getEmail(), "Thong bao khoa luan da bi huy", "Khoa luan cua ban da bi huy");
     }
 }

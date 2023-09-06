@@ -120,7 +120,7 @@ public class NguoiDung implements Serializable {
     @JsonIgnore
     private Set<GiangVienHuongDanKhoaLuan> giangVienHuongDanKhoaLuanSet;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private KhoaLuanTotNghiep khoaLuanId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungId", fetch=FetchType.LAZY)
     @JsonIgnore

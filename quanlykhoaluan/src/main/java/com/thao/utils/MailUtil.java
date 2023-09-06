@@ -30,7 +30,7 @@ public class MailUtil {
     public void sendMail(String to, String subject, String text) {
         final String from = "kolotest54@gmail.com";
         String host = "smtp.gmail.com";
-        final String password = "wxbqsbbbypcebgxy";
+        final String password = "oehe ague lumt klgg";
 
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host);

@@ -67,7 +67,6 @@ public class KhoaLuanTotNghiep implements Serializable {
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private Date ngayKetThuc;
     @Basic(optional = false)
-    @NotNull(message = "{khoaLuan.nganh.nullErr}")
     @Size(min = 1, max = 45)
     @Column(name = "nganh")
     private String nganh;

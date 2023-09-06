@@ -7,6 +7,7 @@ package com.thao.pojo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class GiangVienHuongDanKhoaLuan implements Serializable {
     @DateTimeFormat(iso=ISO.DATE)
     private Date ngayBatDauHuongDan;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private KhoaLuanTotNghiep khoaLuanId;
     @JoinColumn(name = "nguoi_dung_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

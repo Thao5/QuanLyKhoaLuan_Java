@@ -75,7 +75,7 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
                 predicates.add(b.equal(root.get("id"), Integer.parseInt(khoaLuanId)));
             }
             String hoiDongId = params.get("hoiDongId");
-            if(hoiDongId != null && !hoiDongId.isEmpty()){
+            if (hoiDongId != null && !hoiDongId.isEmpty()) {
                 predicates.add(b.equal(root.get("hoiDongId"), Integer.parseInt(hoiDongId)));
             }
             q.where(predicates.toArray(Predicate[]::new));
@@ -230,7 +230,7 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+//    @Transactional(propagation = Propagation.REQUIRED)
     public boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn) {
         Session s = this.factory.getObject().getCurrentSession();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -240,8 +240,9 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
             kltn.setTenKhoaLuan(kl.getTitle());
             kltn.setGiaoVuId(nd);
             kltn.setNgayGhiNhan(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-            s.save(kltn);
             NguoiDung sv = this.nguoiDungRepo.getNguoiDungByUsername(kl.getStudentCode());
+            kltn.setNganh(sv.getNganh());
+            this.addKhoaLuan(kltn);
             sv.setKhoaLuanId(kltn);
             s.update(sv);
             if (kl.getMentor().size() < 2) {
@@ -275,7 +276,7 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         try {
             Query q = s.createQuery("from KhoaLuanTotNghiep where hoiDongId is null");
             return q.getResultList();
-        }catch(NoResultException ex){
+        } catch (NoResultException ex) {
             return null;
         }
 
@@ -288,6 +289,5 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         q.setParameter("hDID", hDID);
         return (Long) q.getSingleResult();
     }
-    
-    
+
 }

@@ -14,20 +14,17 @@
             <tr>
                 <th>MSSV</th>
                 <th>Tên đề tài</th>
-                <th>Ngành</th>
                 <th>Mô tả</th>
                 <th>Tên SV</th>
                 <th>Giảng viên hướng dẫn 1</th>
                 <th>Giảng viên hướng dẫn 2</th>
+                <th></th>
                 <th></th>
             </tr>
             <c:forEach var="kl" items="${thongTinDangKys}">
                 <tr>
                     <td>${kl.studentCode}</td>
                     <td>${kl.title}</td>
-                    <c:forEach var="n" items="${kl.categories}">
-                        <td>${n}</td>
-                    </c:forEach>
                     <td>${kl.description}</td>
                     <td>${kl.author}</td>
                     <c:forEach var="gv" items="${kl.mentor}">
@@ -37,6 +34,7 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal-${kl.studentCode}">
                             +
                         </button>
+                        
 
                         <!-- The Modal -->
                         <div class="modal fade" id="myModal-${kl.studentCode}">
@@ -49,6 +47,12 @@
                                     <div class="modal-body">
                                         <c:url value="/admin/thongtindangkykhoaluans/${kl.studentCode}" var="action" />
                                         <form:form modelAttribute="kltn" method="post" action="${action}">
+                                            <form:hidden path="id"/>
+                                            <form:hidden path="tenKhoaLuan"/>
+                                            <form:hidden path="ngayGhiNhan"/>
+                                            <form:hidden path="giaoVuId"/>
+                                            <form:hidden path="hoiDongId"/>
+                                            <form:hidden path="nganh"/>
                                             <div class="form-floating mb-3 mt-3">
                                                 <form:input type="date" class="form-control" path="ngayKetThuc" id="ngayKetThuc" name="ngayKetThuc"/>
                                                 <label for="ngayKhoa">Ngày kết thúc</label>
@@ -68,8 +72,12 @@
                             </div>
                         </div>
                     </td>
+                    <td>
+                        <button onclick="del('<c:url value="/admin/deletekhoaluanchoduyet/${kl.studentCode}/"/>')" title="Xóa khóa luận chờ duyệt" class="btn btn-outline-danger">-</button>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
 </section>
+<script src="<c:url value="/js/del.js" />"></script>
