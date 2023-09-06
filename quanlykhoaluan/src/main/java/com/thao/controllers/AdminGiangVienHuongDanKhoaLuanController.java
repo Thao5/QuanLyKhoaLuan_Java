@@ -69,14 +69,30 @@ public class AdminGiangVienHuongDanKhoaLuanController {
         model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
         return "addorupdategiangvienhuongdan";
     }
+    
+    @GetMapping("/addorupdategiangvienhuongdan/{id}")
+    public String updateGvhd(Model model, @PathVariable("id") int id) {
+        Map<String, String> tmp = new HashMap<>();
+        tmp.put("vaiTro", "GIANG_VIEN");
+        model.addAttribute("giangVienHuongDan", this.giangVienHuongDanKhoaLuanService.getGiangVienHuongDanKhoaLuanById(id));
+        model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
+        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
+        return "addorupdategiangvienhuongdan";
+    }
 
     @PostMapping("/addorupdategiangvienhuongdan")
     public String add(@ModelAttribute(value = "giangVienHuongDan") @Valid GiangVienHuongDanKhoaLuan gv, BindingResult rs, Model model) {
 
         if (!rs.hasErrors()) {
-            if (this.giangVienHuongDanKhoaLuanService.addGiangVienHuongDanKhoaLuan(gv)) {
-                return "redirect:/";
+            if(gv.getId() != null){
+                if(this.giangVienHuongDanKhoaLuanService.updateGiangVienHuongDanKhoaLuan(gv)){
+                    return "redirect:/";
+                }
             }
+            else
+                if (this.giangVienHuongDanKhoaLuanService.addGiangVienHuongDanKhoaLuan(gv)) {
+                    return "redirect:/";
+                }
         } else {
             Map<String, String> tmp = new HashMap<>();
             tmp.put("vaiTro", "GIANG_VIEN");

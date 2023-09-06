@@ -4,6 +4,7 @@
  */
 package com.thao.configs;
 
+import com.thao.formatters.GiangVienThuocHoiDongFormatter;
 import com.thao.formatters.HoiDongBaoVeKhoaLuanFormatter;
 import com.thao.validator.GiangVienHuongDanWebAppValidator;
 import com.thao.formatters.KhoaLuanFormatter;
@@ -111,6 +112,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new NguoiDungFormatter());
         registry.addFormatter(new HoiDongBaoVeKhoaLuanFormatter());
         registry.addFormatter(new TieuChiFormatter());
+        registry.addFormatter(new GiangVienThuocHoiDongFormatter());
     }
 
     @Bean

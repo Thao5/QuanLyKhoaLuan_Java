@@ -8,7 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <section class="container">
-    <a href="<c:url value="/admin/addgiangvienchamdiem"/>" title="Thêm điểm" class="btn btn-outline-success">+</a>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -58,11 +57,11 @@
                                                     <td>
                                                         <button onclick="del('<c:url value="/admin/deletediem/${gv[0]}/"/>')" title="Xóa điểm" class="btn btn-outline-danger">-</button>
                                                     </td>
-                                                    <!--                                                    <td>
-                                                                                                            <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
-                                                                                                                <i class="fa-solid fa-wrench"></i>
-                                                                                                            </a>
-                                                                                                        </td>-->
+                                                    <td>
+                                                        <a href="<c:url value="/admin/addorupdategiangvienchamdiem/${gv[0]}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
+                                                            <i class="fa-solid fa-wrench"></i>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </table>

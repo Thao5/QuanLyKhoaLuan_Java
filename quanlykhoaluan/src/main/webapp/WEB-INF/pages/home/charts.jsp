@@ -31,7 +31,7 @@
         </li>
     </ul>
 </nav>-->
-<div id="layoutSidenav">
+<!--<div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
@@ -100,7 +100,7 @@
                 Start Bootstrap
             </div>
         </nav>
-    </div>
+    </div>-->
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">

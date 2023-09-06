@@ -56,11 +56,11 @@
                                                     <td>
                                                         <button onclick="del('<c:url value="/admin/deletegiangvienhuongdan/${gvhd.id}/"/>')" title="Xóa điểm" class="btn btn-outline-danger">-</button>
                                                     </td>
-                                                    <!--                                                    <td>
-                                                                                                            <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
+                                                                                                        <td>
+                                                                                                            <a href="<c:url value="/admin/addorupdategiangvienhuongdan/${gvhd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
                                                                                                                 <i class="fa-solid fa-wrench"></i>
                                                                                                             </a>
-                                                                                                        </td>-->
+                                                                                                        </td>
                                                 </tr>
                                             </c:forEach>
                                         </table>

@@ -106,5 +106,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/danhsachkhoaluanchamdiem.jsp" />
     </definition>
+    <definition name="addorupdategiangvienchamdiem" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật điểm" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/updatediem.jsp" />
+    </definition>
 </tiles-definitions>
 
