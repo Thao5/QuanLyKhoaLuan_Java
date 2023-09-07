@@ -24,4 +24,5 @@ public interface KhoaLuanTotNghiepService {
     boolean deleteKhoaLuan(int id);
     boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn);
     List<KhoaLuanTotNghiep> listKhoaLuanChuaCoHoiDong();
+    List<KhoaLuanTotNghiep> getKLTheoHoiDong(int hdID);
 }

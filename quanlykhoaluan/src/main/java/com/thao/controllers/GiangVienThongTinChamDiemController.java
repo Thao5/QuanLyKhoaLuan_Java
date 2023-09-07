@@ -74,10 +74,8 @@ public class GiangVienThongTinChamDiemController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Map<String, String> tmp = new HashMap<>();
         tmp.put("ndID", this.ndSer.getNguoiDungByUsername(auth.getName()).getId().toString());
-        Map<String, String> tmp2 = new HashMap<>();
         for (GiangVienThuocHoiDong gv : this.gvthdSer.getGiangVienThuocHoiDong(tmp)) {
-            tmp2.put("hoiDongId", gv.getHoiDongId().getId().toString());
-            for (KhoaLuanTotNghiep kl : this.klSer.getKhoaLuans(tmp2)) {
+            for (KhoaLuanTotNghiep kl : this.klSer.getKLTheoHoiDong(gv.getHoiDongId().getId())) {
                 listKLChamDiem.add(kl);
             }
         }

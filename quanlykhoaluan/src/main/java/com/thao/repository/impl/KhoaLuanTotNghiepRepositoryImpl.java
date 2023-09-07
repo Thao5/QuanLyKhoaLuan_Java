@@ -78,6 +78,10 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
             if (hoiDongId != null && !hoiDongId.isEmpty()) {
                 predicates.add(b.equal(root.get("hoiDongId"), Integer.parseInt(hoiDongId)));
             }
+            String hoiDongActive = params.get("hoiDongActive");
+            if (hoiDongActive != null && !hoiDongActive.isEmpty()) {
+                predicates.add(b.isTrue(root.<Boolean>get("hoiDongId.isActive")));
+            }
             q.where(predicates.toArray(Predicate[]::new));
         }
         Query query = s.createQuery(q);
@@ -290,4 +294,13 @@ public class KhoaLuanTotNghiepRepositoryImpl implements KhoaLuanTotNghiepReposit
         return (Long) q.getSingleResult();
     }
 
+    @Override
+    public List<KhoaLuanTotNghiep> getKLTheoHoiDong(int hdID) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("from KhoaLuanTotNghiep where hoiDongId.id = :hdID and hoiDongId.isActive = true");
+        q.setParameter("hdID", hdID);
+        return q.getResultList();
+    }
+
+    
 }

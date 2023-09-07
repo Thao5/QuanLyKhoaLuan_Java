@@ -60,7 +60,7 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
             List<Predicate> predicates = new ArrayList<>();
             String khoaLuanId = params.get("khoaLuanId");
             if (khoaLuanId != null && !khoaLuanId.isEmpty()) {
-                predicates.add(b.equal(root.get("khoaLuanId.id"), Integer.parseInt(khoaLuanId)));
+                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(khoaLuanId)));
             }
             String giangVienId = params.get("giangVienId");
             if (giangVienId != null && !giangVienId.isEmpty()) {
@@ -225,6 +225,13 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
         }catch(NoResultException ex){
             return null;
         }
+    }
+
+    @Override
+    public List<Object[]> getDTBKL(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("select khoaLuanId.id, avg(diem) from GiangVienChamDiem group by khoaLuanId");
+        return q.getResultList();
     }
 
 }

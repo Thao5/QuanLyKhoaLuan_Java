@@ -71,6 +71,12 @@ public class KhoaLuanTotNghiepServiceImpl implements KhoaLuanTotNghiepService{
     public List<KhoaLuanTotNghiep> listKhoaLuanChuaCoHoiDong() {
         return this.khoaLuanRepo.listKhoaLuanChuaCoHoiDong();
     }
+
+    @Override
+    public List<KhoaLuanTotNghiep> getKLTheoHoiDong(int hdID) {
+        return this.khoaLuanRepo.getKLTheoHoiDong(hdID);
+    }
+    
     
     
 }

@@ -25,4 +25,5 @@ public interface KhoaLuanTotNghiepRepository {
     boolean addKhoaLuanTheoThongTinDangKy(ThongTinDangKyKhoaLuan kl, KhoaLuanTotNghiep kltn);
     List<KhoaLuanTotNghiep> listKhoaLuanChuaCoHoiDong();
     Long soLuongKhoaLuanHoiDongCham(int hDID);
+    List<KhoaLuanTotNghiep> getKLTheoHoiDong(int hdID);
 }

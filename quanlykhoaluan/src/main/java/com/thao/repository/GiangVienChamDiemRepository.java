@@ -26,5 +26,6 @@ public interface GiangVienChamDiemRepository {
     Double diemTrungBinh(int klId);
     List<Object[]> getDiemKhoaLuanOrderByKhoaLuanId(Map<String,String> params);
     GiangVienChamDiem getGiangVienChamDiemTheoNDAndKL(int ndID, int klID);
+    List<Object[]> getDTBKL(Map<String,String> params);
 //    Long demHoiDongChamKhoaLuan(int hd);
 }

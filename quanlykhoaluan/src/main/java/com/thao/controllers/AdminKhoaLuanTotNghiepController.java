@@ -7,12 +7,14 @@ package com.thao.controllers;
 import static com.thao.controllers.ApiThongTinDangKyKhoaLuanController.sessionTmp;
 import com.thao.pojo.KhoaLuanTotNghiep;
 import com.thao.pojo.ThongTinDangKyKhoaLuan;
+import com.thao.service.GiangVienChamDiemService;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
 import com.thao.service.KhoaLuanTotNghiepService;
 import com.thao.service.NguoiDungService;
 import com.thao.service.TieuChiThuocKhoaLuanService;
 import com.thao.utils.MailUtil;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -52,11 +54,16 @@ public class AdminKhoaLuanTotNghiepController {
     private NguoiDungService ndSer;
     
     @Autowired
+    private GiangVienChamDiemService gvcdSer;
+    
+    @Autowired
     private MailUtil mailUtil;
 
     @RequestMapping("/khoaluantotnghieps")
     public String list(@RequestParam Map<String, String> params, Model model) {
         model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(params));
+        model.addAttribute("diemKL", this.gvcdSer.getDiemKhoaLuan(params));
+        model.addAttribute("DTB", this.gvcdSer.getDTBKL(params));
         return "khoaluantotnghieps";
     }
 
