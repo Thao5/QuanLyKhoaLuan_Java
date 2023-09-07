@@ -6,8 +6,10 @@ package com.thao.controllers;
 
 import com.thao.pojo.HoiDongBaoVeKhoaLuan;
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.NguoiDung;
 import com.thao.pojo.ThongTinGanKhoaLuanChoHoiDong;
 import com.thao.pojo.ThongTinThanhLapHoiDong;
+import com.thao.service.GiangVienChamDiemService;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
 import com.thao.service.KhoaLuanTotNghiepService;
 import com.thao.service.NguoiDungService;
@@ -17,8 +19,10 @@ import com.thao.validator.ThongTinGanKhoaLuanChoHoiDongWebAppValidator;
 import com.thao.validator.ThongTinThanhLapHoiDongWebAppValidator;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +60,8 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     @Autowired
     private ThongTinThanhLapHoiDongService tttlhdSer;
     @Autowired
+    private GiangVienChamDiemService gvcdSer;
+    @Autowired
     private MailUtil mailUtil;
     @Autowired
     private ThongTinThanhLapHoiDongWebAppValidator thongTinThanhLapHoiDongWebAppValidator;
@@ -66,6 +72,7 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     @RequestMapping("/hoidongbaove")
     public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("hoiDongs", this.hoiDongBaoVeKhoaLuanService.getHoiDongBaoVeKhoaLuans(params));
+        model.addAttribute("diemKL", this.gvcdSer.getDiemKhoaLuan(params));
         return "hoidongbaove";
     }
 
@@ -98,11 +105,26 @@ public class AdminHoiDongBaoVeKhoaLuanController {
 
     @DeleteMapping("/deletehoidong/{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteNguoiDung(@PathVariable("id") int id) {
+    public void deleteHD(@PathVariable("id") int id) {
         this.hoiDongBaoVeKhoaLuanService.deleteHoiDong(id);
     }
 
     
-    
+    @GetMapping("/donghoidong/{id}")
+    public String dongHoiDong(@PathVariable("id") int id){
+        List<KhoaLuanTotNghiep> listKL = new ArrayList<>();
+        listKL = this.klSer.getKLTheoHoiDong(id);
+        Map<String,String> tmp = new HashMap<>();
+        List<NguoiDung> listND = new ArrayList<>();
+        for(KhoaLuanTotNghiep kl : listKL){
+            tmp.put("khoaLuanId", kl.getId().toString());
+            listND = this.ndSer.getNguoiDungs(tmp);
+            for(NguoiDung nd:listND){
+                mailUtil.sendMail(nd.getEmail(), String.format("Thong bao diem trung binh cua khoa luan %s", kl.getTenKhoaLuan()) , String.format("Diem Trung binh cua khoa luan: ", this.gvcdSer.diemTrungBinh(kl.getId())));
+            }
+        }
+        this.hoiDongBaoVeKhoaLuanService.deleteHoiDong(id);
+        return "hoidongbaove";
+    }
     
 }

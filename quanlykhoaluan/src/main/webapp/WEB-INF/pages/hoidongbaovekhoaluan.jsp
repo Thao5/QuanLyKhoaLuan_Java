@@ -21,6 +21,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -84,6 +85,15 @@
                             </div>
                         </div>
                     </td>
+                    <c:set var="continueExecuting" scope="request" value="true"/>
+                    <c:forEach items="${diemKL}" var="diem">
+                        <c:if test="${diem.giangVienThuocHoiDongId.hoiDongId.id == hd.id && continueExecuting}">
+                            <c:set var="continueExecuting" scope="request" value="false"/>
+                            <td>
+                                <a href="<c:url value="/admin/donghoidong/${hd.id}"/>" title="Đóng hội đồng" class="btn btn-outline-primary">Đóng hội đồng</a>
+                            </td>
+                        </c:if>
+                    </c:forEach>
                     <td>
                         <a href="<c:url value="/admin/addorupdatehoidong/${hd.id}"/>" title="Cập nhật hội đồng" class="btn btn-outline-primary">
                             <i class="fa-solid fa-wrench"></i>

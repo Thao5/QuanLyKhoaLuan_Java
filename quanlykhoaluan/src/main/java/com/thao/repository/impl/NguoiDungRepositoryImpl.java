@@ -73,6 +73,10 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository {
             if (userId != null && !userId.isEmpty()) {
                 predicates.add(b.equal(root.get("id"), Integer.parseInt(userId)));
             }
+            String khoaLuanId = params.get("khoaLuanId");
+            if (khoaLuanId != null && !khoaLuanId.isEmpty()) {
+                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(khoaLuanId)));
+            }
             q.where(predicates.toArray(Predicate[]::new));
         }
 

@@ -64,7 +64,7 @@ public class GiangVienChamDiemRepositoryImpl implements GiangVienChamDiemReposit
             }
             String giangVienId = params.get("giangVienId");
             if (giangVienId != null && !giangVienId.isEmpty()) {
-                predicates.add(b.equal(root.get("giangVienThuocHoiDongId.id"), Integer.parseInt(giangVienId)));
+                predicates.add(b.equal(root.get("giangVienThuocHoiDongId"), Integer.parseInt(giangVienId)));
             }
             q.where(predicates.toArray(Predicate[]::new));
         }
