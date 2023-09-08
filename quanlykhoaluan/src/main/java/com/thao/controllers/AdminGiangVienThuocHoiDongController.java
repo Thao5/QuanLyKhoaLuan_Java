@@ -6,6 +6,9 @@ package com.thao.controllers;
 
 import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.service.GiangVienThuocHoiDongService;
+import com.thao.service.NguoiDungService;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminGiangVienThuocHoiDongController {
     @Autowired
     private GiangVienThuocHoiDongService gvthdSer;
+    @Autowired
+    private NguoiDungService ndSer;
     
     @RequestMapping("/giangvienthuochoidongs")
     public String list(Model model, @RequestParam Map<String,String> params){
@@ -35,15 +40,21 @@ public class AdminGiangVienThuocHoiDongController {
         return "giangvienthuochoidongs";
     }
     
-    @GetMapping("/addgiangvienthuochoidong")
+    @GetMapping("/addorupdategiangvienthuochoidong")
     public String gvthd(Model model){
+        Map<String, String> tmp = new HashMap<>();
+        tmp.put("vaiTro", "GIANG_VIEN");
         model.addAttribute("giangVienThuocHoiDong", new GiangVienThuocHoiDong());
+        model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
         return "addorupdategiangvienthuochoidong";
     }
     
-    @GetMapping("/updategiangvienthuochoidong/{id}")
+    @GetMapping("/addorupdategiangvienthuochoidong/{id}")
     public String update(Model model, @PathVariable("id") int id){
+        Map<String, String> tmp = new HashMap<>();
+        tmp.put("vaiTro", "GIANG_VIEN");
         model.addAttribute("giangVienThuocHoiDong", this.gvthdSer.getGiangVienThuocHoiDongById(id));
+        model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
         return "addorupdategiangvienthuochoidong";
     }
     
@@ -54,6 +65,17 @@ public class AdminGiangVienThuocHoiDongController {
                 if(this.gvthdSer.addGiangVienThuocHoiDong(gv))
                     return "redirect:/";
             }else{
+                GiangVienThuocHoiDong gvTmp = this.gvthdSer.getGiangVienThuocHoiDongById(gv.getId());
+                Map<String,String> tmp = new HashMap<>();
+                tmp.put("hoiDongId", gv.getHoiDongId().getId().toString());
+                tmp.put("ndID", gv.getNguoiDungId().getId().toString());
+                List<GiangVienThuocHoiDong> listGvTmp = this.gvthdSer.getGiangVienThuocHoiDong(tmp);
+                GiangVienThuocHoiDong gvTmp2 = new GiangVienThuocHoiDong();
+                if(!listGvTmp.isEmpty() && listGvTmp != null){
+                    gvTmp2 = listGvTmp.get(0);
+                    gvTmp2.setNguoiDungId(gvTmp.getNguoiDungId());
+                    this.gvthdSer.updateGiangvienThuocHoiDong(gvTmp2);
+                }
                 if(this.gvthdSer.updateGiangvienThuocHoiDong(gv))
                     return "redirect:/";
             }

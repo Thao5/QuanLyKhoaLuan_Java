@@ -36,14 +36,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDongRepository{
+public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDongRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
     private NguoiDungRepository nguoiDungRepo;
     @Autowired
     private HoiDongBaoVeKhoaLuanRepository hoiDongRepo;
-    
+
     @Override
     public List<GiangVienThuocHoiDong> getGiangVienThuocHoiDong(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -51,31 +52,35 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
         CriteriaQuery<GiangVienThuocHoiDong> q = b.createQuery(GiangVienThuocHoiDong.class);
         Root root = q.from(GiangVienThuocHoiDong.class);
         q.select(root);
-        if(params != null){
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("hoiDongId");
-            if(kw != null && !kw.isEmpty()){
-                predicates.add(b.equal(root.get("hoiDongId.id"), Integer.parseInt(kw)));
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.equal(root.get("hoiDongId"), Integer.parseInt(kw)));
             }
             String ndID = params.get("ndID");
-            if(ndID != null && !ndID.isEmpty()){
+            if (ndID != null && !ndID.isEmpty()) {
                 System.out.println(ndID);
                 predicates.add(b.equal(root.get("nguoiDungId"), Integer.parseInt(ndID)));
             }
             String role = params.get("vaiTro");
-            if(role != null && !role.isEmpty()){
+            if (role != null && !role.isEmpty()) {
                 predicates.add(b.equal(root.get("vaiTro"), role));
             }
             q.where(predicates.toArray(Predicate[]::new));
         }
         Query query = s.createQuery(q);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } catch(NoResultException ex){
+            return null;
+        }
     }
 
     @Override
     public boolean addGiangVienThuocHoiDong(String vaiTro, LocalDateTime ngayVaoHoiDong, int giangVienId, int hoiDongId) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             GiangVienThuocHoiDong gv = new GiangVienThuocHoiDong();
             gv.setVaiTro(vaiTro);
             gv.setNgayVaoHoiDong(Date.from(ngayVaoHoiDong.atZone(ZoneId.systemDefault()).toInstant()));
@@ -83,10 +88,10 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
             q1.setParameter("giangVienId", giangVienId);
             Query q2 = s.createQuery("from HoiDongBaoVeKhoaLuan where id = :hoiDongId");
             q2.setParameter("hoiDongId", hoiDongId);
-            gv.setNguoiDungId((NguoiDung)q1.getSingleResult());
-            gv.setHoiDongId((HoiDongBaoVeKhoaLuan)q2.getSingleResult());
+            gv.setNguoiDungId((NguoiDung) q1.getSingleResult());
+            gv.setHoiDongId((HoiDongBaoVeKhoaLuan) q2.getSingleResult());
             s.save(gv);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -95,33 +100,33 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
 
     @Override
     public boolean updateGiangVienThuocHoiDong(int id, Map<String, String> params) {
-       Session s = this.factory.getObject().getCurrentSession();
-       try{
-           if(params != null){
-               GiangVienThuocHoiDong gv = getGiangVienThuocHoiDongById(id);
-               String tmp = params.get("vaiTro");
-               if(tmp != null && !tmp.isEmpty()){
-                   gv.setVaiTro(tmp);
-               }
-               tmp = params.get("ngayVaoHoiDong");
-               if(tmp != null && !tmp.isEmpty()){
-                   gv.setNgayVaoHoiDong(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-               }
-               tmp = params.get("nguoiDungId");
-               if(tmp != null && !tmp.isEmpty()){
-                   gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(Integer.parseInt(tmp)));
-               }
-               tmp = params.get("hoiDongId");
-               if(tmp != null && !tmp.isEmpty()){
-                   gv.setHoiDongId(this.hoiDongRepo.getHoiDongById(Integer.parseInt(tmp)));
-               }
-               s.update(gv);
-           }
-       }catch(HibernateException ex){
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            if (params != null) {
+                GiangVienThuocHoiDong gv = getGiangVienThuocHoiDongById(id);
+                String tmp = params.get("vaiTro");
+                if (tmp != null && !tmp.isEmpty()) {
+                    gv.setVaiTro(tmp);
+                }
+                tmp = params.get("ngayVaoHoiDong");
+                if (tmp != null && !tmp.isEmpty()) {
+                    gv.setNgayVaoHoiDong(Date.from(LocalDate.parse(tmp).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                }
+                tmp = params.get("nguoiDungId");
+                if (tmp != null && !tmp.isEmpty()) {
+                    gv.setNguoiDungId(this.nguoiDungRepo.getNguoiDungById(Integer.parseInt(tmp)));
+                }
+                tmp = params.get("hoiDongId");
+                if (tmp != null && !tmp.isEmpty()) {
+                    gv.setHoiDongId(this.hoiDongRepo.getHoiDongById(Integer.parseInt(tmp)));
+                }
+                s.update(gv);
+            }
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
-       }
-       return true;
+        }
+        return true;
     }
 
     @Override
@@ -133,9 +138,9 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
     @Override
     public boolean updateGiangvienThuocHoiDong(GiangVienThuocHoiDong gv) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.update(gv);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -145,9 +150,9 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
     @Override
     public boolean addGiangVienThuocHoiDong(GiangVienThuocHoiDong gv) {
         Session s = this.factory.getObject().getCurrentSession();
-        try{
+        try {
             s.save(gv);
-        }catch(HibernateException ex){
+        } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -165,15 +170,14 @@ public class GiangVienThuocHoiDongRepositoryImpl implements GiangVienThuocHoiDon
     @Override
     public GiangVienThuocHoiDong getGiangVienThuocHoiDongByNguoiDungAndHoiDong(int ndID, int hdID) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q= s.createQuery("from GiangVienThuocHoiDong where hoiDongId.id = :hdID and nguoiDungId.id = :ndID");
+        Query q = s.createQuery("from GiangVienThuocHoiDong where hoiDongId.id = :hdID and nguoiDungId.id = :ndID");
         q.setParameter("hdID", hdID);
         q.setParameter("ndID", ndID);
-        try{
+        try {
             return (GiangVienThuocHoiDong) q.getSingleResult();
-        }catch(NoResultException ex){
+        } catch (NoResultException ex) {
             return null;
         }
     }
-    
-    
+
 }

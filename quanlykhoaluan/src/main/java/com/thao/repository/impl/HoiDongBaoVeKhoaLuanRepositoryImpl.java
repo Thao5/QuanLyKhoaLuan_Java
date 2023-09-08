@@ -56,6 +56,10 @@ public class HoiDongBaoVeKhoaLuanRepositoryImpl implements HoiDongBaoVeKhoaLuanR
             if(kw != null && !kw.isEmpty()){
                 predicates.add(b.equal(root.get("id"), Integer.parseInt(kw)));
             }
+            kw = params.get("kw");
+            if(kw != null && !kw.isEmpty()){
+                predicates.add(b.like(root.get("tenHoiDong"), String.format("%%%s%%", kw)));
+            }
             q.where(predicates.toArray(Predicate[]::new));
         }
         

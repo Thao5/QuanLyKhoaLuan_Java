@@ -67,7 +67,7 @@
                                                     <td>${gvthd.vaiTro}</td>
                                                     <td>${gvthd.ngayVaoHoiDong}</td>
                                                     <td>
-                                                        <a href="<c:url value="/admin/updategiangvienthuochoidong/${hd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
+                                                        <a href="<c:url value="/admin/addorupdategiangvienthuochoidong/${gvthd.id}"/>" title="Cập nhật giảng viên" class="btn btn-outline-primary">
                                                             <i class="fa-solid fa-wrench"></i>
                                                         </a>
                                                     </td>
