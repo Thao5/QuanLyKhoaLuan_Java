@@ -45,13 +45,12 @@ public class GiangVienHuongDanKhoaLuan implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull(message = "{giangVienHuongDan.ngayBatDauHuongDan.nullErr}")
     @Column(name = "ngay_bat_dau_huong_dan")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(iso=ISO.DATE)
     private Date ngayBatDauHuongDan;
     @JoinColumn(name = "khoa_luan_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private KhoaLuanTotNghiep khoaLuanId;
     @JoinColumn(name = "nguoi_dung_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

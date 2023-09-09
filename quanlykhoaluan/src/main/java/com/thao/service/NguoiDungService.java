@@ -25,4 +25,5 @@ public interface NguoiDungService extends UserDetailsService {
     NguoiDung getNguoiDungByUsername(String username);
     boolean deleteNguoiDung(int id);
     boolean authNguoiDung(String taiKhoan, String matKhau);
+    List<NguoiDung> getSinhVienChuaCoKL();
 }

@@ -53,7 +53,7 @@ public class AdminThongTinThanhLapHoiDongController {
         Map<String, String> tmp = new HashMap<>();
         tmp.put("vaiTro", "GIANG_VIEN");
         model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
-        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
+        model.addAttribute("khoaLuans", this.klSer.listKhoaLuanChuaCoHoiDong());
         return "thanhlaphoidong";
     }
 
@@ -76,7 +76,7 @@ public class AdminThongTinThanhLapHoiDongController {
         Map<String, String> tmp = new HashMap<>();
         tmp.put("vaiTro", "GIANG_VIEN");
         model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
-        model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
+        model.addAttribute("khoaLuans", this.klSer.listKhoaLuanChuaCoHoiDong());
         return "thanhlaphoidong";
     }
 }

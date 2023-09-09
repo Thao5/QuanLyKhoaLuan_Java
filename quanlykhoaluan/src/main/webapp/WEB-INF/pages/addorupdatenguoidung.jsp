@@ -15,6 +15,9 @@
         <form:hidden path="createdDate" />
         <form:hidden path="khoaLuanId" />
         <form:hidden path="avatar"/>
+        <c:if test="${nguoiDung.id != null}">
+            <form:hidden path="taiKhoan"/>
+        </c:if>
         <div class="form-floating mb-3 mt-3">
             <form:input type="text" class="form-control" path="ho" id="ho" placeholder="họ" name="ho" />
             <label for="ho">Họ</label>
@@ -25,11 +28,13 @@
             <label for="ten">Tên</label>
             <form:errors path="ten" element="div" cssClass="text-danger"/>
         </div>
+        <c:if test="${nguoiDung.id == null}">
         <div class="form-floating mb-3 mt-3">
             <form:input type="text" class="form-control" path="taiKhoan" id="taiKhoan" placeholder="Tài khoản" name="taiKhoan" />
             <label for="taiKhoan">Tài Khoản</label>
             <form:errors path="taiKhoan" element="div" cssClass="text-danger"/>
         </div>
+        </c:if>
         <div class="form-floating mb-3 mt-3">
             <form:input type="email" class="form-control" path="email" id="email" placeholder="Email" name="email" />
             <label for="email">email</label>

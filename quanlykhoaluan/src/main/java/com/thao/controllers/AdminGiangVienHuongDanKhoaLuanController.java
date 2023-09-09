@@ -11,6 +11,9 @@ import com.thao.service.NguoiDungService;
 import com.thao.validator.GiangVienHuongDanWebAppValidator;
 import com.thao.validator.SoLuongKhoaLuanValidator;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
@@ -53,9 +56,9 @@ public class AdminGiangVienHuongDanKhoaLuanController {
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(giangVienHuongDanValidator);
     }
-    
+
     @RequestMapping("/giangvienhuongdan")
-    public String list(Model model, @RequestParam Map<String,String> params){
+    public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("giangVienHuongDans", this.giangVienHuongDanKhoaLuanService.getGiangVienHuongDanByKhoaLuanId(params));
         return "giangvienhuongdan";
     }
@@ -69,7 +72,7 @@ public class AdminGiangVienHuongDanKhoaLuanController {
         model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(tmp));
         return "addorupdategiangvienhuongdan";
     }
-    
+
     @GetMapping("/addorupdategiangvienhuongdan/{id}")
     public String updateGvhd(Model model, @PathVariable("id") int id) {
         Map<String, String> tmp = new HashMap<>();
@@ -84,15 +87,19 @@ public class AdminGiangVienHuongDanKhoaLuanController {
     public String add(@ModelAttribute(value = "giangVienHuongDan") @Valid GiangVienHuongDanKhoaLuan gv, BindingResult rs, Model model) {
 
         if (!rs.hasErrors()) {
-            if(gv.getId() != null){
-                if(this.giangVienHuongDanKhoaLuanService.updateGiangVienHuongDanKhoaLuan(gv)){
+            gv.setKhoaLuanId(this.klSer.getKhoaLuanById(gv.getKhoaLuanId().getId()));
+            gv.setNguoiDungId(this.ndSer.getNguoiDungById(gv.getNguoiDungId().getId()));
+            if (gv.getId() != null) {
+
+                if (this.giangVienHuongDanKhoaLuanService.updateGiangVienHuongDanKhoaLuan(gv)) {
                     return "redirect:/";
                 }
-            }
-            else
+            } else {
+                gv.setNgayBatDauHuongDan(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
                 if (this.giangVienHuongDanKhoaLuanService.addGiangVienHuongDanKhoaLuan(gv)) {
                     return "redirect:/";
                 }
+            }
         } else {
             Map<String, String> tmp = new HashMap<>();
             tmp.put("vaiTro", "GIANG_VIEN");
@@ -101,7 +108,7 @@ public class AdminGiangVienHuongDanKhoaLuanController {
         }
         return "addorupdategiangvienhuongdan";
     }
-    
+
     @DeleteMapping("/deletegiangvienhuongdan/{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {

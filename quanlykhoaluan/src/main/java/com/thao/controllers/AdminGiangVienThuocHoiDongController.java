@@ -6,7 +6,12 @@ package com.thao.controllers;
 
 import com.thao.pojo.GiangVienThuocHoiDong;
 import com.thao.service.GiangVienThuocHoiDongService;
+import com.thao.service.HoiDongBaoVeKhoaLuanService;
 import com.thao.service.NguoiDungService;
+import com.thao.validator.GiangVienThuocHoiDongWebAppValidator;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +40,15 @@ public class AdminGiangVienThuocHoiDongController {
     private GiangVienThuocHoiDongService gvthdSer;
     @Autowired
     private NguoiDungService ndSer;
+    @Autowired
+    private HoiDongBaoVeKhoaLuanService hdSer;
+    @Autowired
+    private GiangVienThuocHoiDongWebAppValidator giangVienThuocHoiDongWebAppValidator;
+    
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(giangVienThuocHoiDongWebAppValidator);
+    }
     
     @RequestMapping("/giangvienthuochoidongs")
     public String list(Model model, @RequestParam Map<String,String> params){
@@ -40,11 +56,15 @@ public class AdminGiangVienThuocHoiDongController {
         return "giangvienthuochoidongs";
     }
     
-    @GetMapping("/addorupdategiangvienthuochoidong")
-    public String gvthd(Model model){
+    @GetMapping("/addgiangvienthuochoidong/{id}")
+    public String gvthd(Model model, @PathVariable("id") int id){
         Map<String, String> tmp = new HashMap<>();
         tmp.put("vaiTro", "GIANG_VIEN");
-        model.addAttribute("giangVienThuocHoiDong", new GiangVienThuocHoiDong());
+        GiangVienThuocHoiDong gv = new GiangVienThuocHoiDong();
+        gv.setHoiDongId(this.hdSer.getHoiDongById(id));
+        gv.setNgayVaoHoiDong(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        gv.setVaiTro("THANH_VIEN");
+        model.addAttribute("giangVienThuocHoiDong", gv);
         model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
         return "addorupdategiangvienthuochoidong";
     }
@@ -59,7 +79,7 @@ public class AdminGiangVienThuocHoiDongController {
     }
     
     @PostMapping("/addorupdategiangvienthuochoidong")
-    public String addOrUpdate(@ModelAttribute(value="giangVienThuocHoiDong") @Valid GiangVienThuocHoiDong gv, BindingResult rs){
+    public String addOrUpdate(Model model,@ModelAttribute(value="giangVienThuocHoiDong") @Valid GiangVienThuocHoiDong gv, BindingResult rs){
         if(!rs.hasErrors()){
             if(gv.getId() == null){
                 if(this.gvthdSer.addGiangVienThuocHoiDong(gv))
@@ -80,6 +100,10 @@ public class AdminGiangVienThuocHoiDongController {
                     return "redirect:/";
             }
         }
+        Map<String, String> tmp = new HashMap<>();
+        tmp.put("vaiTro", "GIANG_VIEN");
+        model.addAttribute("giangVienThuocHoiDong", gv);
+        model.addAttribute("giangViens", this.ndSer.getNguoiDungs(tmp));
         return "addorupdategiangvienthuochoidong";
     }
 }

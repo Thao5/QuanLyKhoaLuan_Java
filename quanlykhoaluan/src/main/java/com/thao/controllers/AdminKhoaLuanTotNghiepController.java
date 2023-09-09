@@ -6,6 +6,7 @@ package com.thao.controllers;
 
 import static com.thao.controllers.ApiThongTinDangKyKhoaLuanController.sessionTmp;
 import com.thao.pojo.KhoaLuanTotNghiep;
+import com.thao.pojo.NguoiDung;
 import com.thao.pojo.ThongTinDangKyKhoaLuan;
 import com.thao.service.GiangVienChamDiemService;
 import com.thao.service.HoiDongBaoVeKhoaLuanService;
@@ -49,13 +50,13 @@ public class AdminKhoaLuanTotNghiepController {
 
     @Autowired
     private TieuChiThuocKhoaLuanService tctklSer;
-    
+
     @Autowired
     private NguoiDungService ndSer;
-    
+
     @Autowired
     private GiangVienChamDiemService gvcdSer;
-    
+
     @Autowired
     private MailUtil mailUtil;
 
@@ -159,5 +160,29 @@ public class AdminKhoaLuanTotNghiepController {
         kls.remove(id);
         sessionTmp.setAttribute("kls", kls);
         mailUtil.sendMail(this.ndSer.getNguoiDungByUsername(id).getEmail(), "Thong bao khoa luan da bi huy", "Khoa luan cua ban da bi huy");
+    }
+
+    @GetMapping("/gankhoaluanchosinhvien/{id}")
+    public String ganKhoaLuan(@PathVariable("id") int id, Model model) {
+        model.addAttribute("klID", id);
+        model.addAttribute("sinhViens", this.ndSer.getSinhVienChuaCoKL());
+        return "gankhoaluanchosinhvien";
+    }
+
+    @PostMapping("/gankhoaluanchosinhvien/{id}")
+    public String ganKhoaLuan(Model model,@RequestParam Map<String, String> params, @PathVariable("id") int id) {
+        NguoiDung nd = this.ndSer.getNguoiDungById(Integer.parseInt(params.get("ndID")));
+        if (nd.getKhoaLuanId() != null) {
+            model.addAttribute("klID", id);
+            model.addAttribute("sinhViens", this.ndSer.getSinhVienChuaCoKL());
+            return "gankhoaluanchosinhvien";
+        }
+        nd.setKhoaLuanId(this.klSer.getKhoaLuanById(id));
+        if (this.ndSer.updateNguoiDung(nd)) {
+            return "redirect:/";
+        }
+        model.addAttribute("klID", id);
+        model.addAttribute("sinhViens", this.ndSer.getSinhVienChuaCoKL());
+        return "gankhoaluanchosinhvien";
     }
 }

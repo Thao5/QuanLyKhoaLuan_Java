@@ -31,13 +31,13 @@ public class PDFUtil extends AbstractPdfView{
         @SuppressWarnings("unchecked")
         List<Object[]> list = (List<Object[]>) model.get("statDTB");
         
-        document.add(new Paragraph(String.format("Điểm trung bình của khóa luận %s", (String)list.get(0)[4])));
+        document.add(new Paragraph(String.format("Diem trung binh cua khoa luan %s", (String)list.get(0)[4])));
         Table table = new Table(5);
-        table.addCell("Họ giảng viên");
-        table.addCell("Tên giảng viên");
-        table.addCell("Ngày chấm");
-        table.addCell("Tên khóa luận");
-        table.addCell("Điểm");
+        table.addCell("Ho giang vien");
+        table.addCell("Ten giang vien");
+        table.addCell("Ngay cham");
+        table.addCell("Ten khoa luan");
+        table.addCell("Dem");
         
         for(Object[] o : list){
             table.addCell((String) o[2]);
@@ -47,7 +47,7 @@ public class PDFUtil extends AbstractPdfView{
             table.addCell(Float.toString((float) o[0]));
         }
         document.add(table);
-        document.add(new Paragraph("Lãnh đạo ký tên"));
+        document.add(new Paragraph("Lanh dao ky ten"));
     }
     
 }

@@ -96,7 +96,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             nd.setMatKhau(this.passwordEncoder.encode(nd.getMatKhau()));
         }
         
-        if (!nd.getImg().isEmpty()) {
+        if (nd.getImg() != null && !nd.getImg().isEmpty()) {
                 Map res;
             try {
                 res = this.cloudinary.uploader().upload(nd.getImg().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -136,6 +136,11 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     @Override
     public boolean authNguoiDung(String taiKhoan, String matKhau) {
         return this.nguoiDungRepo.authNguoiDung(taiKhoan, matKhau);
+    }
+
+    @Override
+    public List<NguoiDung> getSinhVienChuaCoKL() {
+        return this.nguoiDungRepo.getSinhVienChuaCoKL();
     }
     
     

@@ -26,4 +26,5 @@ public interface NguoiDungRepository {
     boolean isAlreadyHaveSDT(String sdt);
     boolean isAlreadyHaveTaiKhoan(String tk);
     boolean authNguoiDung(String taiKhoan, String matKhau);
+    List<NguoiDung> getSinhVienChuaCoKL();
 }

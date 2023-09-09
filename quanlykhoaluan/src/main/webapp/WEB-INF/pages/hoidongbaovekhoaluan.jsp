@@ -45,7 +45,9 @@
                         <div class="modal fade" id="myModal-${hd.id}">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <a href="<c:url value="/admin/addgiangvienthuochoidong/${hd.id}"/>" title="Thêm tiêu chí thuộc khóa luận" class="btn btn-outline-success">+</a>
+                                    <c:if test="${hd.giangVienThuocHoiDongSet.size() < 5}">
+                                        <a href="<c:url value="/admin/addgiangvienthuochoidong/${hd.id}"/>" title="Thêm tiêu chí thuộc khóa luận" class="btn btn-outline-success">+</a>
+                                    </c:if>
                                     <!-- Modal Header -->
                                     <div class="modal-header">
                                         <h4 class="modal-title">Thông tin giảng viên thuộc hội đồng ${hd.tenHoiDong}</h4>

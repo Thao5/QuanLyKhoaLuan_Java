@@ -116,5 +116,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addorupdategiangvienthuochoidong.jsp" />
     </definition>
+    <definition name="gankhoaluanchosinhvien" extends="baseLayout">
+        <put-attribute name="title" value="Gán khóa luận cho sinh viên" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/gankhoaluanchosinhvien.jsp" />
+    </definition>
 </tiles-definitions>
 

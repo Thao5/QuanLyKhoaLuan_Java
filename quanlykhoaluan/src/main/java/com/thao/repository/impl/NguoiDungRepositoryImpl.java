@@ -283,4 +283,16 @@ public class NguoiDungRepositoryImpl implements NguoiDungRepository {
         return false;
     }
 
+    @Override
+    public List<NguoiDung> getSinhVienChuaCoKL() {
+        Session s = this.factory.getObject().getCurrentSession();
+        try{
+            Query q = s.createQuery("from NguoiDung where vaiTro = 'SINH_VIEN' and khoaLuanId is null");
+            return q.getResultList();
+        }catch(NoResultException ex){
+            return null;
+        }
+    }
+
+    
 }

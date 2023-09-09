@@ -34,7 +34,7 @@ public class SoLuongKhoaLuanValidator implements Validator{
     @Override
     public void validate(Object target, Errors errors) {
         GiangVienHuongDanKhoaLuan gv = (GiangVienHuongDanKhoaLuan) target;
-        if(this.gvRepo.demGiangVienHuongDanCuaKhoaLuan(gv.getKhoaLuanId().getId()) >= 2){
+        if(this.gvRepo.demGiangVienHuongDanCuaKhoaLuan(gv.getKhoaLuanId().getId()) >= 2 && gv.getId() == null){
             errors.rejectValue("khoaLuanId", "giangVienHuongDan.khoaLuanId.soLuongKhoaLuanMsg");
         }
     }

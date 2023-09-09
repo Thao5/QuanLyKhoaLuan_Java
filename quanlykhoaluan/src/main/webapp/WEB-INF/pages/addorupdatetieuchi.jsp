@@ -18,7 +18,7 @@
             <form:errors path="noiDungTieuChi" element="div" cssClass="text-danger"/>
         </div>
         <div class="form-floating mb-3 mt-3">
-            <form:input type="number" step="0.01" class="form-control" path="diem" id="diem" placeholder="Điểm" name="diem" />
+            <form:input type="number" step="0.25" class="form-control" path="diem" id="diem" placeholder="Điểm" name="diem" />
             <label for="diem">Điểm</label>
             <form:errors path="diem" element="div" cssClass="text-danger"/>
         </div>

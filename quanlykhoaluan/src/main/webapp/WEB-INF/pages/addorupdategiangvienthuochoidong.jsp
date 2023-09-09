@@ -28,10 +28,16 @@
                     </c:choose>
                 </c:forEach>
             </form:select>
-            <label for="nguoiDungId" class="form-label">Giảng viên hướng dẫn</label>
+            <label for="nguoiDungId" class="form-label">Giảng viên thuộc hội đồng</label>
+            <form:errors path="nguoiDungId" element="div" cssClass="text-danger"/>
         </div>
         <div class="form-floating mb-3 mt-3">
-            <input type="submit" value="Sửa giảng viên thuộc hội đồng" class="btn btn-info" />
+            <button type="submit" class="btn btn-info">
+                <c:choose>
+                    <c:when test="${giangVienThuocHoiDong.id != null}">Cập nhật giảng viên</c:when>
+                    <c:otherwise>Thêm giảng viên</c:otherwise>
+                </c:choose>
+            </button>
         </div>
     </form:form>
 </section>

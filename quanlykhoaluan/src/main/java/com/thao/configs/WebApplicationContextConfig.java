@@ -10,6 +10,8 @@ import com.thao.validator.GiangVienHuongDanWebAppValidator;
 import com.thao.formatters.KhoaLuanFormatter;
 import com.thao.formatters.NguoiDungFormatter;
 import com.thao.formatters.TieuChiFormatter;
+import com.thao.validator.GiangVienThuocHoiDongValidator;
+import com.thao.validator.GiangVienThuocHoiDongWebAppValidator;
 import com.thao.validator.NguoiDungValidator;
 import com.thao.validator.NguoiDungWebAppValidator;
 import com.thao.validator.SoLuongKhoaLuanValidator;
@@ -69,6 +71,9 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     
     @Autowired
     private ThongTinGiangVienChamDiemValidator thongTinGiangVienChamDiemValidator;
+    
+    @Autowired
+    private GiangVienThuocHoiDongValidator giangVienThuocHoiDongValidator;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -178,6 +183,15 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(thongTinGiangVienChamDiemValidator);
         ThongTinGiangVienChamDiemWebAppValidator validator = new ThongTinGiangVienChamDiemWebAppValidator();
+        validator.setSpringValidators(springValidators);
+        return validator;
+    }
+    
+    @Bean
+    public GiangVienThuocHoiDongWebAppValidator giangVienThuocHoiDongWebAppValidator(){
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(giangVienThuocHoiDongValidator);
+        GiangVienThuocHoiDongWebAppValidator validator = new GiangVienThuocHoiDongWebAppValidator();
         validator.setSpringValidators(springValidators);
         return validator;
     }

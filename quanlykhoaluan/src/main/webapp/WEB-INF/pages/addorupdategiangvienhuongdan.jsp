@@ -9,13 +9,10 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <section class="container">
-    <c:url value="/admin/giangvienhuongdankhoaluan" var="action" />
+    <c:url value="/admin/addorupdategiangvienhuongdan" var="action" />
     <form:form modelAttribute="giangVienHuongDan" method="post" action="${action}">
-        <div class="form-floating mb-3 mt-3">
-            <form:input type="date" class="form-control" path="ngayBatDauHuongDan" id="ngayBatDauHuongDan" name="ngayBatDauHuongDan"/>
-            <label for="ngayBatDauHuongDan">Ngày bắt đầu hướng dẫn</label>
-            <form:errors path="ngayBatDauHuongDan" element="div" cssClass="text-danger"/>
-        </div>
+        <form:hidden path="id" />
+        <form:hidden path="ngayBatDauHuongDan" />
         <div class="form-floating mb-3 mt-3">
             <form:select id="nguoiDungId" name="nguoiDungId" path="nguoiDungId" class="form-select">
                 <c:forEach items="${giangViens}" var="gvhd">
@@ -34,7 +31,12 @@
             <form:errors path="khoaLuanId" element="div" cssClass="text-danger"/>
         </div>
         <div class="form-floating mb-3 mt-3">
-            <input type="submit" value="Thêm giảng viên hướng dẫn" class="btn btn-info" />
+            <button type="submit" class="btn btn-info">
+                <c:choose>
+                    <c:when test="${giangVienHuongDan.id != null}">Cập nhật giảng viên</c:when>
+                    <c:otherwise>Thêm giảng viên</c:otherwise>
+                </c:choose>
+            </button>
         </div>
     </form:form>
 </section>
