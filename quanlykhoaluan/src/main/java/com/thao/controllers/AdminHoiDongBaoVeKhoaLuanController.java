@@ -124,7 +124,7 @@ public class AdminHoiDongBaoVeKhoaLuanController {
             }
         }
         this.hoiDongBaoVeKhoaLuanService.deleteHoiDong(id);
-        return "hoidongbaove";
+        return "redirect:/";
     }
     
 }

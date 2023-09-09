@@ -7,6 +7,7 @@ package com.thao.controllers;
 import com.thao.components.JwtService;
 import com.thao.pojo.NguoiDung;
 import com.thao.service.NguoiDungService;
+import com.thao.utils.MailUtil;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,8 @@ public class ApiNguoiDungController {
     private NguoiDungService ndSer;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private MailUtil mailUtil;
     
     @PostMapping("/login/")
     @CrossOrigin
@@ -77,6 +80,23 @@ public class ApiNguoiDungController {
     public ResponseEntity<NguoiDung> details(Principal user) {
         NguoiDung u = this.ndSer.getNguoiDungByUsername(user.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+    
+    @PostMapping("/updateUser/")
+    @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUser(@RequestBody NguoiDung nd){
+        System.out.println(nd.getId());
+        NguoiDung tmp = this.ndSer.getNguoiDungById(nd.getId());
+        System.out.println(nd.getMatKhau());
+        if(nd.getMatKhau() != null && !nd.getMatKhau().isEmpty())
+            tmp.setMatKhau(nd.getMatKhau());
+        if(nd.getSdt() != null && !nd.getSdt().isEmpty()){
+            tmp.setSdt(nd.getSdt());
+        }
+        if(this.ndSer.updateNguoiDung(tmp)){
+            mailUtil.sendMail(tmp.getEmail(), "Thong bao thay doi thong tin", "Ban da thay doi thong tin");
+        }
     }
     
 //    @PostMapping("/nguoiDungs/addNguoiDung/")
