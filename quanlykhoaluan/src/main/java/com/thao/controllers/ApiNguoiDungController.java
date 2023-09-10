@@ -86,9 +86,7 @@ public class ApiNguoiDungController {
     @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@RequestBody NguoiDung nd){
-        System.out.println(nd.getId());
         NguoiDung tmp = this.ndSer.getNguoiDungById(nd.getId());
-        System.out.println(nd.getMatKhau());
         if(nd.getMatKhau() != null && !nd.getMatKhau().isEmpty())
             tmp.setMatKhau(nd.getMatKhau());
         if(nd.getSdt() != null && !nd.getSdt().isEmpty()){

@@ -5,11 +5,13 @@
 package com.thao.controllers;
 
 import com.thao.pojo.ThongTinDangKyKhoaLuan;
+import com.thao.service.NguoiDungService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiThongTinDangKyKhoaLuanController {
+    
+    @Autowired
+    private NguoiDungService ndSer;
     
     public static HttpSession sessionTmp;
 
@@ -54,7 +59,7 @@ public class ApiThongTinDangKyKhoaLuanController {
 //            kl.setCategories(arrays.get("categories"));
 //            kl.setMentor(arrays.get("mentor"));
 //        }
-            if(!kls.containsKey(kl.getStudentCode())){
+            if(!kls.containsKey(kl.getStudentCode()) && this.ndSer.getNguoiDungByUsername(kl.getStudentCode()).getKhoaLuanId() == null){
                 kls.put(kl.getStudentCode(), kl);
             }
 
@@ -63,6 +68,9 @@ public class ApiThongTinDangKyKhoaLuanController {
             sessionTmp = session;
         }
         sessionTmp.setAttribute("kls", kls);
+        if(this.ndSer.getNguoiDungByUsername(kl.getStudentCode()).getKhoaLuanId() != null){
+            return new ResponseEntity(kl,HttpStatus.FORBIDDEN);
+        }
         return new ResponseEntity(kl,HttpStatus.OK);
     }
     
