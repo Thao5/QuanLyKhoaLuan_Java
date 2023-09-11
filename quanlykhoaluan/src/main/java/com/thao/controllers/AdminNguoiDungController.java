@@ -13,6 +13,7 @@ import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.core.env.Environment;
 
 /**
  *
@@ -54,6 +56,9 @@ public class AdminNguoiDungController {
 
     @Autowired
     private NguoiDungWebAppValidator nguoiDungValids;
+    
+    @Autowired
+    private Environment env;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -62,6 +67,10 @@ public class AdminNguoiDungController {
 
     @RequestMapping("/nguoidungs")
     public String list(Model model, @RequestParam Map<String, String> params) {
+        Map<String,String> tmp = new HashMap<>();
+        List<NguoiDung> listNDPages = this.nguoiDungService.getNguoiDungs(tmp);
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        model.addAttribute("pages", Math.ceil(listNDPages.size()*1.0/pageSize));
         model.addAttribute("nguoiDungs", this.nguoiDungService.getNguoiDungs(params));
         return "nguoidungs";
     }

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +63,8 @@ public class AdminHoiDongBaoVeKhoaLuanController {
     @Autowired
     private GiangVienChamDiemService gvcdSer;
     @Autowired
+    private Environment env;
+    @Autowired
     private MailUtil mailUtil;
     @Autowired
     private ThongTinThanhLapHoiDongWebAppValidator thongTinThanhLapHoiDongWebAppValidator;
@@ -71,6 +74,10 @@ public class AdminHoiDongBaoVeKhoaLuanController {
 
     @RequestMapping("/hoidongbaove")
     public String list(Model model, @RequestParam Map<String, String> params) {
+        Map<String,String> tmp = new HashMap<>();
+        List<HoiDongBaoVeKhoaLuan> listHDPages = this.hoiDongBaoVeKhoaLuanService.getHoiDongBaoVeKhoaLuans(tmp);
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        model.addAttribute("pages", Math.ceil(listHDPages.size()*1.0/pageSize));
         model.addAttribute("hoiDongs", this.hoiDongBaoVeKhoaLuanService.getHoiDongBaoVeKhoaLuans(params));
         model.addAttribute("diemKL", this.gvcdSer.getDiemKhoaLuan(params));
         return "hoidongbaove";

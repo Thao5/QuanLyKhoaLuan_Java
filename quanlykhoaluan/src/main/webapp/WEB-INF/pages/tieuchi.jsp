@@ -9,6 +9,17 @@
 
 <section class="container">
     <a href="<c:url value="/admin/addorupdatetieuchi"/>" title="Thêm tiêu chí" class="btn btn-outline-success">+</a>
+    <c:if test="${pages > 1}">
+        <ul class="pagination mt-1">
+            <li class="page-item"><a class="page-link" href="<c:url value="/admin/tieuchi"/>">Tất cả</a></li>
+                <c:forEach begin="1" end="${pages}" var="i">
+                    <c:url value="/admin/tieuchi" var="pageUrl">
+                        <c:param name="page" value="${i}" />
+                    </c:url>
+                <li class="page-item"><a class="page-link" href="${pageUrl}">${i}</a></li>
+                </c:forEach>
+        </ul>
+    </c:if>
     <table class="table table-hover">
         <thead>
             <tr>

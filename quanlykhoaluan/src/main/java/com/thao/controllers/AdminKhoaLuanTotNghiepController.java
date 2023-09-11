@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,12 +57,19 @@ public class AdminKhoaLuanTotNghiepController {
 
     @Autowired
     private GiangVienChamDiemService gvcdSer;
+    
+    @Autowired
+    private Environment env;
 
     @Autowired
     private MailUtil mailUtil;
 
     @RequestMapping("/khoaluantotnghieps")
     public String list(@RequestParam Map<String, String> params, Model model) {
+        Map<String,String> tmp = new HashMap<>();
+        List<KhoaLuanTotNghiep> listKLPages = this.klSer.getKhoaLuans(tmp);
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        model.addAttribute("pages", Math.ceil(listKLPages.size()*1.0/pageSize));
         model.addAttribute("khoaLuans", this.klSer.getKhoaLuans(params));
         model.addAttribute("diemKL", this.gvcdSer.getDiemKhoaLuan(params));
         model.addAttribute("DTB", this.gvcdSer.getDTBKL(params));

@@ -6,10 +6,12 @@ package com.thao.controllers;
 
 import com.thao.pojo.TieuChi;
 import com.thao.service.TieuChiService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +35,15 @@ public class AdminTieuChiController {
 
     @Autowired
     private TieuChiService tieuChiService;
+    @Autowired
+    private Environment env;
 
     @RequestMapping("/tieuchi")
     public String list(Model model, @RequestParam Map<String, String> params) {
-
+        Map<String, String> tmp = new HashMap<>();
+        List<TieuChi> listTCPages = this.tieuChiService.getTieuChis(tmp);
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        model.addAttribute("pages", Math.ceil(listTCPages.size() * 1.0 / pageSize));
         model.addAttribute("tieuChis", this.tieuChiService.getTieuChis(params));
         return "tieuchi";
     }
@@ -57,12 +64,12 @@ public class AdminTieuChiController {
     public String addOrUpdateTieuChi(@ModelAttribute(value = "tieuChi") @Valid TieuChi tc, BindingResult rs) {
         if (!rs.hasErrors()) {
             if (tc.getId() != null) {
-                if(this.tieuChiService.updateTieuChi(tc)){
+                if (this.tieuChiService.updateTieuChi(tc)) {
                     return "redirect:/";
                 }
             }
             if (this.tieuChiService.addTieuChi(tc) == true) {
-                    return "redirect:/";
+                return "redirect:/";
             }
         }
 
