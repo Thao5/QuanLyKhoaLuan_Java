@@ -20,6 +20,7 @@
                 </c:forEach>
             </form:select>
             <label for="nguoiDungId" class="form-label">Giảng viên hướng dẫn</label>
+            <form:errors path="nguoiDungId" element="div" cssClass="text-danger"/>
         </div>
         <div class="form-floating mb-3 mt-3">
             <form:select id="khoaLuanId" name="khoaLuanId" path="khoaLuanId" class="form-select">

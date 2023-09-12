@@ -64,11 +64,15 @@ public class GiangVienHuongDanKhoaLuanRepositoryImpl implements GiangVienHuongDa
              List<Predicate> predicates = new ArrayList<>();
             String kw = params.get("kw");
             if(kw != null && !kw.isEmpty()){
-                predicates.add(b.like(root.get("nguoiDungId.ten"), String.format("%%%s%%", kw)));
+                predicates.add(b.like(root.get("nguoiDungId"), String.format("%%%s%%", kw)));
             }
             kw = params.get("giangVienId");
             if(kw != null && !kw.isEmpty()){
-                predicates.add(b.equal(root.get("nguoiDungId.id"), Integer.parseInt(kw)));
+                predicates.add(b.equal(root.get("nguoiDungId"), Integer.parseInt(kw)));
+            }
+            kw = params.get("khoaLuanId");
+            if(kw != null && !kw.isEmpty()){
+                predicates.add(b.equal(root.get("khoaLuanId"), Integer.parseInt(kw)));
             }
             q.where(predicates.toArray(Predicate[]::new));
         }

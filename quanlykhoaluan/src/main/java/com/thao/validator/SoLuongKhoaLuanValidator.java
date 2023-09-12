@@ -6,6 +6,8 @@ package com.thao.validator;
 
 import com.thao.pojo.GiangVienHuongDanKhoaLuan;
 import com.thao.repository.GiangVienHuongDanKhoaLuanRepository;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
@@ -36,6 +38,13 @@ public class SoLuongKhoaLuanValidator implements Validator{
         GiangVienHuongDanKhoaLuan gv = (GiangVienHuongDanKhoaLuan) target;
         if(this.gvRepo.demGiangVienHuongDanCuaKhoaLuan(gv.getKhoaLuanId().getId()) >= 2 && gv.getId() == null){
             errors.rejectValue("khoaLuanId", "giangVienHuongDan.khoaLuanId.soLuongKhoaLuanMsg");
+        }
+        Map<String,String> tmp = new HashMap<>();
+        tmp.put("giangVienId", gv.getNguoiDungId().getId().toString());
+        tmp.put("khoaLuanId", gv.getKhoaLuanId().getId().toString());
+        if(!this.gvRepo.getGiangVienHuongDans(tmp).isEmpty() && this.gvRepo.getGiangVienHuongDans(tmp) != null){
+            errors.rejectValue("khoaLuanId", "giangVienHuongDan.nguoiDungId.distinctErr");
+            errors.rejectValue("nguoiDungId", "giangVienHuongDan.nguoiDungId.distinctErr");
         }
     }
 }
