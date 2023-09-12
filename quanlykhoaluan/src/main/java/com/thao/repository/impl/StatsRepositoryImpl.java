@@ -43,10 +43,10 @@ public class StatsRepositoryImpl implements StatsRepository{
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("select nganh, count(*) from NguoiDung where khoaLuanId is not null group by nganh");
         if(params != null){
-            String nganh = params.get("nganh");
-            if(nganh != null && !nganh.isEmpty()){
-                q = s.createQuery("select nganh, count(*) from NguoiDung where nganh = :nganh and khoaLuanId is not null group by nganh");
-                q.setParameter("nganh", nganh);
+            String y = params.get("y");
+            if(y != null && !y.isEmpty()){
+                q = s.createQuery("select nganh, count(*) from NguoiDung where year(khoaLuanId.ngayGhiNhan) = :y and khoaLuanId is not null group by nganh, year(khoaLuanId.ngayGhiNhan)");
+                q.setParameter("y", Integer.parseInt(y));
             }
         }
         return q.getResultList();

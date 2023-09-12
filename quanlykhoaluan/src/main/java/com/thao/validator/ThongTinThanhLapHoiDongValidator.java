@@ -51,8 +51,12 @@ public class ThongTinThanhLapHoiDongValidator implements Validator {
                 errors.rejectValue("giangVienTV2", "thongTinThanhLapHoiDong.giangVienCT.distinctError");
             }
         }
-        if (this.klRepo.getKhoaLuanById(hd.getKl().getId()).getHoiDongId() != null) {
-            errors.rejectValue("kl", "thongTinThanhLapHoiDong.kl.existErr");
+        if (hd.getKl() != null) {
+            if (this.klRepo.getKhoaLuanById(hd.getKl().getId()).getHoiDongId() != null) {
+                errors.rejectValue("kl", "thongTinThanhLapHoiDong.kl.existErr");
+            }
+        } else {
+            errors.rejectValue("kl", "thongTinThanhLapHoiDong.kl.NonExistErr");
         }
 
     }

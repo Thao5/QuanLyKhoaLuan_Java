@@ -127,7 +127,7 @@ public class AdminHoiDongBaoVeKhoaLuanController {
             tmp.put("khoaLuanId", kl.getId().toString());
             listND = this.ndSer.getNguoiDungs(tmp);
             for(NguoiDung nd:listND){
-                mailUtil.sendMail(nd.getEmail(), String.format("Thong bao diem trung binh cua khoa luan %s", kl.getTenKhoaLuan()) , String.format("Diem Trung binh cua khoa luan: ", this.gvcdSer.diemTrungBinh(kl.getId())));
+                mailUtil.sendMail(nd.getEmail(), String.format("Thong bao diem trung binh cua khoa luan %s", kl.getTenKhoaLuan()) , String.format("Diem Trung binh cua khoa luan: %.2f", this.gvcdSer.diemTrungBinh(kl.getId())));
             }
         }
         this.hoiDongBaoVeKhoaLuanService.deleteHoiDong(id);

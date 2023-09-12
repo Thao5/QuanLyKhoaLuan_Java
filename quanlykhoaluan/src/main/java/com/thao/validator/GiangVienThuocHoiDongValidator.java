@@ -32,7 +32,7 @@ public class GiangVienThuocHoiDongValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         GiangVienThuocHoiDong gv = (GiangVienThuocHoiDong) target;
-        if (gvthdSer.demGiangVienThuocHoiDong(gv.getHoiDongId().getId()) >= 5) {
+        if (gvthdSer.demGiangVienThuocHoiDong(gv.getHoiDongId().getId()) >= 5 && gv.getId() == null) {
             errors.rejectValue("nguoiDungId", "giangVienThuocHoiDong.nguoiDungId.soLuongGiangVienErr");
         }
         Map<String, String> tmp = new HashMap<>();
